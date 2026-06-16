@@ -35,3 +35,173 @@ model Contact {
   createdAt DateTime @default(now())
 }
 
+enum LeadScore {
+  HOT
+  WARM
+  COLD
+}
+
+// Sales pipeline stage (Phase 5). Orthogonal to scoreTier: stage = where in the
+// process, scoreTier = how qualified.
+enum LeadStage {
+  NEW
+  CONTACTED
+  MEETING
+  PROPOSAL
+  WON
+  LOST
+}
+
+model Lead {
+  id           String   @id @default(cuid())
+  name         String?
+  email        String?
+  phone        String?
+  businessType String?
+  projectType  String?
+  budget       String?
+  timeline     String?
+  description  String?
+  createdAt    DateTime @default(now())
+
+  // AI Lead Scoring (Phase 4): deterministic, explainable 0-100 score + tier.
+  score       Int?
+  scoreTier   LeadScore?
+  scoreReason String?
+  scoredAt    DateTime?
+
+  // Sales Pipeline (Phase 5): current stage, updatable from the admin dashboard.
+  stage          LeadStage @default(NEW)
+  stageUpdatedAt DateTime?
+
+  // Admin email notifications (Phase 9): timestamps so each alert fires at most once.
+  newLeadNotifiedAt DateTime?
+  hotLeadNotifiedAt DateTime?
+
+  // Future lead linking: a lead may be attributed to the conversation(s) it came from.
+  conversations Conversation[]
+
+  // Project Context Management (Phase A): a lead can discuss many distinct projects.
+  projects Project[]
+
+  @@index([scoreTier])
+  @@index([stage])
+}
+
+// A distinct project / opportunity a lead discusses. A Lead can have many Projects,
+// and a Project can own many Conversations. (Project Context Management — Phase A:
+// data foundation and relationships only; not yet wired into the chatbot or admin UI.)
+enum ProjectStatus {
+  ACTIVE
+  WON
+  LOST
+  ARCHIVED
+}
+
+model Project {
+  id        String        @id @default(cuid())
+  leadId    String
+  title     String
+  status    ProjectStatus @default(ACTIVE)
+  summary   String?
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  // Per-project qualification (Phase 9.5): each project carries its own extracted
+  // fields and deterministic score, so qualification lives at the project level
+  // (additive — lead-level scoring is unchanged).
+  projectType String?
+  budget      String?
+  timeline    String?
+  score       Int?
+  scoreTier   LeadScore?
+  scoreReason String?
+
+  // Per-project pipeline (Phase 9.5): each project progresses independently.
+  stage          LeadStage @default(NEW)
+  stageUpdatedAt DateTime?
+
+  lead          Lead           @relation(fields: [leadId], references: [id], onDelete: Cascade)
+  conversations Conversation[]
+  messages      Message[]
+
+  @@index([leadId])
+  @@index([status])
+}
+
+enum MessageRole {
+  user
+  assistant
+}
+
+// A single chat session, keyed by the stable per-visitor sessionId sent from the client.
+model Conversation {
+  id        String   @id @default(cuid())
+  sessionId String   @unique
+  leadId    String?
+  // A conversation belongs to one project (Phase A). Nullable for backward
+  // compatibility: existing conversations and the (not-yet-updated) chatbot have none.
+  projectId String?
+  // Project routing state: the project currently being discussed, and (when the bot
+  // has detected a possible switch) the new project awaiting the visitor's choice.
+  activeProjectTitle  String?
+  pendingProjectTitle String?
+  // Running, AI-maintained synopsis of the conversation. Lets the bot remember
+  // ANONYMOUS visitors (no Lead yet), keyed by sessionId so it survives refresh,
+  // browser restart and return visits. Bounded length; never the full transcript.
+  summary          String?
+  summaryUpdatedAt DateTime?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Prepared for future lead linking; null until a lead is captured in the session.
+  lead     Lead?     @relation(fields: [leadId], references: [id], onDelete: SetNull)
+  project  Project?  @relation(fields: [projectId], references: [id], onDelete: SetNull)
+  messages Message[]
+
+  @@index([leadId])
+  @@index([projectId])
+}
+
+// Every persisted turn: user messages and AI responses, ordered by createdAt.
+model Message {
+  id             String      @id @default(cuid())
+  conversationId String
+  // Project this turn belongs to (Phase D). Nullable: unattributed/anonymous turns.
+  projectId      String?
+  // Idempotency key (client message id) so accidental request retries never create
+  // duplicate messages. Nullable for legacy rows; unique per conversation when set.
+  clientId       String?
+  role           MessageRole
+  content        String
+  createdAt      DateTime    @default(now())
+
+  conversation Conversation @relation(fields: [conversationId], references: [id], onDelete: Cascade)
+  project      Project?     @relation(fields: [projectId], references: [id], onDelete: SetNull)
+
+  @@unique([conversationId, clientId])
+  @@index([conversationId, createdAt])
+  @@index([projectId, createdAt])
+}
+
+// Publishing state (Phase 6.5). Only PUBLISHED articles are visible to the chatbot.
+enum ArticleStatus {
+  DRAFT
+  PUBLISHED
+}
+
+// Knowledge Base article (Phase 6). Admin-authored content used to ground the
+// chatbot. Draft articles are never used by the chatbot.
+model KnowledgeArticle {
+  id        String        @id @default(cuid())
+  title     String
+  category  String?
+  content   String
+  status    ArticleStatus @default(DRAFT)
+  createdAt DateTime      @default(now())
+  updatedAt DateTime      @updatedAt
+
+  @@index([updatedAt])
+  @@index([status])
+}
+
