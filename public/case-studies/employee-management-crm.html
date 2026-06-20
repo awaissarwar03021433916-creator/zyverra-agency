@@ -1,0 +1,135 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zyverra Labs | Case Study: Employee Management CRM</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" href="/apple-icon.png" />
+<style>
+  :root{--ink:#0f1a24;--muted:#5b6b7a;--line:#e6ecf2;--soft:#f5f8fb;--brand:#007acc;--deep:#062746;--mid:#0a5aa0;--amber:#b45309;--emerald:#047857;}
+  *{box-sizing:border-box} html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#e9eef3;color:var(--ink);line-height:1.6;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .doc{max-width:920px;margin:32px auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(12,30,48,.16)}
+  .cover{background:linear-gradient(135deg,var(--deep),var(--mid) 55%,var(--brand));color:#eaf4fb;padding:40px}
+  .brand{font-weight:800;font-size:16px;color:#fff;letter-spacing:.02em}.brand b{color:#7fd0ff}
+  .kick{margin-top:22px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#9fd4f5;font-weight:700}
+  .cover h1{margin:8px 0 10px;font-size:36px;line-height:1.08;color:#fff}
+  .cover .sub{font-size:16px;color:#cfe7f7;max-width:60ch}
+  .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .meta span{font-size:12px;font-weight:600;color:#eaf4fb;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:6px 12px}
+  .shot{margin-top:26px;background:#fff;border-radius:12px;border:1px solid rgba(255,255,255,.25);overflow:hidden}
+  .shot img{display:block;width:100%;height:auto}
+  .body{padding:40px}
+  .sec{padding:26px 0;border-top:1px solid var(--line)} .sec:first-child{border-top:none;padding-top:4px}
+  .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .num{flex:none;width:34px;height:34px;border-radius:9px;background:var(--brand);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .sec-head h2{margin:0;font-size:20px;letter-spacing:-.01em}
+  .lead{font-size:16px;color:#33424f} p{margin:0 0 12px} .muted{color:var(--muted)}
+  .callout{border-left:4px solid var(--amber);background:#fff8f1;padding:12px 16px;border-radius:8px;margin:0 0 8px}
+  .callout.brand{border-color:var(--brand);background:#f1f8fd} .callout.win{border-color:var(--emerald);background:#f0faf5}
+  .callout .t{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px;color:var(--amber)}
+  .callout.brand .t{color:var(--brand)} .callout.win .t{color:var(--emerald)}
+  ul.feat{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}
+  ul.feat li{position:relative;padding:6px 0 6px 26px;font-size:14px;border-bottom:1px solid var(--line)}
+  ul.feat li:before{content:"✓";position:absolute;left:0;top:6px;color:var(--brand);font-weight:800}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .chip{font-size:12px;font-weight:600;color:#16384f;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  .card{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h3{margin:0 0 4px;font-size:14px} .card p{margin:0;font-size:13px;color:var(--muted)}
+  .contact{background:linear-gradient(135deg,var(--deep),var(--brand));color:#eaf4fb;padding:36px 40px}
+  .contact .kick{margin-top:0} .contact h2{margin:6px 0 8px;color:#fff;font-size:22px}
+  .contact p{color:#cfe7f7} .contact a{color:#9fd4f5} .foot{font-size:12px;color:#9fd4f5;margin-top:18px}
+  @media (max-width:640px){.doc{margin:0;border-radius:0}.cover{padding:26px 20px}.cover h1{font-size:26px}.body{padding:24px 20px}ul.feat,.cards{grid-template-columns:1fr}.contact{padding:26px 20px}}
+  @media print{body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.sec{page-break-inside:avoid}@page{size:A4;margin:14mm}}
+</style>
+</head>
+<body>
+<article class="doc">
+  <header class="cover">
+    <div class="brand">ZYVERRA <b>LABS</b></div>
+    <div class="kick">Business Systems Case Study</div>
+    <h1>Employee Management CRM</h1>
+    <div class="sub">Replacing manual record-keeping with one secure source of truth for the workforce.</div>
+    <div class="meta">
+      <span>Business Systems · Internal CRM</span>
+      <span>Status: Live</span>
+      <span>crms-tan.vercel.app</span>
+    </div>
+    <div class="shot"><img src="../portfolio/crms.PNG" alt="Employee Management CRM dashboard" /></div>
+  </header>
+
+  <div class="body">
+    <section class="sec">
+      <div class="sec-head"><span class="num">01</span><h2>Executive Summary</h2></div>
+      <p class="lead">Employee records, roles, and daily operations were being managed by hand across spreadsheets and scattered files, with no single source of truth, no access control over sensitive data, and decisions made on stale information. Zyverra Labs delivered a custom CRM built around the company's actual workflow: centralized data, role-based access, and operations tracking in one secure system.</p>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">02</span><h2>Business Problem</h2></div>
+      <div class="callout"><div class="t">The problem</div>Manual workforce administration doesn't just slow a company down, it introduces real risk.</div>
+      <ul class="feat">
+        <li>Employee data scattered across files with no single source of truth.</li>
+        <li>Error-prone manual updates and duplicated records.</li>
+        <li>No access control over sensitive HR information.</li>
+        <li>Decisions made on outdated information with no visibility.</li>
+      </ul>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">03</span><h2>Solution Delivered</h2></div>
+      <div class="callout brand"><div class="t">What we built</div>A purpose-built internal CRM, not a generic off-the-shelf tool forced onto the business.</div>
+      <p class="muted">It centralizes employee data, enforces role-based access so the right people see the right information, and tracks operations in one place, with structured workflows replacing fragile manual files. Security and data integrity are built in from the start.</p>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">04</span><h2>Key Features</h2></div>
+      <ul class="feat">
+        <li>Centralized employee records database</li>
+        <li>Role-based access control per user type</li>
+        <li>Operations and activity tracking</li>
+        <li>Admin dashboard with management views</li>
+        <li>Structured create / read / update / delete workflows</li>
+        <li>Secure handling of sensitive HR data</li>
+      </ul>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">05</span><h2>Technology Stack</h2></div>
+      <div class="chips"><span class="chip">Next.js</span><span class="chip">React</span><span class="chip">TypeScript</span><span class="chip">Node.js API</span><span class="chip">PostgreSQL</span><span class="chip">Role-Based Access</span><span class="chip">Tailwind CSS</span></div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">06</span><h2>Business Value</h2></div>
+      <div class="callout win"><div class="t">Outcome</div>One source of truth for the workforce, secured access to sensitive data, and faster, more reliable day-to-day administration, with manual record-keeping replaced by a system the business can trust.</div>
+      <div class="cards">
+        <div class="card"><h3>Operational efficiency</h3><p>Administration is faster and far less error-prone.</p></div>
+        <div class="card"><h3>Data security</h3><p>Sensitive data is seen only by the right people.</p></div>
+        <div class="card"><h3>Single source of truth</h3><p>Records stay consistent, current, and trustworthy.</p></div>
+        <div class="card"><h3>Better decisions</h3><p>Management acts on live operational visibility.</p></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">07</span><h2>Future Improvements</h2></div>
+      <ul class="feat">
+        <li>Attendance, leave, and payroll integration</li>
+        <li>Performance reviews and goal tracking</li>
+        <li>Automated onboarding / offboarding</li>
+        <li>Analytics and HR reporting dashboards</li>
+        <li>Self-service employee portal</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="contact">
+    <div class="kick">08 · Contact</div>
+    <h2>Running operations on spreadsheets?</h2>
+    <p>Zyverra Labs builds custom business systems around how your company actually works: secure, centralized, and built to scale. Tell us what you're planning and we'll reply with an honest plan and next steps.</p>
+    <p>Website <a href="https://zyverralabs.com">zyverralabs.com</a> &nbsp;·&nbsp; Email <a href="mailto:hello.zyverralabs@gmail.com">hello.zyverralabs@gmail.com</a></p>
+    <div class="foot">© Zyverra Labs. Portfolio case study prepared for prospective clients.</div>
+  </footer>
+</article>
+</body>
+</html>

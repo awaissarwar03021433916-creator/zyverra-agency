@@ -1,9 +1,16 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import dynamic from "next/dynamic";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { MessageCircle } from "lucide-react";
-import { ChatWindow } from "./ChatWindow";
+
+// The chat window (and its dependencies) only loads when a visitor opens chat,
+// keeping it out of the initial page bundle.
+const ChatWindow = dynamic(() => import("./ChatWindow").then((m) => m.ChatWindow), {
+  ssr: false,
+  loading: () => null,
+});
 
 export function ChatWidget() {
   const [open, setOpen] = useState(false);
@@ -16,6 +23,18 @@ export function ChatWidget() {
     }, 3000);
 
     return () => window.clearTimeout(timer);
+  }, []);
+
+  // Allow other parts of the page (e.g. the "Try Live Experience" button) to open
+  // the chat in-place instead of navigating away. The chat window's input
+  // auto-focuses on mount, so opening here starts the interaction immediately.
+  useEffect(() => {
+    const openChat = () => {
+      setShowAttention(false);
+      setOpen(true);
+    };
+    window.addEventListener("zyverra:open-chat", openChat);
+    return () => window.removeEventListener("zyverra:open-chat", openChat);
   }, []);
 
   return (

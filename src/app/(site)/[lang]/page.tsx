@@ -1,8 +1,16 @@
 import { notFound } from "next/navigation";
 
 import HomePage from "@/components/marketing/home/HomePage";
+import { JsonLd } from "@/components/seo/JsonLd";
 import { isLocale } from "@/i18n/config";
 import { getDictionary } from "@/i18n/getDictionary";
+import {
+  siteOrigin,
+  localBusinessSchema,
+  serviceSchemas,
+  softwareApplicationSchemas,
+  productSchemas,
+} from "@/lib/schema";
 
 export default async function Page({
   params,
@@ -13,5 +21,19 @@ export default async function Page({
   if (!isLocale(lang)) notFound();
 
   const dict = await getDictionary(lang);
-  return <HomePage dict={dict} lang={lang} />;
+  const origin = siteOrigin();
+
+  return (
+    <>
+      <JsonLd
+        data={[
+          localBusinessSchema(origin),
+          ...serviceSchemas(origin),
+          ...softwareApplicationSchemas(origin),
+          ...productSchemas(origin),
+        ]}
+      />
+      <HomePage dict={dict} lang={lang} />
+    </>
+  );
 }

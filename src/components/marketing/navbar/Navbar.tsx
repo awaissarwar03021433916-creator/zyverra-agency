@@ -237,6 +237,30 @@ export default function Navbar({
     [links, contactHref]
   );
 
+  // Nav links are a mix of in-page hash anchors (#services) and real routes
+  // (/why-us). On the home page hash links scroll; elsewhere they navigate home
+  // first. Real page links are always locale-prefixed.
+  const homePath = `/${lang}`;
+  const isHome =
+    pathname === homePath || pathname === `${homePath}/` || pathname === "/";
+
+  const resolveHref = useCallback(
+    (href: string) => {
+      if (href.startsWith("#")) return isHome ? href : `${homePath}${href}`;
+      return `${homePath}${href}`;
+    },
+    [homePath, isHome]
+  );
+
+  const isLinkActive = useCallback(
+    (href: string) => {
+      if (href.startsWith("#")) return isHome && activeHref === href;
+      const full = `${homePath}${href}`;
+      return pathname === full || pathname.startsWith(`${full}/`);
+    },
+    [homePath, isHome, pathname, activeHref]
+  );
+
   const switchLocale = useCallback(
     (code: Locale) => {
       if (code === lang) return;
@@ -302,38 +326,65 @@ export default function Navbar({
   }, [open]);
 
   function handleClick(e: MouseEvent<HTMLAnchorElement>, href: string) {
-    if (!href.startsWith("#")) return;
-    e.preventDefault();
-    setActiveHref(href);
-    scrollToHash(href);
-    window.history.replaceState(null, "", href);
+    if (href.startsWith("#")) {
+      // Smooth-scroll only when the target section is on the current (home) page;
+      // otherwise let the browser navigate to /{lang}#section.
+      if (isHome) {
+        e.preventDefault();
+        setActiveHref(href);
+        scrollToHash(href);
+        window.history.replaceState(null, "", href);
+      }
+      setOpen(false);
+      return;
+    }
+    // Real page link: allow normal navigation to the locale-prefixed route.
     setOpen(false);
   }
 
+  // Scroll-spy: highlight the nav link for the section currently in view.
+  // A scroll-position approach (last section whose top has passed a reference
+  // line just below the navbar) is reliable for sections of any height, unlike
+  // intersection-ratio thresholds which tall sections never reach.
   useEffect(() => {
-    const ids = linkIds.map((h) => h.replace(/^#/, ""));
-    const elements = ids
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => Boolean(el));
+    if (!isHome) return;
+    const ids = linkIds.filter((h) => h.startsWith("#")).map((h) => h.slice(1));
+    if (ids.length === 0) return;
 
-    if (elements.length === 0) return;
+    let frame = 0;
+    const compute = () => {
+      frame = 0;
+      const referenceY = 140; // just below the 64px sticky navbar
+      let current = ids[0];
+      for (const id of ids) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        if (el.getBoundingClientRect().top - referenceY <= 0) current = id;
+      }
+      // Snap to the last section once the page is scrolled to the very bottom.
+      if (
+        window.innerHeight + window.scrollY >=
+        document.documentElement.scrollHeight - 2
+      ) {
+        current = ids[ids.length - 1];
+      }
+      setActiveHref(`#${current}`);
+    };
 
-    const observer = new IntersectionObserver(
-      (entries) => {
-        const visible = entries
-          .filter((entry) => entry.isIntersecting)
-          .sort((a, b) => (b.intersectionRatio ?? 0) - (a.intersectionRatio ?? 0));
+    const onScroll = () => {
+      if (frame) return;
+      frame = window.requestAnimationFrame(compute);
+    };
 
-        if (visible[0]?.target instanceof HTMLElement) {
-          setActiveHref(`#${visible[0].target.id}`);
-        }
-      },
-      { threshold: [0.2, 0.35, 0.5], rootMargin: "-20% 0px -65% 0px" }
-    );
-
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [linkIds]);
+    compute();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll);
+    return () => {
+      if (frame) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [linkIds, isHome]);
 
   return (
     <>
@@ -373,11 +424,11 @@ export default function Navbar({
         {/* Desktop links */}
         <div className="hidden items-center gap-1 md:flex">
           {links.map((link) => {
-            const isActive = activeHref === link.href;
+            const isActive = isLinkActive(link.href);
             return (
               <a
                 key={`${link.label}-${link.href}`}
-                href={link.href}
+                href={resolveHref(link.href)}
                 onClick={(e) => handleClick(e, link.href)}
                 aria-current={isActive ? "page" : undefined}
                 className={`group relative px-3 py-2 text-sm font-medium transition-colors ${
@@ -400,7 +451,7 @@ export default function Navbar({
           <LanguageSelector current={lang} label={dict.languageLabel} onSelect={switchLocale} />
 
           <a
-            href={contactHref}
+            href={resolveHref(contactHref)}
             onClick={(e) => handleClick(e, contactHref)}
             className="group inline-flex h-10 items-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-xs transition-all duration-200 hover:bg-primary/90 hover:shadow-md focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary/40 focus-visible:ring-offset-2 focus-visible:ring-offset-background"
           >
@@ -483,11 +534,11 @@ export default function Navbar({
 
             <div className="flex flex-1 flex-col gap-1.5 overflow-y-auto p-4">
               {links.map((link) => {
-                const isActive = activeHref === link.href;
+                const isActive = isLinkActive(link.href);
                 return (
                   <a
                     key={`${link.label}-${link.href}`}
-                    href={link.href}
+                    href={resolveHref(link.href)}
                     onClick={(e) => handleClick(e, link.href)}
                     aria-current={isActive ? "page" : undefined}
                     className={`rounded-lg px-4 py-3 text-sm font-semibold transition-colors ${
@@ -502,7 +553,7 @@ export default function Navbar({
 
             <div className="border-t border-border p-4">
               <a
-                href={contactHref}
+                href={resolveHref(contactHref)}
                 onClick={(e) => handleClick(e, contactHref)}
                 className="inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary/90"
               >

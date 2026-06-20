@@ -62,7 +62,17 @@ export type Dictionary = {
     eyebrow: string;
     title: string;
     description: string;
-    viewCase: string;
+    filters: { all: string; client: string; systems: string; ai: string; innovation: string };
+    card: { problem: string; solution: string; features: string; outcome: string };
+    visit: string;
+    caseStudy: string;
+    statusLive: string;
+    statusRnd: string;
+    metrics: { value: string; label: string }[];
+    process: { label: string; caption: string }[];
+    featured: { tag: string; discuss: string; documentation: string };
+    futureSlot: { title: string; caption: string; cta: string };
+    closing: { text: string; cta: string };
   };
   testimonials: {
     eyebrow: string;

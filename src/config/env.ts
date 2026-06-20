@@ -44,13 +44,20 @@ export function assertRequiredEnvForProduction() {
   if (!env.OPENAI_API_KEY) missing.push("OPENAI_API_KEY");
   if (!env.ADMIN_SESSION_SECRET) missing.push("ADMIN_SESSION_SECRET");
   if (!env.ADMIN_USERNAME) missing.push("ADMIN_USERNAME");
-  if (!env.ADMIN_PASSWORD_HASH && !env.ADMIN_PASSWORD) {
-    missing.push("ADMIN_PASSWORD_HASH (or ADMIN_PASSWORD)");
-  }
+  // Production must use a scrypt hash; plaintext ADMIN_PASSWORD is dev-only.
+  if (!env.ADMIN_PASSWORD_HASH) missing.push("ADMIN_PASSWORD_HASH");
 
   if (missing.length > 0) {
     throw new Error(
       `Missing required environment variables for production: ${missing.join(", ")}`
+    );
+  }
+
+  // Reject plaintext credentials in production so a stray ADMIN_PASSWORD can't
+  // linger as a usable secret. Use ADMIN_PASSWORD_HASH only.
+  if (env.ADMIN_PASSWORD) {
+    throw new Error(
+      "ADMIN_PASSWORD (plaintext) must not be set in production. Remove it and use ADMIN_PASSWORD_HASH only."
     );
   }
 }

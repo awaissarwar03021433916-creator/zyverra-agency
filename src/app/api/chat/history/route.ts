@@ -1,5 +1,7 @@
 import { NextResponse } from "next/server";
 import { prisma } from "@/lib/prisma";
+import { rateLimited } from "@/server/security/guard";
+import { apiPolicies } from "@/rate-limiting/policies/api";
 
 /**
  * GET /api/chat/history?sessionId=...
@@ -10,7 +12,13 @@ import { prisma } from "@/lib/prisma";
  * messages. The sessionId is the caller's own opaque, unguessable key.
  */
 export async function GET(req: Request) {
-  const sessionId = new URL(req.url).searchParams.get("sessionId")?.trim();
+  const limited = await rateLimited(req, "chat-history", apiPolicies.chatHistory);
+  if (limited) return limited;
+
+  // searchParams.get() returns a single value, so duplicate query params can't
+  // pollute this. Bound the length; the sessionId is an opaque capability key.
+  const raw = new URL(req.url).searchParams.get("sessionId")?.trim();
+  const sessionId = raw ? raw.slice(0, 200) : "";
   if (!sessionId) {
     return NextResponse.json({ messages: [] });
   }

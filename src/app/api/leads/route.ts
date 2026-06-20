@@ -3,6 +3,9 @@ import { prisma } from "@/lib/prisma";
 import { sendClientEmail } from "@/lib/email";
 import { normalizeEmail, normalizePhone, phoneDedupKey } from "@/services/ai/extractLead";
 import { getAdminSession } from "@/server/auth/requireAdmin";
+import { rateLimited } from "@/server/security/guard";
+import { apiPolicies } from "@/rate-limiting/policies/api";
+import { sanitizeText } from "@/server/security/sanitize";
 
 function pickFirstEmail(value: unknown) {
   if (typeof value !== "string") return undefined;
@@ -17,11 +20,17 @@ function pickFirstPhone(value: unknown) {
 }
 
 export async function POST(req: Request) {
-  try {
-    const body = await req.json();
+  const limited = await rateLimited(req, "leads", apiPolicies.leads);
+  if (limited) return limited;
 
-    const email = pickFirstEmail(body?.email);
-    const phone = pickFirstPhone(body?.phone);
+  try {
+    const body = (await req.json().catch(() => null)) as Record<string, unknown> | null;
+    if (!body || typeof body !== "object") {
+      return NextResponse.json({ success: false }, { status: 400 });
+    }
+
+    const email = pickFirstEmail(body.email);
+    const phone = pickFirstPhone(body.phone);
     const phoneKey = phoneDedupKey(phone);
 
     const existing =
@@ -36,11 +45,23 @@ export async function POST(req: Request) {
           })
         : null;
 
-    const data = {
-      ...body,
+    // Whitelist only public-writable fields and sanitize them. The raw body is
+    // never spread into Prisma, so scoring/pipeline columns (score, stage,
+    // *NotifiedAt, id, ...) cannot be set by callers (prevents mass assignment /
+    // parameter pollution).
+    const data: Record<string, unknown> = {
+      name: sanitizeText(body.name, 120),
+      businessType: sanitizeText(body.businessType, 120),
+      projectType: sanitizeText(body.projectType, 120),
+      budget: sanitizeText(body.budget, 60),
+      timeline: sanitizeText(body.timeline, 60),
+      description: sanitizeText(body.description, 2000),
       ...(email ? { email } : {}),
       ...(phone ? { phone } : {}),
-    } as Record<string, unknown>;
+    };
+    for (const key of Object.keys(data)) {
+      if (data[key] === undefined) delete data[key];
+    }
 
     const lead = existing
       ? await prisma.lead.update({

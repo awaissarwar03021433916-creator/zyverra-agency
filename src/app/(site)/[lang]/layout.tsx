@@ -4,20 +4,25 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "../../../styles/globals.css";
 import { env } from "@/config/env";
 import { ChatWidget } from "@/components/chat/ChatWidget";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { organizationSchema, websiteSchema } from "@/lib/schema";
+import { business } from "@/config/business";
 import { locales, defaultLocale, isLocale, dir } from "@/i18n/config";
 import { getDictionary } from "@/i18n/getDictionary";
 
 const inter = Inter({
   variable: "--font-inter",
   subsets: ["latin"],
+  display: "swap",
 });
 
 const spaceGrotesk = Space_Grotesk({
   variable: "--font-space-grotesk",
   subsets: ["latin"],
+  display: "swap",
 });
 
-const siteUrl = env.APP_URL ? new URL(env.APP_URL) : new URL("https://zyverra.com");
+const siteUrl = env.APP_URL ? new URL(env.APP_URL) : new URL("https://zyverralabs.com");
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
@@ -38,6 +43,9 @@ export async function generateMetadata({
     metadataBase: siteUrl,
     title: dict.meta.title,
     description: dict.meta.description,
+    authors: [{ name: "Zyverra Labs", url: siteUrl.origin }],
+    creator: "Zyverra Labs",
+    publisher: "Zyverra Labs",
     icons: {
       icon: [
         { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
@@ -58,6 +66,22 @@ export async function generateMetadata({
       siteName: "Zyverra Labs",
       locale,
       type: "website",
+      images: [
+        { url: "/og-image.png", width: 1200, height: 630, alt: "Zyverra Labs" },
+      ],
+    },
+    // Card type + default image cascade to every page; per-page title and
+    // description fall back to each page's own metadata (no pinning).
+    twitter: {
+      card: "summary_large_image",
+      images: ["/og-image.png"],
+    },
+    // Location signals for local SEO (single-location business).
+    other: {
+      "geo.region": "PK-PB",
+      "geo.placename": business.address.city,
+      "geo.position": `${business.geo.latitude};${business.geo.longitude}`,
+      ICBM: `${business.geo.latitude}, ${business.geo.longitude}`,
     },
   };
 }
@@ -85,6 +109,12 @@ export default async function LocaleLayout({
         >
           Skip to content
         </a>
+        <JsonLd
+          data={[
+            organizationSchema(siteUrl.origin),
+            websiteSchema(siteUrl.origin, locale),
+          ]}
+        />
         {children}
         <ChatWidget />
       </body>

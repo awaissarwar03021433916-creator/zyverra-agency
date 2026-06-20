@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Zyverra Labs | Case Study: AI Sales Engineer</title>
+<link rel="icon" type="image/png" sizes="32x32" href="/favicon-32.png" />
+<link rel="apple-touch-icon" href="/apple-icon.png" />
+<style>
+  :root{--ink:#0f1a24;--muted:#5b6b7a;--line:#e6ecf2;--soft:#f5f8fb;--brand:#007acc;--deep:#062746;--mid:#0a5aa0;--amber:#b45309;--emerald:#047857;}
+  *{box-sizing:border-box} html,body{margin:0;padding:0}
+  body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;background:#e9eef3;color:var(--ink);line-height:1.6;-webkit-print-color-adjust:exact;print-color-adjust:exact}
+  .doc{max-width:920px;margin:32px auto;background:#fff;border-radius:18px;overflow:hidden;box-shadow:0 24px 60px rgba(12,30,48,.16)}
+  .cover{background:linear-gradient(135deg,var(--deep),var(--mid) 55%,var(--brand));color:#eaf4fb;padding:40px}
+  .brand{font-weight:800;font-size:16px;color:#fff;letter-spacing:.02em}.brand b{color:#7fd0ff}
+  .kick{margin-top:22px;font-size:11px;letter-spacing:.22em;text-transform:uppercase;color:#9fd4f5;font-weight:700}
+  .cover h1{margin:8px 0 10px;font-size:38px;line-height:1.08;color:#fff}
+  .cover .sub{font-size:16px;color:#cfe7f7;max-width:62ch}
+  .meta{margin-top:22px;display:flex;flex-wrap:wrap;gap:10px}
+  .meta span{font-size:12px;font-weight:600;color:#eaf4fb;background:rgba(255,255,255,.12);border:1px solid rgba(255,255,255,.22);border-radius:999px;padding:6px 12px}
+  /* The chatbot screenshot is portrait, so cap and center it as an app mockup
+     instead of stretching it full width. */
+  .shot{margin:26px auto 0;max-width:340px;background:#fff;border-radius:14px;border:1px solid rgba(255,255,255,.25);overflow:hidden;box-shadow:0 18px 50px rgba(0,0,0,.28)}
+  .shot img{display:block;width:100%;height:auto}
+  @media (max-width:640px){.shot{max-width:300px}}
+  .body{padding:40px}
+  .sec{padding:26px 0;border-top:1px solid var(--line)} .sec:first-child{border-top:none;padding-top:4px}
+  .sec-head{display:flex;align-items:center;gap:12px;margin-bottom:12px}
+  .num{flex:none;width:34px;height:34px;border-radius:9px;background:var(--brand);color:#fff;font-weight:800;font-size:13px;display:flex;align-items:center;justify-content:center}
+  .sec-head h2{margin:0;font-size:20px;letter-spacing:-.01em}
+  .lead{font-size:16px;color:#33424f} p{margin:0 0 12px} .muted{color:var(--muted)}
+  /* Never let a long word/URL/email overflow the clipped .doc container. */
+  .lead,.body p,.callout,.card h3,.card p,ul.feat li,ol.flow li,.stat span,.cover .sub,.contact p{overflow-wrap:anywhere}
+  img{max-width:100%}
+  /* Cap prose line length for comfortable reading on wide screens. */
+  .sec>p{max-width:72ch}
+  .callout{border-left:4px solid var(--amber);background:#fff8f1;padding:12px 16px;border-radius:8px;margin:0 0 8px}
+  .callout.brand{border-color:var(--brand);background:#f1f8fd} .callout.win{border-color:var(--emerald);background:#f0faf5}
+  .callout .t{font-size:11px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;margin-bottom:4px;color:var(--amber)}
+  .callout.brand .t{color:var(--brand)} .callout.win .t{color:var(--emerald)}
+  ul.feat{list-style:none;margin:8px 0 0;padding:0;display:grid;grid-template-columns:1fr 1fr;gap:6px 18px}
+  ul.feat li{position:relative;padding:6px 0 6px 26px;font-size:14px;border-bottom:1px solid var(--line)}
+  ul.feat li:before{content:"✓";position:absolute;left:0;top:6px;color:var(--brand);font-weight:800}
+  ol.flow{list-style:none;margin:8px 0 0;padding:0;counter-reset:step}
+  ol.flow li{position:relative;padding:10px 0 10px 44px;font-size:14px;border-bottom:1px solid var(--line);counter-increment:step}
+  ol.flow li:before{content:counter(step);position:absolute;left:0;top:8px;width:28px;height:28px;border-radius:8px;background:var(--brand);color:#fff;font-weight:800;font-size:12px;display:flex;align-items:center;justify-content:center}
+  ol.flow b{color:var(--ink)}
+  .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:6px}
+  .chip{font-size:12px;font-weight:600;color:#16384f;background:var(--soft);border:1px solid var(--line);border-radius:999px;padding:6px 12px}
+  .cards{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin-top:6px}
+  .card{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px 18px}
+  .card h3{margin:0 0 4px;font-size:14px} .card p{margin:0;font-size:13px;color:var(--muted)}
+  .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:6px}
+  .stat{background:var(--soft);border:1px solid var(--line);border-radius:12px;padding:16px 18px;text-align:center}
+  .stat b{display:block;font-size:22px;color:var(--brand)} .stat span{font-size:12px;color:var(--muted)}
+  .contact{background:linear-gradient(135deg,var(--deep),var(--brand));color:#eaf4fb;padding:36px 40px}
+  .contact .kick{margin-top:0} .contact h2{margin:6px 0 8px;color:#fff;font-size:22px}
+  .contact p{color:#cfe7f7} .contact a{color:#9fd4f5;overflow-wrap:anywhere} .foot{font-size:12px;color:#9fd4f5;margin-top:18px}
+  .contact-info{margin:0 0 6px} .contact-info .cl{color:#9fd4f5;font-weight:600}
+  /* Tablet: trim outer margins and inner padding so content has more room. */
+  @media (max-width:900px){.doc{margin:20px;max-width:none;border-radius:14px}.cover{padding:32px}.body{padding:32px}.contact{padding:32px}}
+  @media (max-width:640px){.doc{margin:0;border-radius:0}.cover{padding:24px 18px}.cover h1{font-size:26px}.cover .sub{font-size:15px}.body{padding:22px 18px}.sec{padding:22px 0}ul.feat,.cards{grid-template-columns:1fr}.stats{grid-template-columns:1fr}.contact{padding:24px 18px}.sec-head h2{font-size:18px}}
+  @media print{body{background:#fff}.doc{margin:0;max-width:none;border-radius:0;box-shadow:none}.sec{page-break-inside:avoid}@page{size:A4;margin:14mm}}
+</style>
+</head>
+<body>
+<article class="doc">
+  <header class="cover">
+    <div class="brand">ZYVERRA <b>LABS</b></div>
+    <div class="kick">AI Product Case Study</div>
+    <h1>AI Sales Engineer</h1>
+    <div class="sub">A commercial AI sales platform that engages, qualifies, scores, and captures leads automatically, then hands a sales-ready pipeline to your team. Not a chatbot: an always-on sales engine.</div>
+    <div class="meta">
+      <span>AI Sales Platform</span>
+      <span>Status: Live Product</span>
+      <span>AI Agents · RAG · CRM</span>
+      <span>Multi-language</span>
+    </div>
+    <div class="shot"><img src="../portfolio/chatbot.PNG" alt="AI Sales Engineer platform interface" /></div>
+  </header>
+
+  <div class="body">
+    <section class="sec">
+      <div class="sec-head"><span class="num">01</span><h2>Executive Summary</h2></div>
+      <p class="lead">Most website visitors leave without ever speaking to a salesperson, and those silent exits are lost revenue. The AI Sales Engineer is a complete AI sales platform that works the way a great sales development rep would, at scale and around the clock. It engages every visitor in natural conversation, answers their questions accurately from your own knowledge base, qualifies and scores them against your criteria, captures their contact details inside the conversation, and delivers a sales-ready lead, with full history, straight into the CRM. The result is an automated top-of-funnel that turns ordinary website traffic into a qualified, prioritized pipeline while freeing the sales team to focus on closing.</p>
+      <div class="stats">
+        <div class="stat"><b>24/7</b><span>Always-on engagement and capture</span></div>
+        <div class="stat"><b>12</b><span>Integrated platform capabilities</span></div>
+        <div class="stat"><b>0</b><span>Forms a visitor has to fill in</span></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">02</span><h2>Business Problem</h2></div>
+      <div class="callout"><div class="t">The problem</div>Businesses lose leads because website visitors leave without ever speaking to a salesperson, and qualifying the few who do reach out eats expensive sales time.</div>
+      <ul class="feat">
+        <li>High-intent visitors arrive with questions and leave them unanswered.</li>
+        <li>No one engages prospects 24/7 across time zones and languages.</li>
+        <li>Interest is never captured, so there is nothing to follow up on.</li>
+        <li>Reps waste hours qualifying low-intent enquiries by hand.</li>
+        <li>Follow-up is slow and context-light, so warm leads go cold.</li>
+        <li>Static contact forms are abandoned and convert poorly.</li>
+      </ul>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">03</span><h2>Solution Delivered</h2></div>
+      <div class="callout brand"><div class="t">What we built</div>An AI-powered sales platform that engages visitors, qualifies and scores leads, answers questions from a knowledge base, captures contact details, and stores every conversation, all orchestrated by an autonomous AI agent and managed from an admin dashboard.</div>
+      <p class="muted">Rather than a scripted chatbot, the platform runs an AI agent workflow: it reasons about each visitor, retrieves accurate answers, decides what to ask next, and takes the actions a sales rep would, capturing the lead and routing it to the CRM. Conversation memory keeps every exchange coherent, multi-language support widens reach, and an analytics dashboard makes the whole funnel measurable.</p>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">04</span><h2>Platform Capabilities</h2></div>
+      <div class="cards">
+        <div class="card"><h3>AI Chat Assistant</h3><p>Engages every visitor instantly in natural, human-like conversation, day or night.</p></div>
+        <div class="card"><h3>Lead Qualification</h3><p>Asks the right questions to separate serious buyers from casual browsers automatically.</p></div>
+        <div class="card"><h3>Lead Scoring</h3><p>Ranks each lead by intent and fit so sales pursues the highest-value opportunities first.</p></div>
+        <div class="card"><h3>Lead Capture</h3><p>Collects name, email, and phone inside the conversation, no abandoned forms.</p></div>
+        <div class="card"><h3>CRM Integration</h3><p>Pushes every qualified lead and its details straight into the CRM, ready to action.</p></div>
+        <div class="card"><h3>Conversation Memory</h3><p>Remembers context across the chat so the experience feels personal, not robotic.</p></div>
+        <div class="card"><h3>RAG Knowledge Base</h3><p>Answers product and pricing questions accurately from your curated content, not guesses.</p></div>
+        <div class="card"><h3>Admin Dashboard</h3><p>A control center to manage leads, knowledge, and the assistant without touching code.</p></div>
+        <div class="card"><h3>Conversation History</h3><p>Full transcripts per lead, so sales picks up exactly where the AI left off.</p></div>
+        <div class="card"><h3>Analytics Dashboard</h3><p>Tracks conversations, leads, scores, and conversion so you can measure and improve.</p></div>
+        <div class="card"><h3>Multi-language Support</h3><p>Greets and sells to visitors in multiple languages, widening your addressable market.</p></div>
+        <div class="card"><h3>AI Agent Workflow</h3><p>An autonomous agent that orchestrates engage, qualify, capture, and route end to end.</p></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">05</span><h2>How the AI Agent Works</h2></div>
+      <ol class="flow">
+        <li><b>Engage</b> — greets every visitor the moment they arrive and starts a relevant conversation.</li>
+        <li><b>Understand</b> — retrieves accurate answers from the knowledge base using RAG.</li>
+        <li><b>Qualify &amp; Score</b> — asks qualifying questions and scores intent and fit in real time.</li>
+        <li><b>Capture</b> — collects the visitor's contact details naturally inside the chat.</li>
+        <li><b>Persist &amp; Sync</b> — stores the full conversation and pushes the lead into the CRM.</li>
+        <li><b>Hand off</b> — surfaces a prioritized, sales-ready lead with complete history to the team.</li>
+      </ol>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">06</span><h2>Technology Stack</h2></div>
+      <div class="chips"><span class="chip">Next.js</span><span class="chip">TypeScript</span><span class="chip">OpenAI</span><span class="chip">AI Agents</span><span class="chip">RAG</span><span class="chip">Prisma</span><span class="chip">PostgreSQL</span></div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">07</span><h2>Business Value &amp; Outcomes</h2></div>
+      <div class="callout win"><div class="t">Outcome</div>Converts website visitors into qualified leads while reducing manual sales effort, an always-on sales engine that turns existing traffic into pipeline.</div>
+      <div class="cards">
+        <div class="card"><h3>Higher lead conversion</h3><p>Captures interested visitors who would otherwise leave without a trace.</p></div>
+        <div class="card"><h3>Automated 24/7 selling</h3><p>First-touch and qualification handled around the clock, with no staffing.</p></div>
+        <div class="card"><h3>Sales efficiency</h3><p>Reps spend time only on qualified, scored, sales-ready leads.</p></div>
+        <div class="card"><h3>Faster follow-up</h3><p>Leads land in the CRM with full context the instant the chat ends.</p></div>
+        <div class="card"><h3>Lower cost per lead</h3><p>Automation removes hours of manual qualification from the funnel.</p></div>
+        <div class="card"><h3>Scales effortlessly</h3><p>Handles unlimited simultaneous conversations as traffic grows.</p></div>
+      </div>
+    </section>
+
+    <section class="sec">
+      <div class="sec-head"><span class="num">08</span><h2>Future Improvements</h2></div>
+      <ul class="feat">
+        <li>Voice and phone-call handoff to live reps</li>
+        <li>Deeper integrations with external CRMs and marketing tools</li>
+        <li>Automated meeting booking and calendar sync</li>
+        <li>Outbound and re-engagement campaigns</li>
+        <li>Richer conversion and drop-off analytics</li>
+        <li>A/B testing of assistant prompts and sales flows</li>
+      </ul>
+    </section>
+  </div>
+
+  <footer class="contact">
+    <div class="kick">09 · Contact</div>
+    <h2>Want an AI sales platform for your website?</h2>
+    <p>Zyverra Labs designs and ships AI products that capture, qualify, and convert leads automatically. Tell us what you're planning and we'll reply with an honest plan and next steps.</p>
+    <p class="contact-info"><span class="cl">Website</span> <a href="https://zyverralabs.com">zyverralabs.com</a></p>
+    <p class="contact-info"><span class="cl">Email</span> <a href="mailto:hello.zyverralabs@gmail.com">hello.zyverralabs@gmail.com</a></p>
+    <div class="foot">© Zyverra Labs. Portfolio case study prepared for prospective clients.</div>
+  </footer>
+</article>
+</body>
+</html>

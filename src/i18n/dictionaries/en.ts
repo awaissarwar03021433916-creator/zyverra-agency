@@ -2,22 +2,24 @@ import type { Dictionary } from "../types";
 
 const en: Dictionary = {
   meta: {
-    title: "ZYVERRA LABS | AI, AUTOMATION & SOFTWARE ENGINEERING",
+    title: "Custom Software Development & AI Solutions | Zyverra Labs",
     description:
-      "Zyverra Labs specializes in AI Agents, AI Automation, SaaS Development, Web Applications and Custom Software Engineering Solutions.",
+      "Zyverra Labs is a software house in Lahore, Pakistan building custom software, AI solutions, business automation, and SaaS products for teams worldwide.",
   },
   nav: {
     links: [
       { label: "Home", href: "#top" },
       { label: "Services", href: "#services" },
       { label: "Portfolio", href: "#portfolio" },
-      { label: "Process", href: "#process" },
+      { label: "How We Deliver", href: "/how-we-deliver" },
+      { label: "Why Us", href: "/why-us" },
+      { label: "Blog", href: "/blog" },
     ],
     contact: "Contact",
     languageLabel: "Language",
   },
   hero: {
-    badge: "AI Agents · Automation · SaaS Engineering",
+    badge: "Custom Software · AI · Automation · SaaS",
     headingPrefix: "We build",
     headingSuffix: "for modern teams.",
     offerings: [
@@ -38,7 +40,7 @@ const en: Dictionary = {
       },
     ],
     paragraph:
-      "We design, build, and ship AI agents, automation, and SaaS platforms that hold up in production. Reliable, secure, and ready to grow with you.",
+      "We design, build, and ship custom software, AI solutions, business automation, and SaaS platforms that hold up in production. Reliable, secure, and ready to grow with you.",
     ctaPrimary: "Start Your Project",
     ctaSecondary: "View Our Work",
     trust: [
@@ -51,9 +53,9 @@ const en: Dictionary = {
   },
   services: {
     eyebrow: "SERVICES",
-    title: "Engineering across your full AI and product stack.",
+    title: "From custom software to AI agents, engineered end to end.",
     description:
-      "Five core capabilities that take you from first idea to a product that is live and earning.",
+      "Five core capabilities that take you from first idea to custom software, AI, and automation that is live and earning.",
     learnMore: "Learn more",
     items: [
       {
@@ -65,7 +67,7 @@ const en: Dictionary = {
       {
         title: "AI Automation",
         description:
-          "Smart workflows that remove repetitive work and connect your data, apps, and teams end to end.",
+          "Business automation and smart workflows that remove repetitive work and connect your data, apps, and teams end to end.",
         points: ["Workflow orchestration", "Measurable time savings"],
       },
       {
@@ -75,15 +77,15 @@ const en: Dictionary = {
         points: ["Multi-tenant architecture", "Auth, billing, and dashboards"],
       },
       {
-        title: "Web Platforms",
+        title: "Web Application Development",
         description:
-          "Fast web platforms and marketing sites with clean UX, strong performance, and real conversion.",
+          "Fast web applications and marketing sites with clean UX, strong performance, and real conversion.",
         points: ["Optimized Core Web Vitals", "SEO and accessibility"],
       },
       {
-        title: "Custom Software",
+        title: "Custom Software Development",
         description:
-          "Systems built around your exact business logic, with solid APIs, clean data models, and dependable delivery.",
+          "Custom systems built around your exact business logic, from CRM development to blockchain solutions, with solid APIs and clean data models.",
         points: ["Tailored business logic", "Scalable APIs and data"],
       },
     ],
@@ -104,9 +106,9 @@ const en: Dictionary = {
   },
   about: {
     eyebrow: "About Zyverra",
-    title: "A focused engineering partner for AI and SaaS.",
+    title: "Your custom software and AI development partner.",
     paragraphs: [
-      "Zyverra Labs is a software studio focused on AI agents, AI automation, and SaaS development. We help companies turn ideas into software they can actually rely on.",
+      "Zyverra Labs is a software house based in Lahore, Pakistan, focused on custom software development, AI agents, AI automation, and SaaS development. We help companies in Pakistan and worldwide turn ideas into software they can actually rely on.",
       "We are a senior-led team, and we work closely with every client. Instead of taking on everything, we keep our project list short so each one gets real attention and careful engineering.",
       "The way we work is simple. We learn your business, choose the right architecture, and build software that is secure, easy to maintain, and ready to grow with you.",
     ],
@@ -202,11 +204,45 @@ const en: Dictionary = {
     ],
   },
   portfolio: {
-    eyebrow: "EXAMPLE PROJECTS",
-    title: "The kind of products we build.",
+    eyebrow: "SELECTED WORK",
+    title: "Real problems, solved with software.",
     description:
-      "A few example solutions that show how we approach AI and software projects. These are illustrative, not client case studies.",
-    viewCase: "Build something similar",
+      "Zyverra Labs turns business problems into reliable software. Here's the work, and the value each solution created.",
+    filters: {
+      all: "All",
+      client: "Client Projects",
+      systems: "Business Systems",
+      ai: "AI Products",
+      innovation: "Innovation & R&D",
+    },
+    card: { problem: "Problem", solution: "Solution", features: "Key Features", outcome: "Outcome" },
+    visit: "Visit project",
+    caseStudy: "Case study",
+    statusLive: "Live",
+    statusRnd: "R&D",
+    metrics: [
+      { value: "6", label: "Problems solved" },
+      { value: "2", label: "Live client platforms" },
+      { value: "5", label: "Solution categories" },
+      { value: "100%", label: "Built in-house" },
+    ],
+    process: [
+      { label: "Understand", caption: "We map the business problem." },
+      { label: "Design", caption: "We shape the right solution." },
+      { label: "Engineer", caption: "We build and ship it." },
+      { label: "Deliver value", caption: "Outcomes, not just output." },
+    ],
+    featured: {
+      tag: "Featured · Innovation & R&D",
+      discuss: "Discuss a similar build",
+      documentation: "View documentation",
+    },
+    futureSlot: {
+      title: "Your project here",
+      caption: "We're always building what's next.",
+      cta: "Start a project",
+    },
+    closing: { text: "Want something like this for your business?", cta: "Start a project" },
   },
   testimonials: {
     eyebrow: "TESTIMONIALS",
@@ -222,7 +258,7 @@ const en: Dictionary = {
   },
   contact: {
     eyebrow: "Get in touch",
-    title: "Let’s build your next AI or SaaS product.",
+    title: "Let’s build your next custom software, AI, or SaaS product.",
     description:
       "Tell us what you are planning. We will reply personally with honest feedback, a clear plan, and the next steps.",
     bullets: [
@@ -259,16 +295,17 @@ const en: Dictionary = {
     columns: { company: "Company", services: "Services", connect: "Connect" },
     companyLinks: [
       { label: "About", href: "#about" },
-      { label: "Why Zyverra", href: "#why" },
-      { label: "Process", href: "#process" },
+      { label: "How We Deliver", href: "/how-we-deliver" },
+      { label: "Why Us", href: "/why-us" },
+      { label: "Blog", href: "/blog" },
       { label: "Contact", href: "#contact" },
     ],
     servicesLinks: [
       { label: "AI Agents", href: "#services" },
       { label: "AI Automation", href: "#services" },
       { label: "SaaS Development", href: "#services" },
-      { label: "Web Platforms", href: "#services" },
-      { label: "Custom Software", href: "#services" },
+      { label: "Web Application Development", href: "#services" },
+      { label: "Custom Software Development", href: "#services" },
     ],
     socialLinks: [
       { label: "X (Twitter)", href: "#" },

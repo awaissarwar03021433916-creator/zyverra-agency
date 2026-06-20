@@ -43,7 +43,8 @@ export function proxy(request: NextRequest) {
 }
 
 export const config = {
-  // Run on everything except internal Next paths, API/admin routes, and files
+  // Run on everything except internal Next paths, API/admin routes, the static
+  // case-studies pages (served via clean rewrites, no locale prefix), and files
   // (anything containing a dot, e.g. robots.txt, sitemap.xml, logo.png).
-  matcher: ["/((?!_next|api|admin|.*\\..*).*)"],
+  matcher: ["/((?!_next|api|admin|case-studies|.*\\..*).*)"],
 };

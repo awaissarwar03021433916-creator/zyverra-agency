@@ -13,6 +13,14 @@ import { detectProject, resolveChoice } from "@/services/ai/projectRouter";
 import { scoreLead } from "@/lib/leadScoring";
 import { sendNewLeadEmail, sendHotLeadEmail } from "@/lib/email";
 import { prisma } from "@/lib/prisma";
+import { rateLimited } from "@/server/security/guard";
+import { apiPolicies } from "@/rate-limiting/policies/api";
+import { cleanContent } from "@/server/security/sanitize";
+
+// Bounds to cap token cost / payload size and limit prompt-injection surface.
+const MAX_TURNS = 40;
+const MAX_CONTENT = 4000;
+const MAX_SESSION_ID = 200;
 
 type LeadFields = {
   name?: string;
@@ -133,6 +141,10 @@ async function resolveProjectRoute(state: RouteState, message: string): Promise<
 }
 
 export async function POST(req: Request) {
+  // Rate limit (per IP) before doing any work — the LLM calls are expensive.
+  const limited = await rateLimited(req, "chat", apiPolicies.chat);
+  if (limited) return limited;
+
   try {
     const { messages, lead, sessionId } = (await req.json().catch(() => ({}))) as {
       messages?: Array<{ id?: string; role?: string; content?: string }>;
@@ -141,9 +153,19 @@ export async function POST(req: Request) {
     };
 
     const safeSessionId =
-      typeof sessionId === "string" && sessionId.trim() ? sessionId.trim() : null;
+      typeof sessionId === "string" && sessionId.trim()
+        ? sessionId.trim().slice(0, MAX_SESSION_ID)
+        : null;
 
-    const safeMessages = Array.isArray(messages) ? messages : [];
+    // Cap the number of turns and sanitize/cap each message's content so the
+    // downstream pipeline (memory, knowledge, extraction, model, storage) only
+    // ever sees bounded, control-char-free text. Logic below is unchanged.
+    const safeMessages = (Array.isArray(messages) ? messages : [])
+      .slice(-MAX_TURNS)
+      .map((m) => ({
+        ...m,
+        content: typeof m?.content === "string" ? cleanContent(m.content, MAX_CONTENT) : m?.content,
+      }));
     const conversationTurns = safeMessages
       .filter((m): m is { role: "user" | "assistant"; content: string } => {
         return (m.role === "user" || m.role === "assistant") && typeof m.content === "string";

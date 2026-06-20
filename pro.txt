@@ -1,0 +1,57 @@
+Add a new portfolio project:
+Project Name:
+AI Sales Engineer
+Category:
+AI Products
+Screenshot:
+public/portfolio/chatbot.png
+Display Position:
+Place AI Sales Engineer immediately after the Featured LandChain project.
+New Order:
+Featured:
+- LandChain
+Row 1:
+- AI Sales Engineer
+- Aura Manufacturers
+Row 2:
+- VAREZA
+- Employee Management CRM
+Row 3:
+- AI Proposal Generator
+- PDF Merger
+Project Description:
+Problem:
+Businesses lose leads because website visitors leave without speaking to a salesperson.
+Solution:
+AI-powered sales assistant that engages visitors, qualifies leads, answers questions, captures contact information and stores conversations automatically.
+Key Features:
+- AI Chat Assistant
+- Lead Qualification
+- Lead Scoring
+- CRM Integration
+- Conversation Memory
+- Knowledge Base
+- RAG Retrieval
+- Admin Dashboard
+- Conversation History
+- Multi-language Support
+- Analytics Dashboard
+- Contact Capture
+Outcome:
+Converts website visitors into qualified leads while reducing manual sales effort.
+Technology:
+Next.js
+TypeScript
+OpenAI
+Prisma
+PostgreSQL
+RAG
+AI Agents
+Status:
+Live Product
+Buttons:
+- Try Live Experience
+- View Case Study
+Also generate a professional case study document for AI Sales Engineer using the same structure as the other project case studies.
+Do not modify any chatbot logic.
+Only update the portfolio section and portfolio data.

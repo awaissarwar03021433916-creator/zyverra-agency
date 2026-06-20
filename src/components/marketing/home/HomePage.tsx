@@ -6,13 +6,13 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { ArrowRight, Bot, Boxes, Building2, CheckCircle2, Code2, Cpu, Eye, Gauge, GitBranch, Globe, GraduationCap, HeartPulse, Landmark, LayoutDashboard, MessageSquare, Palette, Phone, Plane, Rocket, Search, ShieldCheck, ShoppingBag, Truck, Users, Workflow, X } from "lucide-react";
 
-import { Button } from "@/shared/ui/button";
 import { Card } from "@/shared/ui/card";
 import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
 
 import Navbar from "@/components/marketing/navbar/Navbar";
+import PortfolioSection from "@/components/marketing/home/PortfolioSection";
 import Footer from "@/components/layout/Footer";
-import { fadeIn, scaleHover, slideUp } from "@/animations/motion/variants";
+import { fadeIn } from "@/animations/motion/variants";
 import type { Dictionary } from "@/i18n/types";
 import type { Locale } from "@/i18n/config";
 
@@ -100,34 +100,6 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
     icon: INDUSTRY_ICONS[i] ?? Boxes,
     image: INDUSTRY_IMAGES[i] ?? INDUSTRY_IMAGES[0],
   }));
-
-  // Demo placeholder content, slated for replacement with real assets.
-  const portfolio = [
-    {
-      title: "AI Customer Support Assistant",
-      description:
-        "An AI assistant that answers common customer questions, hands off complex issues to your team, and keeps a record of every conversation.",
-      image: "/portfolio/ai-support.jpg",
-      imageAlt: "Team reviewing analytics dashboard on a large screen",
-      href: "#contact",
-    },
-    {
-      title: "SaaS Analytics Dashboard",
-      description:
-        "A clean analytics dashboard with role-based access, so each team sees the data that matters to them.",
-      image: "/portfolio/saas-dashboard.jpg",
-      imageAlt: "Modern product analytics charts on desktop and tablet devices",
-      href: "#contact",
-    },
-    {
-      title: "Workflow Automation Platform",
-      description:
-        "A shared workspace that automates approvals, sends alerts, and connects steps across teams so work moves without manual handoffs.",
-      image: "/portfolio/automation.jpg",
-      imageAlt: "Professionals collaborating over a workflow process diagram",
-      href: "#contact",
-    },
-  ] as const;
 
   const testimonials = [
     {
@@ -322,7 +294,7 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
                   <span className="h-2.5 w-2.5 rounded-full bg-border" />
                   <span className="h-2.5 w-2.5 rounded-full bg-border" />
                   <span className="ms-3 text-xs font-medium text-muted-foreground">
-                    zyverra.ai
+                    zyverralabs.com
                   </span>
                 </div>
 
@@ -424,7 +396,6 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
                   sizes="288px"
                   className="object-cover"
                   loading="lazy"
-                  unoptimized
                   aria-hidden={idx >= industries.length}
                 />
                 <div className="absolute inset-0 bg-gradient-to-t from-[#04121f]/90 via-[#04121f]/30 to-transparent" />
@@ -562,63 +533,8 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
         </div>
       </section>
 
-      {/* Portfolio */}
-      <section
-        id="portfolio"
-        className="mx-auto max-w-6xl px-4 pb-20 pt-12 sm:px-6 md:pb-28 md:pt-16"
-      >
-        <SectionHeading
-          eyebrow={dict.portfolio.eyebrow}
-          title={dict.portfolio.title}
-          description={dict.portfolio.description}
-        />
-
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
-          {portfolio.map((p, i) => (
-            <motion.div
-              key={p.title}
-              variants={slideUp}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, amount: 0.25 }}
-              transition={{ duration: 0.6, delay: i * 0.06 }}
-              whileHover={shouldReduceMotion ? {} : { y: -8 }}
-              className="group h-full transform-gpu"
-            >
-              <div className="relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-5 shadow-sm transition-shadow duration-300 group-hover:shadow-lg">
-                <div className="relative aspect-[16/10] w-full shrink-0 overflow-hidden rounded-xl border border-border">
-                  <Image
-                    src={p.image}
-                    alt={p.imageAlt}
-                    fill
-                    sizes="(max-width: 768px) 100vw, 33vw"
-                    className="object-cover transition-transform duration-500 group-hover:scale-105"
-                    loading="lazy"
-                  />
-                </div>
-                <h3 className="mt-5 text-lg font-semibold tracking-tight text-foreground">
-                  {p.title}
-                </h3>
-                <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-                  {p.description}
-                </p>
-                <motion.a
-                  href={p.href}
-                  className="group/button mt-auto inline-flex pt-6"
-                  variants={scaleHover}
-                  initial="initial"
-                  whileHover="hover"
-                >
-                  <Button variant="outline" className="h-10">
-                    {dict.portfolio.viewCase}
-                    <ArrowRight className="ms-2 h-4 w-4 transition-transform duration-200 group-hover/button:translate-x-1 rtl:rotate-180" />
-                  </Button>
-                </motion.a>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
+      {/* Portfolio — problem-led case-study showcase */}
+      <PortfolioSection dict={dict.portfolio} />
 
       {/* Development Process — full-color section */}
       <div className="relative overflow-hidden bg-gradient-to-br from-[#062746] via-[#0a5aa0] to-[#007acc]">
@@ -918,7 +834,7 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
         </motion.div>
       </section>
 
-      <Footer dict={dict.footer} />
+      <Footer dict={dict.footer} lang={lang} />
 
       {/* Free 30-min call modal — same ContactForm, shown in a popup */}
       <AnimatePresence>

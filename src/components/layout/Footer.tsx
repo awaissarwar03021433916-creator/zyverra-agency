@@ -1,18 +1,33 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { usePathname } from "next/navigation";
 import { ArrowRight } from "lucide-react";
 
 import type { Dictionary, NavLink } from "@/i18n/types";
+import type { Locale } from "@/i18n/config";
+import { business, businessLocality } from "@/config/business";
 
 const COPYRIGHT_NAME = "Zyverra Labs";
 
-export default function Footer({ dict }: { dict: Dictionary["footer"] }) {
+export default function Footer({ dict, lang }: { dict: Dictionary["footer"]; lang: Locale }) {
   const [year, setYear] = useState<number | null>(null);
+  const pathname = usePathname();
 
   useEffect(() => {
     setYear(new Date().getFullYear());
   }, []);
+
+  // Resolve links so in-page anchors work from sub-pages (navigate home first)
+  // and real page links carry the active locale. Placeholder "#" stays inert.
+  const homePath = `/${lang}`;
+  const isHome =
+    pathname === homePath || pathname === `${homePath}/` || pathname === "/";
+  const resolveHref = (href: string) => {
+    if (href === "#") return href;
+    if (href.startsWith("#")) return isHome ? href : `${homePath}${href}`;
+    return `${homePath}${href}`;
+  };
 
   const columns: { title: string; links: NavLink[] }[] = [
     { title: dict.columns.company, links: dict.companyLinks },
@@ -36,8 +51,29 @@ export default function Footer({ dict }: { dict: Dictionary["footer"] }) {
             <p className="mt-4 max-w-xs text-sm leading-relaxed text-muted-foreground">
               {dict.description}
             </p>
+            <address className="mt-4 space-y-1 text-sm not-italic leading-relaxed text-muted-foreground">
+              <div>{businessLocality}</div>
+              <div>
+                <a
+                  href={`mailto:${business.email}`}
+                  className="transition-colors hover:text-primary"
+                >
+                  {business.email}
+                </a>
+              </div>
+              {business.phone ? (
+                <div>
+                  <a
+                    href={`tel:${business.phone}`}
+                    className="transition-colors hover:text-primary"
+                  >
+                    {business.phone}
+                  </a>
+                </div>
+              ) : null}
+            </address>
             <a
-              href="#contact"
+              href={resolveHref("#contact")}
               className="group mt-5 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
             >
               {dict.startProject}
@@ -54,7 +90,7 @@ export default function Footer({ dict }: { dict: Dictionary["footer"] }) {
                 {col.links.map((link) => (
                   <li key={`${link.label}-${link.href}`}>
                     <a
-                      href={link.href}
+                      href={resolveHref(link.href)}
                       className="text-sm text-muted-foreground transition-colors hover:text-primary"
                     >
                       {link.label}
