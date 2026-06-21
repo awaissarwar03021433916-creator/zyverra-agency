@@ -8,7 +8,7 @@ import type { Locale } from "@/i18n/config";
 import type { Faq } from "@/data/faqs";
 
 const CONTEXT = "https://schema.org";
-const EMAIL = "hello.zyverralabs@gmail.com";
+const EMAIL = "hello@zyverralabs.com";
 const NAME = "Zyverra Labs";
 
 // Entities Zyverra Labs is associated with — strengthens AI/entity understanding.

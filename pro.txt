@@ -1,57 +1,58 @@
-Add a new portfolio project:
-Project Name:
-AI Sales Engineer
-Category:
-AI Products
-Screenshot:
-public/portfolio/chatbot.png
-Display Position:
-Place AI Sales Engineer immediately after the Featured LandChain project.
-New Order:
-Featured:
-- LandChain
-Row 1:
-- AI Sales Engineer
-- Aura Manufacturers
-Row 2:
-- VAREZA
-- Employee Management CRM
-Row 3:
-- AI Proposal Generator
-- PDF Merger
-Project Description:
-Problem:
-Businesses lose leads because website visitors leave without speaking to a salesperson.
-Solution:
-AI-powered sales assistant that engages visitors, qualifies leads, answers questions, captures contact information and stores conversations automatically.
-Key Features:
-- AI Chat Assistant
-- Lead Qualification
-- Lead Scoring
-- CRM Integration
-- Conversation Memory
-- Knowledge Base
-- RAG Retrieval
-- Admin Dashboard
-- Conversation History
-- Multi-language Support
-- Analytics Dashboard
-- Contact Capture
-Outcome:
-Converts website visitors into qualified leads while reducing manual sales effort.
-Technology:
-Next.js
-TypeScript
-OpenAI
-Prisma
-PostgreSQL
-RAG
-AI Agents
-Status:
-Live Product
-Buttons:
-- Try Live Experience
-- View Case Study
-Also generate a professional case study document for AI Sales Engineer using the same structure as the other project case studies.
-Do not modify any chatbot logic.
-Only update the portfolio section and portfolio data.
+Act as a Senior Next.js Engineer.
+
+Task: Replace all business/contact email references across the entire Zyverra Labs codebase with:
+
+[hello@zyverralabs.com](mailto:hello@zyverralabs.com)
+
+Requirements:
+
+1. Search the entire project for:
+
+   * old email addresses
+   * placeholder emails
+   * contact emails
+   * support emails
+   * sales emails
+   * mailto links
+   * schema markup emails
+   * footer contact emails
+   * contact form destination emails
+   * metadata and SEO files
+
+2. Update all public-facing business email references to:
+
+[hello@zyverralabs.com](mailto:hello@zyverralabs.com)
+
+3. Update:
+
+   * Footer
+   * Contact section
+   * Contact page
+   * Structured data (JSON-LD)
+   * Organization schema
+   * SEO metadata
+   * Open Graph contact references
+   * Email CTA buttons
+   * Mailto links
+
+4. Preserve all existing functionality.
+
+5. Do NOT modify:
+
+   * business logic
+   * API routes
+   * database schema
+   * Prisma configuration
+   * authentication
+   * chatbot functionality
+   * analytics
+   * rate limiting
+   * security configuration
+
+6. After implementation provide:
+
+   * files changed
+   * old email references found
+   * confirmation that no functionality was modified
+
+Only perform email-related updates.

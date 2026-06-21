@@ -514,7 +514,7 @@ export default function PortfolioSection({ dict }: { dict: Dictionary["portfolio
                 </div>
 
                 <div className="mt-4 flex flex-col items-start gap-3 border-t border-border pt-4 sm:flex-row sm:items-center sm:justify-between">
-                  <span className="max-w-full truncate text-sm font-semibold text-foreground">{p.name}</span>
+                  <h3 className="m-0 max-w-full truncate text-sm font-semibold text-foreground">{p.name}</h3>
                   <div className="flex shrink-0 items-center gap-3">
                     <a
                       href={p.caseStudy}

@@ -45,15 +45,16 @@ const nextConfig: NextConfig = {
       "frame-ancestors 'none'",
       "form-action 'self'",
       // 'unsafe-eval' is only needed by React Fast Refresh in development.
-      `script-src 'self' 'unsafe-inline'${isDev ? " 'unsafe-eval'" : ""}`,
+      // Google Tag Manager hosts the GA4 (gtag.js) script.
+      `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com${isDev ? " 'unsafe-eval'" : ""}`,
       // framer-motion / React render inline style attributes; Tailwind is a sheet.
       "style-src 'self' 'unsafe-inline'",
       // next/image optimizer (self) + direct remote avatars/photos over https.
       "img-src 'self' data: https:",
       "font-src 'self' data:",
-      // Chatbot, contact form, and history all call the same origin only.
+      // Same-origin (chatbot/contact/history) + Google Analytics collection.
       // ws/wss are dev-only (HMR).
-      `connect-src 'self'${isDev ? " ws: wss:" : ""}`,
+      `connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com${isDev ? " ws: wss:" : ""}`,
       "frame-src 'self'",
       "worker-src 'self' blob:",
       "manifest-src 'self'",

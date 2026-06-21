@@ -4,6 +4,7 @@ import { Inter, Space_Grotesk } from "next/font/google";
 import "../../../styles/globals.css";
 import { env } from "@/config/env";
 import { ChatWidget } from "@/components/chat/ChatWidget";
+import { Analytics } from "@/components/analytics/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { business } from "@/config/business";
@@ -39,6 +40,10 @@ export async function generateMetadata({
 
   const languages = Object.fromEntries(locales.map((l) => [l, `/${l}`]));
 
+  // Google Search Console verification (HTML-tag method). Set
+  // NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION to the token GSC gives you.
+  const googleVerification = process.env.NEXT_PUBLIC_GOOGLE_SITE_VERIFICATION;
+
   return {
     metadataBase: siteUrl,
     title: dict.meta.title,
@@ -46,6 +51,7 @@ export async function generateMetadata({
     authors: [{ name: "Zyverra Labs", url: siteUrl.origin }],
     creator: "Zyverra Labs",
     publisher: "Zyverra Labs",
+    ...(googleVerification ? { verification: { google: googleVerification } } : {}),
     icons: {
       icon: [
         { url: "/favicon-16.png", sizes: "16x16", type: "image/png" },
@@ -117,6 +123,7 @@ export default async function LocaleLayout({
         />
         {children}
         <ChatWidget />
+        <Analytics />
       </body>
     </html>
   );

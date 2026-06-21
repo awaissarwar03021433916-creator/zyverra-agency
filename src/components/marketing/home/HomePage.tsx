@@ -180,6 +180,7 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
     <div className="min-h-screen bg-background text-foreground">
       <Navbar dict={dict.nav} lang={lang} />
 
+      <main>
       {/* Hero */}
       <div className="relative isolate overflow-hidden">
         <div className="absolute inset-0 -z-10 overflow-hidden" aria-hidden>
@@ -833,6 +834,7 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
           </div>
         </motion.div>
       </section>
+      </main>
 
       <Footer dict={dict.footer} lang={lang} />
 

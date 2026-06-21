@@ -101,8 +101,15 @@ export default function BlogPostPage({
             Have a project in mind?
           </h2>
           <p className="mx-auto mt-2 max-w-md text-sm leading-relaxed text-muted-foreground">
-            Tell us what you are building. We will reply with honest feedback, a clear plan, and the
-            next steps.
+            Tell us what you are building, or first see{" "}
+            <a href={`/${lang}/why-us`} className="font-semibold text-primary underline-offset-2 hover:underline">
+              why teams choose us
+            </a>{" "}
+            and{" "}
+            <a href={`/${lang}/how-we-deliver`} className="font-semibold text-primary underline-offset-2 hover:underline">
+              how we deliver
+            </a>
+            . We will reply with honest feedback, a clear plan, and the next steps.
           </p>
           <a
             href={`/${lang}#contact`}

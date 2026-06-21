@@ -7,7 +7,7 @@
 // Business Profile (NAP must match the GBP listing exactly).
 export const business = {
   name: "Zyverra Labs",
-  email: "hello.zyverralabs@gmail.com",
+  email: "hello@zyverralabs.com",
   phone: "", // e.g. "+92XXXXXXXXXX" (E.164) once a verified business line exists
   address: {
     street: "", // add a verified office street address when available

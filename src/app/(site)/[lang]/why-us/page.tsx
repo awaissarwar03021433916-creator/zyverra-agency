@@ -11,7 +11,7 @@ import { siteOrigin, faqPageSchema, breadcrumbSchema } from "@/lib/schema";
 const PATH = "why-us";
 const TITLE = "Why Zyverra Labs | Senior-Led AI & Software Engineering";
 const DESCRIPTION =
-  "Why choose Zyverra Labs: senior-led delivery, business-first engineering, security by default, real transparency, and a partnership that lasts past launch.";
+  "Why choose Zyverra Labs for custom software, AI, and SaaS development: senior-led delivery, business-first engineering, security by default, and a partnership that lasts past launch.";
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));
