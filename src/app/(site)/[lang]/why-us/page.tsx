@@ -9,9 +9,9 @@ import { whyUsFaqs } from "@/data/faqs";
 import { siteOrigin, faqPageSchema, breadcrumbSchema } from "@/lib/schema";
 
 const PATH = "why-us";
-const TITLE = "Why Zyverra Labs | Senior-Led AI & Software Engineering";
+const TITLE = "Why Zyverra Labs | Founder-Led AI & Software Engineering";
 const DESCRIPTION =
-  "Why choose Zyverra Labs for custom software, AI, and SaaS development: senior-led delivery, business-first engineering, security by default, and a partnership that lasts past launch.";
+  "Why choose Zyverra Labs for custom software, AI, and SaaS development: founder-led delivery, business-first engineering, security by default, and a partnership that lasts past launch.";
 
 export function generateStaticParams() {
   return locales.map((lang) => ({ lang }));

@@ -109,16 +109,16 @@ const fr: Dictionary = {
     title: "Un partenaire d’ingénierie dédié à l’IA et au SaaS.",
     paragraphs: [
       "Zyverra Labs est un studio technologique spécialisé dans les agents IA, l’automatisation IA et le développement SaaS. Nous aidons les entreprises à transformer leurs idées en logiciels fiables et prêts pour la production.",
-      "Nous sommes une équipe dirigée par des développeurs seniors qui travaille étroitement avec chaque client. Plutôt que de viser le volume, nous prenons un nombre restreint de projets afin que chacun reçoive une vraie attention, une réflexion claire et une ingénierie soignée.",
+      "Zyverra est dirigée par son fondateur : vous travaillez directement avec l’ingénieur qui conçoit et construit votre produit. Pas de gestionnaires de comptes, pas de transferts. Plutôt que de viser le volume, nous prenons un nombre restreint de projets afin que chacun reçoive une vraie attention, une réflexion claire et une ingénierie soignée.",
       "Notre approche est simple : comprendre l’activité en profondeur, concevoir la bonne architecture et bâtir un logiciel sécurisé, maintenable et prêt à évoluer avec vous.",
     ],
     tags: ["Agents IA", "Automatisation IA", "Développement SaaS"],
     panelTitle: "Travailler avec nous, concrètement",
     principles: [
       {
-        title: "Livraison pilotée par des seniors",
+        title: "Livraison pilotée par le fondateur",
         description:
-          "Vous travaillez directement avec les personnes qui conçoivent et construisent votre produit.",
+          "Vous travaillez directement avec l’ingénieur qui conçoit et construit votre produit.",
       },
       {
         title: "L’activité d’abord",
@@ -141,7 +141,7 @@ const fr: Dictionary = {
     eyebrow: "POURQUOI ZYVERRA",
     title: "Bâti sur l’expertise, le processus et la confiance.",
     description:
-      "Ce que vous obtenez en construisant avec une équipe d’ingénierie senior et concentrée.",
+      "Ce que vous obtenez en construisant directement avec le fondateur qui livre votre produit.",
     items: [
       {
         title: "Expertise spécialisée",
@@ -245,11 +245,13 @@ const fr: Dictionary = {
     },
     closing: { text: "Vous voulez quelque chose de similaire pour votre entreprise ?", cta: "Démarrer un projet" },
   },
-  testimonials: {
-    eyebrow: "TÉMOIGNAGES",
-    title: "La confiance des équipes qui livrent.",
-    description:
-      "Une exécution premium, portée par une ingénierie fiable et un design réfléchi.",
+  proof: {
+    eyebrow: "VOYEZ PAR VOUS-MÊME",
+    title: "Ne nous croyez pas sur parole : essayez.",
+    body:
+      "L’agent commercial IA de ce site ? Nous l’avons construit de bout en bout : il parle aux visiteurs, comprend leurs besoins, les qualifie et enregistre chaque conversation. Il est actif en ce moment même. Parlez-lui, et vous verrez exactement le type de système que nous pouvons construire pour votre entreprise. Chaque projet de notre portfolio est construit, livré et en ligne. De vrais problèmes, de vrais logiciels, pas des diapositives.",
+    tryAgent: "Essayer l’agent IA en direct",
+    viewWork: "Voir nos réalisations",
   },
   callCta: {
     title: "Une idée ? Discutons-en ensemble.",
@@ -265,7 +267,7 @@ const fr: Dictionary = {
       "Parlez-nous de votre projet. Nous répondrons personnellement avec un retour honnête, un plan ciblé et des étapes claires.",
     bullets: [
       "Un plan ciblé et des étapes claires",
-      "Des réponses directes d’ingénieurs seniors",
+      "Des réponses directes de l’ingénieur qui le construit",
       "Périmètre, délais et compromis honnêtes",
     ],
     formTitle: "Démarrer un projet",
@@ -293,7 +295,7 @@ const fr: Dictionary = {
   },
   footer: {
     description:
-      "Un studio dirigé par des seniors, spécialisé dans les agents IA, l’automatisation IA et le développement SaaS, des logiciels fiables et prêts pour la production, pour les équipes en croissance.",
+      "Un studio dirigé par son fondateur, spécialisé dans les agents IA, l’automatisation IA et le développement SaaS, des logiciels fiables et prêts pour la production, pour les équipes en croissance.",
     columns: { company: "Entreprise", services: "Services", connect: "Suivez-nous" },
     companyLinks: [
       { label: "À propos", href: "#about" },
@@ -310,9 +312,7 @@ const fr: Dictionary = {
       { label: "Logiciels sur mesure", href: "#services" },
     ],
     socialLinks: [
-      { label: "X (Twitter)", href: "#" },
-      { label: "LinkedIn", href: "#" },
-      { label: "GitHub", href: "#" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/awaissarwar898/" },
     ],
     startProject: "Démarrer un projet",
     rights: "Tous droits réservés.",

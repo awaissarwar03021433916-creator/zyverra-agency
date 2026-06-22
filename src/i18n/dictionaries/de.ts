@@ -109,16 +109,16 @@ const de: Dictionary = {
     title: "Ein fokussierter Engineering-Partner für KI und SaaS.",
     paragraphs: [
       "Zyverra Labs ist ein Technologiestudio mit Spezialisierung auf KI-Agenten, KI-Automatisierung und SaaS-Entwicklung. Wir helfen Unternehmen, Ideen in zuverlässige, produktionsreife Software zu verwandeln.",
-      "Wir sind ein von Senior-Entwicklern geführtes Team, das eng mit jedem Kunden zusammenarbeitet. Statt auf Masse zu setzen, übernehmen wir gezielt wenige Projekte, damit jedes echte Aufmerksamkeit, klares Denken und sorgfältiges Engineering erhält.",
+      "Zyverra wird vom Gründer geführt: Sie arbeiten direkt mit dem Ingenieur zusammen, der Ihr Produkt konzipiert und baut. Keine Account-Manager, keine Übergaben. Statt auf Masse zu setzen, übernehmen wir gezielt wenige Projekte, damit jedes echte Aufmerksamkeit, klares Denken und sorgfältiges Engineering erhält.",
       "Unser Ansatz ist klar: das Geschäft tief verstehen, die richtige Architektur entwerfen und Software bauen, die sicher, wartbar und bereit zum Skalieren ist.",
     ],
     tags: ["KI-Agenten", "KI-Automatisierung", "SaaS-Entwicklung"],
     panelTitle: "So sieht die Zusammenarbeit mit uns aus",
     principles: [
       {
-        title: "Senior-geführte Umsetzung",
+        title: "Vom Gründer geführte Umsetzung",
         description:
-          "Sie arbeiten direkt mit den Menschen, die Ihr Produkt konzipieren und bauen.",
+          "Sie arbeiten direkt mit dem Ingenieur, der Ihr Produkt konzipiert und baut.",
       },
       {
         title: "Geschäft zuerst",
@@ -141,7 +141,7 @@ const de: Dictionary = {
     eyebrow: "WARUM ZYVERRA",
     title: "Aufgebaut auf Expertise, Prozess und Vertrauen.",
     description:
-      "Was Sie erhalten, wenn Sie mit einem erfahrenen, fokussierten Engineering-Team bauen.",
+      "Was Sie erhalten, wenn Sie direkt mit dem Gründer bauen, der Ihr Produkt liefert.",
     items: [
       {
         title: "Spezialisierte Expertise",
@@ -245,11 +245,13 @@ const de: Dictionary = {
     },
     closing: { text: "Möchten Sie so etwas für Ihr Unternehmen?", cta: "Projekt starten" },
   },
-  testimonials: {
-    eyebrow: "REFERENZEN",
-    title: "Vertraut von Teams, die liefern.",
-    description:
-      "Erstklassige Umsetzung, gestützt auf zuverlässiges Engineering und durchdachtes Design.",
+  proof: {
+    eyebrow: "ÜBERZEUGEN SIE SICH SELBST",
+    title: "Glauben Sie uns nicht – testen Sie es.",
+    body:
+      "Der KI-Vertriebsagent auf dieser Seite? Wir haben ihn von A bis Z gebaut: Er spricht mit Besuchern, versteht ihren Bedarf, qualifiziert sie und protokolliert jedes Gespräch. Er ist gerade jetzt live. Sprechen Sie mit ihm, und Sie sehen genau die Art von System, die wir für Ihr Unternehmen bauen können. Jedes Projekt in unserem Portfolio ist gebaut, ausgeliefert und live. Echte Probleme, echte Software – keine Folien.",
+    tryAgent: "Den Live-KI-Agenten testen",
+    viewWork: "Unsere Arbeiten ansehen",
   },
   callCta: {
     title: "Eine Idee? Lassen Sie uns darüber sprechen.",
@@ -265,7 +267,7 @@ const de: Dictionary = {
       "Erzählen Sie uns von Ihrem Vorhaben. Wir antworten persönlich mit ehrlichem Feedback, einem fokussierten Plan und klaren nächsten Schritten.",
     bullets: [
       "Ein fokussierter Plan und klare nächste Schritte",
-      "Direkte Antworten von Senior-Entwicklern",
+      "Direkte Antworten vom Ingenieur, der es baut",
       "Ehrlicher Umfang, Zeitpläne und Kompromisse",
     ],
     formTitle: "Projekt starten",
@@ -293,7 +295,7 @@ const de: Dictionary = {
   },
   footer: {
     description:
-      "Ein von Senior-Entwicklern geführtes Studio mit Spezialisierung auf KI-Agenten, KI-Automatisierung und SaaS-Entwicklung – zuverlässige, produktionsreife Software für wachsende Teams.",
+      "Ein vom Gründer geführtes Studio mit Spezialisierung auf KI-Agenten, KI-Automatisierung und SaaS-Entwicklung – zuverlässige, produktionsreife Software für wachsende Teams.",
     columns: { company: "Unternehmen", services: "Leistungen", connect: "Verbinden" },
     companyLinks: [
       { label: "Über uns", href: "#about" },
@@ -310,9 +312,7 @@ const de: Dictionary = {
       { label: "Individuelle Software", href: "#services" },
     ],
     socialLinks: [
-      { label: "X (Twitter)", href: "#" },
-      { label: "LinkedIn", href: "#" },
-      { label: "GitHub", href: "#" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/awaissarwar898/" },
     ],
     startProject: "Projekt starten",
     rights: "Alle Rechte vorbehalten.",

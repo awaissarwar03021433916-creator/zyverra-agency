@@ -100,7 +100,7 @@ const ENGAGEMENTS = [
   {
     title: "Ongoing partnership",
     description:
-      "A continuous engagement where we design, build, and improve your product over time, acting as your senior engineering team.",
+      "A continuous engagement where we design, build, and improve your product over time, acting as your dedicated engineering partner.",
   },
 ];
 

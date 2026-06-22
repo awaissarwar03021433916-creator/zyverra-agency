@@ -109,16 +109,16 @@ const es: Dictionary = {
     title: "Un socio de ingeniería enfocado en IA y SaaS.",
     paragraphs: [
       "Zyverra Labs es un estudio tecnológico especializado en agentes de IA, automatización con IA y desarrollo SaaS. Ayudamos a las empresas a convertir ideas en software fiable y listo para producción.",
-      "Somos un equipo liderado por seniors que trabaja de cerca con cada cliente. En lugar de buscar volumen, tomamos un número reducido de proyectos para que cada uno reciba atención real, claridad de pensamiento e ingeniería cuidadosa.",
+      "Zyverra está liderada por su fundador: trabajas directamente con el ingeniero que diseña y construye tu producto. Sin gestores de cuentas, sin traspasos. En lugar de buscar volumen, tomamos un número reducido de proyectos para que cada uno reciba atención real, claridad de pensamiento e ingeniería cuidadosa.",
       "Nuestro enfoque es sencillo: entender el negocio a fondo, diseñar la arquitectura adecuada y construir software seguro, mantenible y listo para escalar contigo.",
     ],
     tags: ["Agentes de IA", "Automatización con IA", "Desarrollo SaaS"],
     panelTitle: "Cómo es trabajar con nosotros",
     principles: [
       {
-        title: "Entrega liderada por seniors",
+        title: "Entrega liderada por el fundador",
         description:
-          "Trabajas directamente con las personas que diseñan y construyen tu producto.",
+          "Trabajas directamente con el ingeniero que diseña y construye tu producto.",
       },
       {
         title: "El negocio primero",
@@ -141,7 +141,7 @@ const es: Dictionary = {
     eyebrow: "POR QUÉ ZYVERRA",
     title: "Construido sobre experiencia, proceso y confianza.",
     description:
-      "Lo que obtienes al construir con un equipo de ingeniería senior y enfocado.",
+      "Lo que obtienes al construir directamente con el fundador que entrega tu producto.",
     items: [
       {
         title: "Experiencia especializada",
@@ -245,11 +245,13 @@ const es: Dictionary = {
     },
     closing: { text: "¿Quieres algo así para tu negocio?", cta: "Iniciar un proyecto" },
   },
-  testimonials: {
-    eyebrow: "TESTIMONIOS",
-    title: "La confianza de equipos que entregan.",
-    description:
-      "Ejecución premium respaldada por ingeniería fiable y diseño bien pensado.",
+  proof: {
+    eyebrow: "COMPRUÉBALO TÚ MISMO",
+    title: "No nos creas: pruébalo.",
+    body:
+      "¿El agente de ventas con IA de este sitio? Lo construimos de principio a fin: habla con los visitantes, entiende lo que necesitan, los cualifica y registra cada conversación. Está activo ahora mismo. Háblale y verás exactamente el tipo de sistema que podemos construir para tu negocio. Cada proyecto de nuestro portafolio está construido, lanzado y en vivo. Problemas reales, software real, no diapositivas.",
+    tryAgent: "Prueba el agente de IA en vivo",
+    viewWork: "Ver nuestro trabajo",
   },
   callCta: {
     title: "¿Tienes una idea? Hablémoslo.",
@@ -265,7 +267,7 @@ const es: Dictionary = {
       "Cuéntanos qué tienes en mente. Responderemos personalmente con feedback honesto, un plan enfocado y próximos pasos claros.",
     bullets: [
       "Un plan enfocado y próximos pasos claros",
-      "Respuestas directas de ingenieros seniors",
+      "Respuestas directas del ingeniero que lo construye",
       "Alcance, plazos y compromisos honestos",
     ],
     formTitle: "Iniciar un proyecto",
@@ -293,7 +295,7 @@ const es: Dictionary = {
   },
   footer: {
     description:
-      "Un estudio liderado por seniors especializado en agentes de IA, automatización con IA y desarrollo SaaS, software fiable y listo para producción para equipos en crecimiento.",
+      "Un estudio liderado por su fundador, especializado en agentes de IA, automatización con IA y desarrollo SaaS, software fiable y listo para producción para equipos en crecimiento.",
     columns: { company: "Empresa", services: "Servicios", connect: "Conecta" },
     companyLinks: [
       { label: "Sobre nosotros", href: "#about" },
@@ -310,9 +312,7 @@ const es: Dictionary = {
       { label: "Software a medida", href: "#services" },
     ],
     socialLinks: [
-      { label: "X (Twitter)", href: "#" },
-      { label: "LinkedIn", href: "#" },
-      { label: "GitHub", href: "#" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/awaissarwar898/" },
     ],
     startProject: "Iniciar un proyecto",
     rights: "Todos los derechos reservados.",

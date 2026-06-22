@@ -2,9 +2,9 @@ import type { Dictionary } from "../types";
 
 const en: Dictionary = {
   meta: {
-    title: "Custom Software Development & AI Solutions | Zyverra Labs",
+    title: "Zyverra Labs | AI Agents, Automation & Custom Software",
     description:
-      "Zyverra Labs is a software house in Lahore, Pakistan building custom software, AI solutions, business automation, and SaaS products for teams worldwide.",
+      "Zyverra Labs is a software studio building AI agents, workflow automation, SaaS, and custom software for startups and businesses worldwide. Founder-led, hands-on, production-ready.",
   },
   nav: {
     links: [
@@ -109,16 +109,16 @@ const en: Dictionary = {
     title: "Your custom software and AI development partner.",
     paragraphs: [
       "Zyverra Labs is a software house based in Lahore, Pakistan, focused on custom software development, AI agents, AI automation, and SaaS development. We help companies in Pakistan and worldwide turn ideas into software they can actually rely on.",
-      "We are a senior-led team, and we work closely with every client. Instead of taking on everything, we keep our project list short so each one gets real attention and careful engineering.",
+      "Zyverra is founder-led — you work directly with the engineer who designs and builds your product. No account managers, no hand-offs. Instead of taking on everything, we keep our project list short so each one gets real attention and careful engineering.",
       "The way we work is simple. We learn your business, choose the right architecture, and build software that is secure, easy to maintain, and ready to grow with you.",
     ],
     tags: ["AI Agents", "AI Automation", "SaaS Development"],
     panelTitle: "What working with us looks like",
     principles: [
       {
-        title: "Senior-led delivery",
+        title: "Founder-led delivery",
         description:
-          "You work directly with the people who design and build your product.",
+          "You work directly with the engineer who designs and builds your product.",
       },
       {
         title: "Business-first thinking",
@@ -140,7 +140,7 @@ const en: Dictionary = {
   why: {
     eyebrow: "WHY ZYVERRA",
     title: "Built on expertise, process, and trust.",
-    description: "What you get when you build with a senior team that stays focused.",
+    description: "What you get when you build directly with the founder who ships your product.",
     items: [
       {
         title: "Specialized expertise",
@@ -244,10 +244,13 @@ const en: Dictionary = {
     },
     closing: { text: "Want something like this for your business?", cta: "Start a project" },
   },
-  testimonials: {
-    eyebrow: "TESTIMONIALS",
-    title: "Trusted by teams who ship.",
-    description: "Strong delivery backed by reliable engineering and thoughtful design.",
+  proof: {
+    eyebrow: "SEE IT YOURSELF",
+    title: "Don't take our word for it — try it.",
+    body:
+      "The AI sales agent on this site? We built it end to end — it talks to visitors, understands what they need, qualifies them, and logs every conversation. It's live right now. Talk to it, and you're seeing exactly the kind of system we can build for your business. Every project in our portfolio is built, shipped, and live. Real problems, real software — not slideware.",
+    tryAgent: "Try the live AI agent",
+    viewWork: "View our work",
   },
   callCta: {
     title: "Have an idea? Let's talk it through.",
@@ -263,7 +266,7 @@ const en: Dictionary = {
       "Tell us what you are planning. We will reply personally with honest feedback, a clear plan, and the next steps.",
     bullets: [
       "A clear plan and next steps",
-      "Direct answers from senior engineers",
+      "Direct answers from the engineer building it",
       "Honest scope, timelines, and trade-offs",
     ],
     formTitle: "Start a project",
@@ -291,7 +294,7 @@ const en: Dictionary = {
   },
   footer: {
     description:
-      "A senior-led studio focused on AI agents, AI automation, and SaaS development. We build reliable, production-ready software for growing teams.",
+      "A founder-led studio focused on AI agents, AI automation, and SaaS development. We build reliable, production-ready software for growing teams.",
     columns: { company: "Company", services: "Services", connect: "Connect" },
     companyLinks: [
       { label: "About", href: "#about" },
@@ -308,9 +311,7 @@ const en: Dictionary = {
       { label: "Custom Software Development", href: "#services" },
     ],
     socialLinks: [
-      { label: "X (Twitter)", href: "#" },
-      { label: "LinkedIn", href: "#" },
-      { label: "GitHub", href: "#" },
+      { label: "LinkedIn", href: "https://www.linkedin.com/in/awaissarwar898/" },
     ],
     startProject: "Start a project",
     rights: "All rights reserved.",

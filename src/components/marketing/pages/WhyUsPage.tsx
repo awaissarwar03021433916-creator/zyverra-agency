@@ -24,9 +24,9 @@ import { Reveal } from "./Reveal";
 const DIFFERENTIATORS = [
   {
     icon: Users,
-    title: "Senior-led, end to end",
+    title: "Founder-led, end to end",
     description:
-      "The people who design your product are the people who build it. No handoff to a junior bench, no context lost in translation, just experienced engineers accountable for the result.",
+      "The engineer who designs your product is the one who builds it. No handoff to a junior bench, no context lost in translation, just one experienced engineer accountable for the result.",
   },
   {
     icon: Cpu,
@@ -82,8 +82,8 @@ const NOT_FOR_YOU = [
 ];
 
 const COMPARISON = [
-  { point: "Who builds it", zyverra: "The senior team you hired", agency: "Often a junior bench" },
-  { point: "Who you talk to", zyverra: "The engineers directly", agency: "An account manager" },
+  { point: "Who builds it", zyverra: "The founder you hired", agency: "Often a junior bench" },
+  { point: "Who you talk to", zyverra: "The founder directly", agency: "An account manager" },
   { point: "Scope & pricing", zyverra: "Honest and clear up front", agency: "Padded for overhead" },
   { point: "After launch", zyverra: "Ongoing partnership", agency: "Handover and goodbye" },
   { point: "Attention", zyverra: "A short, focused project list", agency: "One of many accounts" },
@@ -100,13 +100,13 @@ export default function WhyUsPage({ dict, lang }: { dict: Dictionary; lang: Loca
         eyebrow="Why Zyverra Labs"
         title={
           <>
-            A senior team that treats your product{" "}
+            A founder who treats your product{" "}
             <span className="bg-gradient-to-r from-primary to-sky-500 bg-clip-text text-transparent">
-              like its own.
+              like their own.
             </span>
           </>
         }
-        description="Most teams can write code. Far fewer combine senior engineering, business judgment, and real honesty in one place. That combination is what makes the difference between software that ships and software that lasts."
+        description="Most teams can write code. Far fewer combine senior-level engineering, business judgment, and real honesty in one place. That combination is what makes the difference between software that ships and software that lasts."
         actions={
           <>
             <a
@@ -124,7 +124,7 @@ export default function WhyUsPage({ dict, lang }: { dict: Dictionary; lang: Loca
             </a>
           </>
         }
-        chips={["Senior-led delivery", "Business-first", "Honest & transparent", "Built to scale"]}
+        chips={["Founder-led delivery", "Business-first", "Honest & transparent", "Built to scale"]}
       />
 
       {/* Differentiators */}
@@ -233,7 +233,7 @@ export default function WhyUsPage({ dict, lang }: { dict: Dictionary; lang: Loca
               The difference
             </div>
             <h2 className="mt-3 font-heading text-3xl font-bold tracking-tight text-foreground md:text-4xl">
-              Senior-led vs. the typical agency.
+              Founder-led vs. the typical agency.
             </h2>
           </Reveal>
           <Reveal className="mt-10 overflow-hidden rounded-2xl border border-border bg-card shadow-sm">

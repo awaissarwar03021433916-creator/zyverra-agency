@@ -74,10 +74,12 @@ export type Dictionary = {
     futureSlot: { title: string; caption: string; cta: string };
     closing: { text: string; cta: string };
   };
-  testimonials: {
+  proof: {
     eyebrow: string;
     title: string;
-    description: string;
+    body: string;
+    tryAgent: string;
+    viewWork: string;
   };
   callCta: {
     title: string;

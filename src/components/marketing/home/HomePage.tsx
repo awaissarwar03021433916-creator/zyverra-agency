@@ -6,9 +6,6 @@ import dynamic from "next/dynamic";
 import Image from "next/image";
 import { ArrowRight, Bot, Boxes, Building2, CheckCircle2, Code2, Cpu, Eye, Gauge, GitBranch, Globe, GraduationCap, HeartPulse, Landmark, LayoutDashboard, MessageSquare, Palette, Phone, Plane, Rocket, Search, ShieldCheck, ShoppingBag, Truck, Users, Workflow, X } from "lucide-react";
 
-import { Card } from "@/shared/ui/card";
-import { Avatar, AvatarFallback, AvatarImage } from "@/shared/ui/avatar";
-
 import Navbar from "@/components/marketing/navbar/Navbar";
 import PortfolioSection from "@/components/marketing/home/PortfolioSection";
 import Footer from "@/components/layout/Footer";
@@ -20,6 +17,13 @@ const ContactForm = dynamic(() => import("@/components/forms/ContactForm"), {
   ssr: false,
   loading: () => <div className="h-60 animate-pulse rounded-xl bg-muted/40" aria-hidden="true" />,
 });
+
+// Ask the floating chat widget to open in-place (no navigation / new tab).
+function openChatWidget() {
+  if (typeof window !== "undefined") {
+    window.dispatchEvent(new CustomEvent("zyverra:open-chat"));
+  }
+}
 
 function SectionHeading({
   eyebrow,
@@ -101,33 +105,6 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
     image: INDUSTRY_IMAGES[i] ?? INDUSTRY_IMAGES[0],
   }));
 
-  const testimonials = [
-    {
-      quote:
-        "Zyverra Labs delivered a workflow automation system that our team can actually trust and scale.",
-      name: "Ava Thompson",
-      role: "Head of Operations",
-      company: "NimbusHQ",
-      avatar: "https://i.pravatar.cc/120?img=47",
-    },
-    {
-      quote:
-        "The UI polish and motion design felt premium from day one, and our conversions improved immediately.",
-      name: "Noah Kim",
-      role: "Founder",
-      company: "Arcadia AI",
-      avatar: "https://i.pravatar.cc/120?img=33",
-    },
-    {
-      quote:
-        "They engineered the platform like a real product: clean contracts, reliable data, strong performance.",
-      name: "Maya Patel",
-      role: "Product Lead",
-      company: "HelioSaaS",
-      avatar: "https://i.pravatar.cc/120?img=5",
-    },
-  ] as const;
-
   const heroContainer: Variants = {
     hidden: {},
     visible: { transition: { staggerChildren: 0.08, delayChildren: 0.05 } },
@@ -164,17 +141,6 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
       window.removeEventListener("keydown", onKey);
     };
   }, [callOpen]);
-
-  const [activeTestimonial, setActiveTestimonial] = useState(0);
-
-  useEffect(() => {
-    if (shouldReduceMotion) return;
-    const timer = window.setInterval(() => {
-      setActiveTestimonial((prev) => (prev + 1) % testimonials.length);
-    }, 4200);
-
-    return () => window.clearInterval(timer);
-  }, [shouldReduceMotion, testimonials.length]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -646,91 +612,39 @@ export default function HomePage({ dict, lang }: { dict: Dictionary; lang: Local
       </section>
       </div>
 
-      {/* Testimonials */}
+      {/* See it yourself */}
       <section
-        id="testimonials"
+        id="see-it-yourself"
         className="mx-auto max-w-6xl px-4 pb-20 pt-12 sm:px-6 md:pb-28 md:pt-16"
       >
         <SectionHeading
-          eyebrow={dict.testimonials.eyebrow}
-          title={dict.testimonials.title}
-          description={dict.testimonials.description}
+          eyebrow={dict.proof.eyebrow}
+          title={dict.proof.title}
+          description={dict.proof.body}
         />
 
         <motion.div
-          className="mt-10"
+          className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row"
           variants={fadeIn}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true, amount: 0.25 }}
           transition={{ duration: 0.6 }}
         >
-          <div className="relative overflow-hidden rounded-2xl">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={testimonials[activeTestimonial].name}
-                initial={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: 40 }}
-                animate={shouldReduceMotion ? { opacity: 1 } : { opacity: 1, x: 0 }}
-                exit={shouldReduceMotion ? { opacity: 0 } : { opacity: 0, x: -40 }}
-                transition={{ duration: shouldReduceMotion ? 0.2 : 0.42, ease: "easeOut" }}
-              >
-                <Card className="rounded-2xl border border-border bg-card p-6 shadow-sm md:p-8">
-                  <div className="flex items-center gap-4">
-                    <Avatar size="lg" className="ring-2 ring-primary/25">
-                      <AvatarImage
-                        src={testimonials[activeTestimonial].avatar}
-                        alt={testimonials[activeTestimonial].name}
-                        loading="lazy"
-                      />
-                      <AvatarFallback>
-                        {testimonials[activeTestimonial].name
-                          .split(" ")
-                          .map((part) => part[0])
-                          .join("")
-                          .slice(0, 2)}
-                      </AvatarFallback>
-                    </Avatar>
-                    <div>
-                      <div className="text-base font-semibold text-foreground">
-                        {testimonials[activeTestimonial].name}
-                      </div>
-                      <div className="text-xs text-muted-foreground">
-                        {testimonials[activeTestimonial].role}
-                      </div>
-                    </div>
-                  </div>
-
-                  <div className="mt-4 text-xs font-semibold uppercase tracking-widest text-primary">
-                    {testimonials[activeTestimonial].company}
-                  </div>
-                  <p className="mt-3 text-sm leading-7 text-muted-foreground md:text-base">
-                    “{testimonials[activeTestimonial].quote}”
-                  </p>
-                </Card>
-              </motion.div>
-            </AnimatePresence>
-          </div>
-
-          <div
-            className="mt-5 flex items-center justify-center gap-2"
-            aria-label="Testimonial carousel indicators"
+          <button
+            type="button"
+            onClick={openChatWidget}
+            className="group inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md"
           >
-            {testimonials.map((t, idx) => {
-              const isActive = idx === activeTestimonial;
-              return (
-                <button
-                  key={t.name}
-                  type="button"
-                  onClick={() => setActiveTestimonial(idx)}
-                  className={`h-2.5 rounded-full transition-all ${
-                    isActive ? "w-8 bg-primary" : "w-2.5 bg-border hover:bg-primary/70"
-                  }`}
-                  aria-label={t.name}
-                  aria-current={isActive}
-                />
-              );
-            })}
-          </div>
+            {dict.proof.tryAgent}
+            <ArrowRight className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5 rtl:rotate-180" />
+          </button>
+          <a
+            href="#portfolio"
+            className="inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-border bg-background/70 px-6 text-sm font-semibold text-foreground shadow-xs backdrop-blur transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-muted"
+          >
+            {dict.proof.viewWork}
+          </a>
         </motion.div>
       </section>
 

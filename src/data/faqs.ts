@@ -10,7 +10,7 @@ export const howWeDeliverFaqs: Faq[] = [
   },
   {
     q: "Who actually builds the product?",
-    a: "The same senior people who design and plan it. There is no handoff to a junior bench, you work directly with the people writing the code.",
+    a: "The same engineer who designs and plans it. There is no handoff to a junior bench, you work directly with the founder writing the code.",
   },
   {
     q: "What if the scope changes mid-project?",
@@ -25,7 +25,7 @@ export const howWeDeliverFaqs: Faq[] = [
 export const whyUsFaqs: Faq[] = [
   {
     q: "Are you not too small for a serious project?",
-    a: "Small and senior is a feature, not a risk. A focused team has less coordination overhead and more accountability, which is exactly why we can out-deliver much larger groups on the work that matters.",
+    a: "Small and senior is a feature, not a risk. A founder-led setup has less coordination overhead and more accountability, which is exactly why we can out-deliver much larger groups on the work that matters.",
   },
   {
     q: "How do I know the quality will hold up?",

@@ -27,7 +27,7 @@ export default function BlogIndexPage({ dict, lang }: { dict: Dictionary; lang: 
             </span>
           </>
         }
-        description="Honest, no-hype perspective from a senior engineering team, what we have learned building AI agents, automation, and SaaS that holds up in production."
+        description="Honest, no-hype perspective from a founder-led studio, what we have learned building AI agents, automation, and SaaS that holds up in production."
         chips={["AI", "Automation", "SaaS", "Delivery", "Engineering"]}
       />
 

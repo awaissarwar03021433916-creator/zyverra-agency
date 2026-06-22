@@ -7,7 +7,6 @@ import { ChatWidget } from "@/components/chat/ChatWidget";
 import { Analytics } from "@/components/analytics/Analytics";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
-import { business } from "@/config/business";
 import { locales, defaultLocale, isLocale, dir } from "@/i18n/config";
 import { getDictionary } from "@/i18n/getDictionary";
 
@@ -82,13 +81,6 @@ export async function generateMetadata({
     twitter: {
       card: "summary_large_image",
       images: ["/og-image.png"],
-    },
-    // Location signals for local SEO (single-location business).
-    other: {
-      "geo.region": "PK-PB",
-      "geo.placename": business.address.city,
-      "geo.position": `${business.geo.latitude};${business.geo.longitude}`,
-      ICBM: `${business.geo.latitude}, ${business.geo.longitude}`,
     },
   };
 }
