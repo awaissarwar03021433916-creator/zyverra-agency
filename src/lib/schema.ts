@@ -149,6 +149,9 @@ export function serviceSchemas(origin: string) {
 }
 
 export function softwareApplicationSchemas(origin: string) {
+  // Software products and tools built by Zyverra Labs, modeled as
+  // SoftwareApplication (CreativeWork subtype) — never Product/Offer, which
+  // would trigger Merchant Listing requirements meant for e-commerce items.
   const apps = [
     {
       name: "AI Proposal Generator",
@@ -164,6 +167,13 @@ export function softwareApplicationSchemas(origin: string) {
       description:
         "A custom CRM that centralizes employee records, role-based access, and operations tracking.",
     },
+    {
+      name: "PDF Merger",
+      url: "https://pdf-merger-liard.vercel.app/",
+      category: "UtilitiesApplication",
+      description:
+        "A fast, zero-install web tool that merges PDF files privately, right in the browser.",
+    },
   ];
 
   return apps.map((a) => ({
@@ -171,38 +181,14 @@ export function softwareApplicationSchemas(origin: string) {
     "@type": "SoftwareApplication",
     name: a.name,
     url: a.url,
+    image: `${origin}/og-image.png`,
     applicationCategory: a.category,
     operatingSystem: "Web",
     description: a.description,
     publisher: { "@id": orgId(origin) },
-    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
-  }));
-}
-
-export function productSchemas(origin: string) {
-  // Tools, modeled as Product.
-  const tools = [
-    {
-      name: "PDF Merger",
-      url: "https://pdf-merger-liard.vercel.app/",
-      description:
-        "A fast, zero-install web tool that merges PDF files privately, right in the browser.",
-    },
-  ];
-
-  return tools.map((t) => ({
-    "@context": CONTEXT,
-    "@type": "Product",
-    name: t.name,
-    url: t.url,
-    description: t.description,
-    brand: { "@type": "Brand", name: NAME },
-    offers: {
-      "@type": "Offer",
-      price: "0",
-      priceCurrency: "USD",
-      availability: "https://schema.org/InStock",
-    },
+    // Free to use, expressed without an Offer node so this stays an entity
+    // descriptor and does not invoke product/merchant validation.
+    isAccessibleForFree: true,
   }));
 }
 

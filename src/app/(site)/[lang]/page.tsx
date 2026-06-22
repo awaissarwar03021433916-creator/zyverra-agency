@@ -9,7 +9,6 @@ import {
   localBusinessSchema,
   serviceSchemas,
   softwareApplicationSchemas,
-  productSchemas,
 } from "@/lib/schema";
 
 export default async function Page({
@@ -30,7 +29,6 @@ export default async function Page({
           localBusinessSchema(origin),
           ...serviceSchemas(origin),
           ...softwareApplicationSchemas(origin),
-          ...productSchemas(origin),
         ]}
       />
       <HomePage dict={dict} lang={lang} />
