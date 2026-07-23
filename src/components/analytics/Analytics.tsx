@@ -4,9 +4,12 @@ import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
 
-// Google Analytics 4. Activates only in production and only when
-// NEXT_PUBLIC_GA_ID is set (e.g. "G-XXXXXXXXXX"), so dev/preview builds stay
-// analytics-free.
+import { useCookieConsent } from "@/hooks/useCookieConsent";
+
+// Google Analytics 4. Activates only in production, only when
+// NEXT_PUBLIC_GA_ID is set (e.g. "G-XXXXXXXXXX"), and only after the visitor
+// has granted consent via the cookie banner — so dev/preview builds stay
+// analytics-free and no measurement runs before an opt-in.
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
 const GA_ENABLED = !!GA_ID && process.env.NODE_ENV === "production";
 
@@ -33,7 +36,11 @@ function PageViewTracker() {
 }
 
 export function Analytics() {
-  if (!GA_ENABLED) return null;
+  const { status } = useCookieConsent();
+
+  // No consent, no script. Nothing from Google is requested or executed until
+  // the visitor actively opts in, so no analytics cookie can be set first.
+  if (!GA_ENABLED || status !== "granted") return null;
 
   return (
     <>

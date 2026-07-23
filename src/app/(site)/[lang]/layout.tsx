@@ -5,6 +5,7 @@ import "../../../styles/globals.css";
 import { env } from "@/config/env";
 import { ChatWidget } from "@/components/chat/ChatWidget";
 import { Analytics } from "@/components/analytics/Analytics";
+import { CookieConsentBanner } from "@/components/analytics/CookieConsentBanner";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { organizationSchema, websiteSchema } from "@/lib/schema";
 import { locales, defaultLocale, isLocale, dir } from "@/i18n/config";
@@ -117,6 +118,7 @@ export default async function LocaleLayout({
         {children}
         <ChatWidget />
         <Analytics />
+        <CookieConsentBanner />
       </body>
     </html>
   );

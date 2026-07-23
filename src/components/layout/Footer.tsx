@@ -19,12 +19,16 @@ export default function Footer({ dict, lang }: { dict: Dictionary["footer"]; lan
   }, []);
 
   // Resolve links so in-page anchors work from sub-pages (navigate home first)
-  // and real page links carry the active locale. Placeholder "#" stays inert.
+  // and real page links carry the active locale. Placeholder "#" stays inert,
+  // and external/protocol links (social profiles, mailto, tel) pass through
+  // untouched — prefixing the locale would break them.
   const homePath = `/${lang}`;
   const isHome =
     pathname === homePath || pathname === `${homePath}/` || pathname === "/";
+  const isExternal = (href: string) => /^([a-z][a-z0-9+.-]*:|\/\/)/i.test(href);
   const resolveHref = (href: string) => {
     if (href === "#") return href;
+    if (isExternal(href)) return href;
     if (href.startsWith("#")) return isHome ? href : `${homePath}${href}`;
     return `${homePath}${href}`;
   };
@@ -87,16 +91,22 @@ export default function Footer({ dict, lang }: { dict: Dictionary["footer"]; lan
                 {col.title}
               </div>
               <ul className="mt-4 grid gap-3">
-                {col.links.map((link) => (
-                  <li key={`${link.label}-${link.href}`}>
-                    <a
-                      href={resolveHref(link.href)}
-                      className="text-sm text-muted-foreground transition-colors hover:text-primary"
-                    >
-                      {link.label}
-                    </a>
-                  </li>
-                ))}
+                {col.links.map((link) => {
+                  const external = isExternal(link.href);
+                  return (
+                    <li key={`${link.label}-${link.href}`}>
+                      <a
+                        href={resolveHref(link.href)}
+                        {...(external
+                          ? { target: "_blank", rel: "noopener noreferrer" }
+                          : {})}
+                        className="text-sm text-muted-foreground transition-colors hover:text-primary"
+                      >
+                        {link.label}
+                      </a>
+                    </li>
+                  );
+                })}
               </ul>
             </div>
           ))}

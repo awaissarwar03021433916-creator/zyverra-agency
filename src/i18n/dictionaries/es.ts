@@ -1,4 +1,5 @@
 import type { Dictionary } from "../types";
+import { socialNavLinks } from "@/config/founder";
 
 const es: Dictionary = {
   meta: {
@@ -303,6 +304,9 @@ const es: Dictionary = {
       { label: "Por Qué Nosotros", href: "/why-us" },
       { label: "Blog", href: "/blog" },
       { label: "Contacto", href: "#contact" },
+      { label: "Política de Privacidad", href: "/privacy" },
+      { label: "Términos y Condiciones", href: "/terms" },
+      { label: "Política de Cookies", href: "/cookies" },
     ],
     servicesLinks: [
       { label: "Agentes de IA", href: "#services" },
@@ -311,9 +315,7 @@ const es: Dictionary = {
       { label: "Plataformas web", href: "#services" },
       { label: "Software a medida", href: "#services" },
     ],
-    socialLinks: [
-      { label: "LinkedIn", href: "https://www.linkedin.com/in/awaissarwar898/" },
-    ],
+    socialLinks: socialNavLinks,
     startProject: "Iniciar un proyecto",
     rights: "Todos los derechos reservados.",
     tagline: "Agentes de IA · Automatización con IA · Desarrollo SaaS",

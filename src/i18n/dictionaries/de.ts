@@ -1,4 +1,5 @@
 import type { Dictionary } from "../types";
+import { socialNavLinks } from "@/config/founder";
 
 const de: Dictionary = {
   meta: {
@@ -303,6 +304,9 @@ const de: Dictionary = {
       { label: "Warum Wir", href: "/why-us" },
       { label: "Blog", href: "/blog" },
       { label: "Kontakt", href: "#contact" },
+      { label: "Datenschutzerklärung", href: "/privacy" },
+      { label: "AGB", href: "/terms" },
+      { label: "Cookie-Richtlinie", href: "/cookies" },
     ],
     servicesLinks: [
       { label: "KI-Agenten", href: "#services" },
@@ -311,9 +315,7 @@ const de: Dictionary = {
       { label: "Web-Plattformen", href: "#services" },
       { label: "Individuelle Software", href: "#services" },
     ],
-    socialLinks: [
-      { label: "LinkedIn", href: "https://www.linkedin.com/in/awaissarwar898/" },
-    ],
+    socialLinks: socialNavLinks,
     startProject: "Projekt starten",
     rights: "Alle Rechte vorbehalten.",
     tagline: "KI-Agenten · KI-Automatisierung · SaaS-Entwicklung",

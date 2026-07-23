@@ -26,6 +26,9 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "/how-we-deliver", lastModified: now },
     { path: "/why-us", lastModified: now },
     { path: "/blog", lastModified: now },
+    { path: "/privacy", lastModified: now },
+    { path: "/terms", lastModified: now },
+    { path: "/cookies", lastModified: now },
     ...blogPosts.map((p) => ({ path: `/blog/${p.slug}`, lastModified: new Date(p.date) })),
   ];
 

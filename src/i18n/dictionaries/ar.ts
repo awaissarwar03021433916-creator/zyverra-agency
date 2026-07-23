@@ -1,4 +1,5 @@
 import type { Dictionary } from "../types";
+import { socialNavLinks } from "@/config/founder";
 
 const ar: Dictionary = {
   meta: {
@@ -297,6 +298,9 @@ const ar: Dictionary = {
       { label: "لماذا نحن", href: "/why-us" },
       { label: "المدونة", href: "/blog" },
       { label: "تواصل", href: "#contact" },
+      { label: "سياسة الخصوصية", href: "/privacy" },
+      { label: "الشروط والأحكام", href: "/terms" },
+      { label: "سياسة ملفات الارتباط", href: "/cookies" },
     ],
     servicesLinks: [
       { label: "وكلاء الذكاء الاصطناعي", href: "#services" },
@@ -305,9 +309,7 @@ const ar: Dictionary = {
       { label: "منصات الويب", href: "#services" },
       { label: "برمجيات مخصصة", href: "#services" },
     ],
-    socialLinks: [
-      { label: "LinkedIn", href: "https://www.linkedin.com/in/awaissarwar898/" },
-    ],
+    socialLinks: socialNavLinks,
     startProject: "ابدأ مشروعًا",
     rights: "جميع الحقوق محفوظة.",
     tagline: "وكلاء الذكاء الاصطناعي · الأتمتة بالذكاء الاصطناعي · تطوير SaaS",

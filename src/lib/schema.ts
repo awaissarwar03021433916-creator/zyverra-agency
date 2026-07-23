@@ -4,6 +4,7 @@
 import { env } from "@/config/env";
 import { appConfig } from "@/config/app";
 import { business } from "@/config/business";
+import { founder, sameAsProfiles } from "@/config/founder";
 import type { Locale } from "@/i18n/config";
 import type { Faq } from "@/data/faqs";
 
@@ -27,6 +28,7 @@ export function siteOrigin(): string {
 }
 
 const orgId = (origin: string) => `${origin}/#organization`;
+const founderId = (origin: string) => `${origin}/#founder`;
 
 function postalAddress() {
   const a = business.address;
@@ -62,7 +64,30 @@ export function organizationSchema(origin: string) {
     },
     address: postalAddress(),
     areaServed: business.areaServed,
+    sameAs: sameAsProfiles,
+    founder: { "@id": founderId(origin) },
     ...(business.phone ? { telephone: business.phone } : {}),
+  };
+}
+
+// The founder as a first-class entity, linked to the organization from both
+// sides. `sameAs` connects this profile to the same person's public accounts so
+// search engines can reconcile them into one entity.
+export function founderSchema(origin: string) {
+  return {
+    "@context": CONTEXT,
+    "@type": "Person",
+    "@id": founderId(origin),
+    name: founder.name,
+    jobTitle: founder.role,
+    email: founder.email,
+    image: `${origin}${founder.image}`,
+    url: `${origin}/#founder`,
+    worksFor: { "@id": orgId(origin) },
+    founderOf: { "@id": orgId(origin) },
+    knowsAbout: KNOWS_ABOUT,
+    sameAs: sameAsProfiles,
+    address: postalAddress(),
   };
 }
 

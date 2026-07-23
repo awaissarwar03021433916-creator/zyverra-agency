@@ -9,6 +9,7 @@ import {
   localBusinessSchema,
   serviceSchemas,
   softwareApplicationSchemas,
+  founderSchema,
 } from "@/lib/schema";
 
 export default async function Page({
@@ -27,6 +28,7 @@ export default async function Page({
       <JsonLd
         data={[
           localBusinessSchema(origin),
+          founderSchema(origin),
           ...serviceSchemas(origin),
           ...softwareApplicationSchemas(origin),
         ]}

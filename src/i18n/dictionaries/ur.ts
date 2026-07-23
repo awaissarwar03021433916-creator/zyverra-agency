@@ -1,4 +1,5 @@
 import type { Dictionary } from "../types";
+import { socialNavLinks } from "@/config/founder";
 
 const ur: Dictionary = {
   meta: {
@@ -301,6 +302,9 @@ const ur: Dictionary = {
       { label: "ہم کیوں", href: "/why-us" },
       { label: "بلاگ", href: "/blog" },
       { label: "رابطہ", href: "#contact" },
+      { label: "پرائیویسی پالیسی", href: "/privacy" },
+      { label: "شرائط و ضوابط", href: "/terms" },
+      { label: "کوکی پالیسی", href: "/cookies" },
     ],
     servicesLinks: [
       { label: "AI ایجنٹس", href: "#services" },
@@ -309,9 +313,7 @@ const ur: Dictionary = {
       { label: "ویب پلیٹ فارمز", href: "#services" },
       { label: "کسٹم سافٹ ویئر", href: "#services" },
     ],
-    socialLinks: [
-      { label: "LinkedIn", href: "https://www.linkedin.com/in/awaissarwar898/" },
-    ],
+    socialLinks: socialNavLinks,
     startProject: "پروجیکٹ شروع کریں",
     rights: "جملہ حقوق محفوظ ہیں۔",
     tagline: "AI ایجنٹس · AI آٹومیشن · SaaS ڈویلپمنٹ",
