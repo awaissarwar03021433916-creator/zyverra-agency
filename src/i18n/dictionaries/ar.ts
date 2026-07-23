@@ -14,6 +14,7 @@ const ar: Dictionary = {
       { label: "الأعمال", href: "#portfolio" },
       { label: "آلية التسليم", href: "/how-we-deliver" },
       { label: "لماذا نحن", href: "/why-us" },
+      { label: "المؤسس", href: "/founder" },
       { label: "المدونة", href: "/blog" },
     ],
     contact: "تواصل",

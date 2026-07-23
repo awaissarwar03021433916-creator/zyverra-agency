@@ -14,6 +14,7 @@ const ur: Dictionary = {
       { label: "پورٹ فولیو", href: "#portfolio" },
       { label: "ہماری ڈیلیوری", href: "/how-we-deliver" },
       { label: "ہم کیوں", href: "/why-us" },
+      { label: "بانی", href: "/founder" },
       { label: "بلاگ", href: "/blog" },
     ],
     contact: "رابطہ",

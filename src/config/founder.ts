@@ -11,10 +11,13 @@ export const founder = {
   company: "Zyverra Labs",
   email: business.email,
   location: `${business.address.city}, ${business.address.countryName}`,
-  // Portrait lives in public/portfolio/. Dimensions are intrinsic to the file
-  // and are passed to next/image to reserve layout space.
+  // Portrait lives in public/portfolio/awais.jpg (560×560, a circular crop on a
+  // square canvas — which is why it is framed as a circle wherever it appears).
+  // Move the file and change this one line if you prefer it at public/awais.jpg.
   image: "/portfolio/awais.jpg",
   imageAlt: "Muhammad Awais, Founder and CEO of Zyverra Labs",
+  // Locale-relative path to the portfolio page the profile links to.
+  portfolioPath: "/portfolio",
 } as const;
 
 export const founderSocials = {

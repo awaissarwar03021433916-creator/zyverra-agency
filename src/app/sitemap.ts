@@ -25,6 +25,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: "", lastModified: now },
     { path: "/how-we-deliver", lastModified: now },
     { path: "/why-us", lastModified: now },
+    { path: "/founder", lastModified: now },
+    { path: "/portfolio", lastModified: now },
     { path: "/blog", lastModified: now },
     { path: "/privacy", lastModified: now },
     { path: "/terms", lastModified: now },

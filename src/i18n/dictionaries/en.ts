@@ -14,6 +14,7 @@ const en: Dictionary = {
       { label: "Portfolio", href: "#portfolio" },
       { label: "How We Deliver", href: "/how-we-deliver" },
       { label: "Why Us", href: "/why-us" },
+      { label: "Founder", href: "/founder" },
       { label: "Blog", href: "/blog" },
     ],
     contact: "Contact",
