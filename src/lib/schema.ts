@@ -246,7 +246,7 @@ export function blogPostingSchema(origin: string, post: BlogPost) {
     publisher: { "@id": orgId(origin) },
     mainEntityOfPage: url,
     url,
-    image: `${origin}${post.image}`,
+    image: `${origin}${routes.blog}/${post.slug}/og`,
     keywords: post.targetKeyword,
     articleSection: post.category,
   };

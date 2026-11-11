@@ -19,7 +19,16 @@ export const metadata = pageMetadata({
   path: PATH,
 });
 
-const CATEGORY_ORDER: BlogCategory[] = ["Websites", "Compliance", "SEO & AI search", "AI & software"];
+const CATEGORY_ORDER: BlogCategory[] = [
+  "Websites",
+  "Local SEO",
+  "SEO & AI search",
+  "Ads",
+  "Social media",
+  "Clinic growth",
+  "Compliance",
+  "AI & software",
+];
 const slug = (s: string) => s.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
 
 export default function Page() {

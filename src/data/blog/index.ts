@@ -3,15 +3,56 @@ import { websiteCostPost } from "./posts/aesthetic-clinic-website-cost-uk";
 import { advertisingRulesPost } from "./posts/botox-advertising-rules-clinic-website";
 import { aiSearchPost } from "./posts/get-clinic-recommended-by-chatgpt";
 import { softwarePosts } from "./posts/software";
+import { websiteChecklistPost } from "./posts/a1-website-checklist";
+import { designExamplesPost } from "./posts/a2-design-examples";
+import { websiteBuilderPost } from "./posts/a3-website-builder";
+import { notGettingBookingsPost } from "./posts/a4-not-getting-bookings";
+import { treatmentPageSeoPost } from "./posts/a5-treatment-page-seo";
+import { freshaVsWebsitePost } from "./posts/a6-fresha-vs-own-website";
+import { nurseWebsitePost } from "./posts/a7-nurse-website";
+import { gdprPost } from "./posts/a8-gdpr";
+import { gbpGuidePost } from "./posts/b1-gbp-guide";
+import { mapPackPost } from "./posts/b2-map-pack";
+import { aiOverviewsPost } from "./posts/c2-ai-overviews";
+import { facebookAdsPlaybookPost } from "./posts/d1-facebook-ads-playbook";
+import { googleVsMetaPost } from "./posts/d2-google-vs-meta";
+import { instagramPlanPost } from "./posts/e1-instagram-plan";
+import { reelsIdeasPost } from "./posts/e2-reels-ideas";
+import { enquiryConversionPost } from "./posts/f1-enquiry-conversion";
+import { patientRetentionPost } from "./posts/f2-patient-retention";
 
 export type { BlogBlock, BlogPost, BlogCategory } from "./types";
 
 // Clinic guides first; posts 4–16 of the content plan live in
 // content/blog/_planned.md and get no placeholder pages.
 export const blogPosts: BlogPost[] = [
+  // A. Clinic websites
+  websiteChecklistPost,
+  designExamplesPost,
+  websiteBuilderPost,
+  notGettingBookingsPost,
+  treatmentPageSeoPost,
+  freshaVsWebsitePost,
+  nurseWebsitePost,
+  gdprPost,
   websiteCostPost,
-  advertisingRulesPost,
+  // B. Local SEO
+  gbpGuidePost,
+  mapPackPost,
+  // C. AI search
   aiSearchPost,
+  aiOverviewsPost,
+  // D. Ads
+  facebookAdsPlaybookPost,
+  googleVsMetaPost,
+  // E. Social
+  instagramPlanPost,
+  reelsIdeasPost,
+  // F. Growth
+  enquiryConversionPost,
+  patientRetentionPost,
+  // Compliance + software
+  advertisingRulesPost,
   ...softwarePosts,
 ];
 
@@ -49,12 +90,24 @@ function blockText(block: BlogBlock): string {
     case "list":
     case "ordered":
     case "checklist":
+    case "tldr":
       return block.items.join(" ");
+    case "table":
+      return [block.head.join(" "), ...block.rows.map((r) => r.join(" "))].join(" ");
+    case "faq":
+      return block.items.map((i) => `${i.q} ${i.a}`).join(" ");
+    case "sources":
+      return "";
     case "cta":
       return `${block.title} ${block.text}`;
     default:
       return block.text;
   }
+}
+
+/** External sources cited by a post. */
+export function postSources(post: BlogPost) {
+  return post.body.flatMap((b) => (b.type === "sources" ? b.items : []));
 }
 
 /** Reading time at ~220 words per minute, minimum one minute. */

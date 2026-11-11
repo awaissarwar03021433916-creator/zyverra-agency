@@ -1,3 +1,4 @@
+import { Fragment } from "react";
 import { notFound } from "next/navigation";
 import Image from "next/image";
 import Link from "next/link";
@@ -40,6 +41,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
     type: "article",
     publishedTime: post.date,
     modifiedTime: post.updated,
+    image: { url: `${routes.blog}/${post.slug}/og`, width: 1200, height: 630, alt: post.imageAlt },
   });
 }
 
@@ -88,9 +90,97 @@ function Block({ block }: { block: BlogBlock }) {
           ))}
         </ol>
       );
+    case "tldr":
+      return (
+        <div className="rounded-2xl border border-border bg-secondary/50 p-6">
+          <p className="text-xs font-bold uppercase tracking-widest text-foreground">TL;DR</p>
+          <ul className="mt-3 ml-5 list-disc space-y-1.5 text-base text-foreground marker:text-primary">
+            {block.items.map((item, i) => (
+              <li key={i}>
+                <RichText text={item} />
+              </li>
+            ))}
+          </ul>
+        </div>
+      );
+    case "table":
+      return (
+        <figure className="overflow-x-auto rounded-2xl border border-border bg-card">
+          <table className="w-full min-w-[32rem] text-left text-sm">
+            <caption className="sr-only">{block.caption}</caption>
+            <thead>
+              <tr className="border-b border-border bg-secondary/60">
+                {block.head.map((h) => (
+                  <th key={h} scope="col" className="px-4 py-3 font-semibold text-foreground">
+                    {h}
+                  </th>
+                ))}
+              </tr>
+            </thead>
+            <tbody>
+              {block.rows.map((row, ri) => (
+                <tr key={ri} className="border-b border-border last:border-0 align-top">
+                  {row.map((cell, ci) =>
+                    ci === 0 ? (
+                      <th key={ci} scope="row" className="px-4 py-3 font-medium text-foreground">
+                        <RichText text={cell} />
+                      </th>
+                    ) : (
+                      <td key={ci} className="px-4 py-3 text-muted-foreground">
+                        <RichText text={cell} />
+                      </td>
+                    )
+                  )}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+          {block.note && <figcaption className="border-t border-border px-4 py-2.5 text-xs text-muted-foreground">{block.note}</figcaption>}
+        </figure>
+      );
+    case "placeholder":
+      // Screenshot the owner still has to supply. Dev-only, never in production.
+      if (process.env.NODE_ENV === "production") return null;
+      return (
+        <p className="rounded-lg border border-dashed border-amber-400 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-900">
+          TODO [CONFIRM] (dev only): {block.text}
+        </p>
+      );
+    case "faq":
+      return (
+        <div className="divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card">
+          {block.items.map((f) => (
+            <details key={f.q} className="group px-5 py-1">
+              <summary className="flex cursor-pointer list-none items-center justify-between gap-4 py-4 [&::-webkit-details-marker]:hidden">
+                <h3 className="text-base font-semibold text-foreground">{f.q}</h3>
+                <span aria-hidden className="text-muted-foreground transition-transform duration-200 group-open:rotate-45">+</span>
+              </summary>
+              <p className="pb-5 text-base text-muted-foreground">
+                <RichText text={f.a} />
+              </p>
+            </details>
+          ))}
+        </div>
+      );
+    case "sources":
+      return (
+        <div className="rounded-2xl border border-border bg-card p-6">
+          <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Sources</p>
+          <ol className="mt-3 ml-5 list-decimal space-y-1.5 text-sm text-muted-foreground">
+            {block.items.map((s) => (
+              <li key={s.url}>
+                <a href={s.url} target="_blank" rel="noopener noreferrer">
+                  {s.label}
+                </a>
+              </li>
+            ))}
+          </ol>
+        </div>
+      );
     case "checklist":
       return (
         <ul className="space-y-2.5 rounded-2xl border border-border bg-card p-6">
+          {block.title && <li className="list-none pb-1 font-heading text-lg font-semibold text-foreground">{block.title}</li>}
           {block.items.map((item, i) => (
             <li key={i} className="flex items-start gap-3 text-base text-foreground">
               <span aria-hidden className="mt-1 flex h-4 w-4 shrink-0 items-center justify-center rounded border border-primary/50">
@@ -117,10 +207,10 @@ function Block({ block }: { block: BlogBlock }) {
           <p className="mt-2 text-sm leading-relaxed text-white/90">{block.text}</p>
           <div className="mt-5 flex flex-col gap-3 sm:flex-row">
             <Link
-              href={routes.contact}
+              href={routes.freeAudit}
               className="inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-white px-5 text-sm font-bold text-[#0a4f8c] no-underline hover:no-underline"
             >
-              Get a quote
+              Get a free website audit
               <ArrowRight aria-hidden className="h-4 w-4" />
             </Link>
             <WhatsAppInlineLink location="blog_cta">Message us on WhatsApp</WhatsAppInlineLink>
@@ -175,7 +265,25 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <div className="mx-auto mt-10 grid max-w-5xl gap-10 lg:grid-cols-[1fr_15rem]">
           <div className="prose-zyverra min-w-0 space-y-5 lg:order-1">
             {post.body.map((block, i) => (
-              <Block key={i} block={block} />
+              <Fragment key={i}>
+                <Block block={block} />
+                {/* Table of contents straight after the TL;DR (inline on smaller screens;
+                    the sticky sidebar version shows on desktop). */}
+                {block.type === "tldr" && toc.length > 0 && (
+                  <nav aria-label="Contents" className="rounded-2xl border border-border bg-card p-5 lg:hidden">
+                    <p className="text-xs font-bold uppercase tracking-widest text-muted-foreground">Contents</p>
+                    <ol className="mt-3 ml-5 list-decimal space-y-1.5 text-sm">
+                      {toc.map((item) => (
+                        <li key={item.id}>
+                          <a href={`#${item.id}`} className="text-muted-foreground hover:text-primary">
+                            {item.text}
+                          </a>
+                        </li>
+                      ))}
+                    </ol>
+                  </nav>
+                )}
+              </Fragment>
             ))}
 
             {/* Author box */}

@@ -1,17 +1,11 @@
 import { business, marketingPackages, pricing } from "@/config/business";
 import { routes, services } from "@/config/site";
-import { blogPosts } from "@/data/blog";
+import { blogPosts, listingTitle } from "@/data/blog";
 import { siteOrigin } from "@/lib/schema";
 
 // /llms.txt (Section G6). Optional and low-cost: Google says it is not needed
 // for Search, so this is generated from the site data and left at that.
 export const dynamic = "force-static";
-
-const GUIDE_LABELS: Record<string, string> = {
-  "aesthetic-clinic-website-cost-uk": "Clinic website prices in the UK (2026 guide)",
-  "botox-advertising-rules-clinic-website": "Prescription-only medicines and ASA advertising rules for clinic websites",
-  "get-clinic-recommended-by-chatgpt": "Getting your clinic recommended by ChatGPT and Google AI",
-};
 
 export function GET() {
   const origin = siteOrigin();
@@ -23,9 +17,10 @@ export function GET() {
     [routes.adminDashboard]: "what clients can edit themselves",
   };
 
+  // Every clinic guide (software articles excluded), listed by its neutral title.
   const guides = blogPosts
-    .filter((p) => GUIDE_LABELS[p.slug])
-    .map((p) => `- [${GUIDE_LABELS[p.slug]}](${u(`${routes.blog}/${p.slug}`)})`)
+    .filter((p) => p.category !== "AI & software")
+    .map((p) => `- [${listingTitle(p)}](${u(`${routes.blog}/${p.slug}`)}): ${p.excerpt}`)
     .join("\n");
 
   const text = `# Zyverra Labs
