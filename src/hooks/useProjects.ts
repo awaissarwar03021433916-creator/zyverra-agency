@@ -49,13 +49,11 @@ function loadInitial(): Stored {
  * conversation (its own sessionId), persisted across reloads in localStorage.
  */
 export function useProjects() {
-  const [state, setState] = useState<Stored>(() => ({ projects: [], activeId: "" }));
-  const [ready, setReady] = useState(false);
-
-  useEffect(() => {
-    setState(loadInitial());
-    setReady(true);
-  }, []);
+  // The chat window that uses this hook is client-only (dynamic, ssr: false),
+  // so localStorage can be read in a lazy initialiser — no hydration mismatch
+  // and no setState-in-effect cascade.
+  const [state, setState] = useState<Stored>(loadInitial);
+  const ready = true;
 
   useEffect(() => {
     if (!ready || typeof window === "undefined") return;

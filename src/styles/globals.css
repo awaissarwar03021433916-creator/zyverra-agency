@@ -274,6 +274,7 @@
   animation: heroGridDrift 90s linear infinite;
 }
 
+
 /* Infinite horizontal marquee. The track holds two identical copies of the
    items, so translating by -50% lands copy two exactly where copy one began
    for a seamless loop (a trailing gap is added via padding so the math is
@@ -311,7 +312,7 @@
   background: #007acc;
 }
 
-/* Respect users who prefer reduced motion: neutralize CSS animations and
+/* Respect users who prefer reduced motion: neutralise CSS animations and
    transitions site-wide. Framer Motion is handled separately via
    useReducedMotion in the components. */
 @media (prefers-reduced-motion: reduce) {
@@ -327,4 +328,58 @@
   html {
     scroll-behavior: auto;
   }
+}
+
+/* Floating WhatsApp button: on small screens the cookie banner spans the full
+   width, so the button steps aside while the banner is open and never covers
+   its buttons. On wider screens the banner sits bottom-left, clear of it. */
+@media (max-width: 639px) {
+  html[data-cookie-banner="open"] .wa-float {
+    display: none;
+  }
+}
+
+/* Blog / long-form typography used by the guide and legal pages. */
+.prose-zyverra :where(p, li) {
+  line-height: 1.8;
+}
+.prose-zyverra :where(p, li) a {
+  color: var(--primary);
+  font-weight: 600;
+  text-underline-offset: 3px;
+}
+.prose-zyverra :where(p, li) a:hover {
+  text-decoration: underline;
+}
+
+/* Scroll reveal (see components/marketing/pages/Reveal.tsx). */
+[data-reveal="pending"],
+[data-reveal="shown"] {
+  transition:
+    opacity 0.55s ease-out,
+    transform 0.55s ease-out;
+}
+[data-reveal="pending"] {
+  opacity: 0;
+  transform: translate3d(0, 22px, 0);
+}
+
+/* Brand blue as *text* is a touch darker than the #007acc fill colour, so
+   small blue text on tinted section backgrounds passes WCAG AA (4.5:1).
+   Buttons and fills keep #007acc. */
+:root {
+  --primary-ink: #006aae;
+}
+.text-primary {
+  color: var(--primary-ink);
+}
+
+/* Gentle periodic nudge on the chat launcher (replaces a JS animation). */
+@keyframes chatNudge {
+  0%, 84%, 100% { transform: translateY(0) scale(1); }
+  88% { transform: translateY(-6px) scale(1.12); }
+  92% { transform: translateY(0) scale(1); }
+}
+.animate-chat-nudge {
+  animation: chatNudge 4.6s ease-in-out infinite;
 }

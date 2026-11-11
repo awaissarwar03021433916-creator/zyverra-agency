@@ -1,25 +1,54 @@
-// Single source of truth for the business NAP (Name, Address, Phone). Used by
-// the LocalBusiness schema, location metadata, and on-page contact details so
-// everything stays consistent with the Google Business Profile listing.
+// Single source of truth for the business NAP (Name, Address, Phone) and the
+// commercial facts the site repeats everywhere (prices, timeline, payment
+// plans). Schema, metadata, llms.txt, the footer and page copy all read from
+// here so the details never drift apart.
 //
-// IMPORTANT: phone and street are intentionally empty — no contact details are
-// fabricated. Fill these with verified values before claiming the Google
-// Business Profile (NAP must match the GBP listing exactly).
+// No UK street address is listed on purpose: the business operates from
+// Lahore and serves UK clinics remotely. Never add a virtual UK address.
+
 export const business = {
   name: "Zyverra Labs",
   email: "hello@zyverralabs.com",
-  phone: "", // e.g. "+92XXXXXXXXXX" (E.164) once a verified business line exists
+  // E.164 for schema/tel: links, and a human-readable form for display.
+  phone: "+923024258017",
+  phoneDisplay: "+92 302 4258017",
+  whatsappNumber: "923024258017",
   address: {
-    street: "", // add a verified office street address when available
+    street: "",
     city: "Lahore",
     region: "Punjab",
     postalCode: "",
     country: "PK",
     countryName: "Pakistan",
   },
-  // Lahore city-level coordinates. Replace with the exact office location for GBP.
   geo: { latitude: 31.5204, longitude: 74.3587 },
-  areaServed: ["Pakistan", "Worldwide"],
+  areaServed: "United Kingdom",
 } as const;
 
 export const businessLocality = `${business.address.city}, ${business.address.countryName}`;
+
+// Commercial facts. Change a price here and every page, table, FAQ answer and
+// JSON-LD Offer updates with it.
+export const pricing = {
+  optionA: {
+    name: "Option A",
+    label: "Website with admin dashboard",
+    price: 400,
+  },
+  optionB: {
+    name: "Option B",
+    label: "Website without admin dashboard",
+    price: 300,
+  },
+  // TODO [CONFIRM]: "from receipt of content" — the timeline is stated as
+  // working days once the clinic's logo, treatment list, prices and photos arrive.
+  timeline: "7–10 working days",
+  paymentPlans: ["50/50", "30/40/30"],
+} as const;
+
+export const whatsappMessage =
+  "Hi Zyverra Labs, I run a clinic in the UK and I'd like to talk about a new website/marketing. My clinic is: ";
+
+export function whatsappHref(message: string = whatsappMessage): string {
+  return `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(message)}`;
+}

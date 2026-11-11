@@ -1,0 +1,193 @@
+import Link from "next/link";
+import { ArrowRight, Clock, FileText, Receipt, RefreshCw, Sparkles, TrendingUp } from "lucide-react";
+
+import PageShell from "@/components/marketing/pages/PageShell";
+import { Accent, PageHero } from "@/components/marketing/pages/PageHero";
+import {
+  CardGrid,
+  CompareTable,
+  CtaBand,
+  DevConfirm,
+  FaqList,
+  HeroActions,
+  Lead,
+  Section,
+  SectionHeading,
+} from "@/components/marketing/blocks";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { pricing } from "@/config/business";
+import { dashboardLines, routes } from "@/config/site";
+import { faqsById } from "@/data/faqs";
+import { serviceSchema, siteOrigin } from "@/lib/schema";
+import { pageMetadata } from "@/lib/seo";
+
+const PATH = routes.adminDashboard;
+
+export const metadata = pageMetadata({
+  title: "Clinic Website Admin Dashboard: Edit It Yourself | Zyverra",
+  description:
+    "Update treatments, prices, before/after photos, offers and blogs yourself — no developer fees for small changes. See how our clinic dashboard works.",
+  path: PATH,
+});
+
+// Rows marked `confirm` depend on scope the owner still has to confirm; they
+// are labelled neutrally on the page and listed in the TODO note below.
+const CAN_CHANGE: { item: string; what: string; confirm?: boolean }[] = [
+  { item: "Treatments", what: "Add, edit or hide treatments" },
+  { item: "Prices", what: "Change any price, any time" },
+  { item: "Images and galleries", what: "Upload, replace or remove images" },
+  { item: "Before-and-after photos", what: "Add new results to your gallery" },
+  { item: "Offers and promotions", what: "Publish and remove offers" },
+  { item: "Blog posts", what: "Write, edit and publish posts" },
+  { item: "New pages or sections", what: "Agreed at the start of your project", confirm: true },
+  { item: "Opening hours and contact details", what: "Agreed at the start of your project", confirm: true },
+];
+
+export default function Page() {
+  const origin = siteOrigin();
+
+  return (
+    <PageShell breadcrumbs={[{ name: "Clinic Website Admin Dashboard", path: PATH }]}>
+      <JsonLd
+        data={serviceSchema(origin, {
+          path: PATH,
+          name: "Clinic website admin dashboard",
+          serviceType: "Website content management dashboard for clinics",
+          description:
+            "An admin dashboard included with Option A clinic websites, for updating treatments, prices, images, before-and-after photos, offers and blog posts without a developer.",
+        })}
+      />
+
+      <PageHero
+        eyebrow={dashboardLines.tagline}
+        title={
+          <>
+            An admin dashboard that lets you <Accent>run your clinic website yourself</Accent>
+          </>
+        }
+        description={dashboardLines.core}
+        actions={<HeroActions primary={{ href: routes.contact, label: "See the dashboard on a free call" }} secondary={{ href: routes.pricing, label: "Pricing" }} />}
+        chips={["Included with Option A", "Works on phone and laptop", "Changes go live straight away"]}
+      />
+
+      <Lead>
+        Every Option A website comes with a simple admin dashboard. Log in from your phone or laptop to add
+        a new treatment, change a price, upload before-and-after photos, publish an offer or write a blog
+        post. Changes go live straight away, and you don&apos;t need to call or pay a developer. You only need
+        us for major changes, such as a new feature or a redesign.
+      </Lead>
+
+      <Section id="what-you-can-change">
+        <SectionHeading eyebrow="Do it yourself" title="What you can change yourself" />
+        <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-card shadow-xs">
+          <table className="w-full min-w-[30rem] text-left text-sm">
+            <caption className="sr-only">Content you can change yourself with the admin dashboard</caption>
+            <thead>
+              <tr className="border-b border-border bg-secondary/50">
+                <th scope="col" className="px-5 py-4 font-semibold text-foreground">Content</th>
+                <th scope="col" className="px-5 py-4 font-semibold text-foreground">What you can do</th>
+              </tr>
+            </thead>
+            <tbody>
+              {CAN_CHANGE.map((row) => (
+                <tr key={row.item} className="border-b border-border last:border-0">
+                  <th scope="row" className="px-5 py-3.5 font-medium text-foreground">{row.item}</th>
+                  <td className="px-5 py-3.5 text-muted-foreground">{row.what}</td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        {/* TODO [CONFIRM]: whether clients can add new pages/sections and edit opening hours/contact details themselves. */}
+        <DevConfirm>confirm whether clients can add new pages/sections and edit opening hours and contact details themselves.</DevConfirm>
+      </Section>
+
+      <Section id="developer" tone="muted">
+        <SectionHeading
+          eyebrow="When you need us"
+          title="What still needs a developer"
+          description={`${dashboardLines.proof} Major changes, such as new features, new page layouts, integrations and redesigns, are handled by us and quoted separately.`}
+        />
+        {/* TODO [CONFIRM]: pricing for major changes. */}
+        <DevConfirm>state how major changes are priced.</DevConfirm>
+      </Section>
+
+      <Section id="why">
+        <SectionHeading eyebrow="Why it matters" title="Why it matters for clinics" />
+        <CardGrid
+          columns={3}
+          items={[
+            { icon: RefreshCw, title: "Prices change", description: "Update a price the day it changes, not when a developer is free." },
+            { icon: Sparkles, title: "New treatments launch", description: "Add a new treatment page as soon as you start offering it." },
+            { icon: Clock, title: "Seasonal offers", description: "Publish and remove offers on your own timetable." },
+            { icon: TrendingUp, title: "Fresh content helps SEO", description: "An up-to-date site is easier for Google and AI assistants to trust." },
+            { icon: Receipt, title: "No extra invoices", description: "Small edits don't come with a bill or a wait." },
+            { icon: FileText, title: "Your words, your way", description: "Write blog posts and treatment updates in your own voice." },
+          ]}
+        />
+      </Section>
+
+      <Section id="compliance" tone="tint">
+        <div className="grid gap-10 lg:grid-cols-2">
+          <div>
+            <SectionHeading
+              eyebrow="Compliance"
+              title="Built with compliance in mind"
+              description="Before-and-after photos must be genuine, consented and representative. At handover we show you how to add new photos and treatment content in a way that stays within UK advertising rules."
+            />
+            {/* TODO [CONFIRM]: if an in-dashboard consent reminder for before-and-after uploads is built, say so here. */}
+          </div>
+          <div>
+            <SectionHeading
+              eyebrow="Handover"
+              title="Dashboard training at handover"
+              description="When your site launches, we walk you through the dashboard so you know how to make every everyday change yourself."
+            />
+            {/* TODO [CONFIRM]: training format and length. */}
+            <DevConfirm>confirm the training format (e.g. a recorded video call) and length.</DevConfirm>
+          </div>
+        </div>
+      </Section>
+
+      <Section id="compare">
+        <SectionHeading
+          eyebrow="Compare"
+          title="Option A vs Option B"
+          description={dashboardLines.comparison}
+        />
+        <CompareTable
+          caption="Option A compared with Option B"
+          rows={[
+            { label: "Price", a: `£${pricing.optionA.price}`, b: `£${pricing.optionB.price}` },
+            { label: "Admin dashboard", a: true, b: false },
+            { label: "Edit treatments, prices and before-and-afters yourself", a: true, b: false },
+            { label: "Small changes after launch", a: "Do it yourself", b: "By request" },
+            { label: "Timeline", a: pricing.timeline, b: pricing.timeline },
+          ]}
+        />
+        <Link href={routes.pricing} className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+          Full pricing and payment plans
+          <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+        </Link>
+        <span className="mx-3 text-muted-foreground" aria-hidden>·</span>
+        <Link href={routes.work} className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+          See clinic websites we&apos;ve built
+          <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+        </Link>
+      </Section>
+
+      {/* TODO [CONFIRM]: add 3–4 real dashboard screenshots (e.g. /public/dashboard/*.png) with descriptive alt text,
+          such as "Zyverra clinic admin dashboard: editing a treatment price". No mock-ups presented as real. */}
+      <div className="mx-auto max-w-6xl px-4 sm:px-6">
+        <DevConfirm>add 3–4 real admin dashboard screenshots here. Do not use mock-ups.</DevConfirm>
+      </div>
+
+      <Section id="faq" narrow>
+        <SectionHeading eyebrow="FAQ" title="Admin dashboard FAQs" />
+        <FaqList faqs={faqsById(["dashboard-edits", "developer", "options", "before-after"])} />
+      </Section>
+
+      <CtaBand title="See the dashboard on a free call" primaryLabel="Book a free call" />
+    </PageShell>
+  );
+}

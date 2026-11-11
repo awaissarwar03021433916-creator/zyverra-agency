@@ -3,6 +3,8 @@ import { NextResponse } from "next/server";
 import { prisma } from "@/database/prisma/client";
 import { checkContactRateLimit } from "@/rate-limiting/contactLimiter";
 import { sendContactNotificationEmail } from "@/backend/services/email.service";
+import { cleanContent } from "@/server/security/sanitize";
+import { contactSchema } from "@/validation/zod/contact";
 
 function getClientIpFromRequest(req: Request) {
   const forwardedFor = req.headers.get("x-forwarded-for");
@@ -41,20 +43,8 @@ export async function POST(req: Request) {
       );
     }
 
-    const raw = body as Record<string, unknown>;
-    const name = typeof raw.name === "string" ? raw.name.trim() : "";
-    const email = typeof raw.email === "string" ? raw.email.trim() : "";
-    const message = typeof raw.message === "string" ? raw.message.trim() : "";
-
-    if (!name || !email || !message) {
-      statusCode = 400;
-      return NextResponse.json(
-        { success: false, message: "Missing required fields" },
-        { status: 400 }
-      );
-    }
-
-    if (name.length > 80 || email.length > 254 || message.length > 2000) {
+    const parsed = contactSchema.safeParse(body);
+    if (!parsed.success) {
       statusCode = 400;
       return NextResponse.json(
         { success: false, message: "Validation failed" },
@@ -62,8 +52,23 @@ export async function POST(req: Request) {
       );
     }
 
-    const contact = await prisma.contact.create({
-      data: { name, email, message },
+    const { name, email, clinic, town, website, services } = parsed.data;
+    // The Contact table stores one message column, so the clinic details are
+    // folded into it (no schema migration needed). Cleaned of control chars.
+    const message = cleanContent(
+      [
+        `Clinic: ${clinic}`,
+        `Town/city: ${town}`,
+        `Website: ${website || "—"}`,
+        `Services: ${services.length ? services.join(", ") : "—"}`,
+        "",
+        parsed.data.message,
+      ].join("\n"),
+      3000
+    );
+
+    await prisma.contact.create({
+      data: { name: cleanContent(name, 80), email, message },
     });
 
     statusCode = 200;

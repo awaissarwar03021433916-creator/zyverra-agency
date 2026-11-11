@@ -1,220 +1,171 @@
-// Centralized Schema.org / JSON-LD builders. Pure functions returning plain
-// objects so any server component can emit them via <JsonLd>.
+// Schema.org / JSON-LD builders (Section G5). Pure functions returning plain
+// objects that server components emit through <JsonLd>.
+//
+// Rules: only describe what is visible on the page, never output placeholder
+// or unconfirmed values, and never emit Review/AggregateRating for Zyverra Labs.
 
 import { env } from "@/config/env";
-import { appConfig } from "@/config/app";
-import { business } from "@/config/business";
+import { appConfig, CANONICAL_ORIGIN } from "@/config/app";
+import { business, pricing } from "@/config/business";
 import { founder, sameAsProfiles } from "@/config/founder";
-import type { Locale } from "@/i18n/config";
+import { routes } from "@/config/site";
 import type { Faq } from "@/data/faqs";
+import type { BlogPost } from "@/data/blog";
 
 const CONTEXT = "https://schema.org";
-const EMAIL = "hello@zyverralabs.com";
-const NAME = "Zyverra Labs";
 
-// Entities Zyverra Labs is associated with — strengthens AI/entity understanding.
-const KNOWS_ABOUT = [
-  "Custom Software Development",
-  "AI Solutions",
-  "Business Automation",
-  "CRM Development",
-  "Web Application Development",
-  "Blockchain Development",
-  "SaaS Development",
-];
-
+/**
+ * Canonical origin, without a trailing slash. APP_URL wins (so local dev uses
+ * localhost), but the bare production domain is normalised to www because the
+ * host layer redirects apex -> www — the www host is the one that serves pages.
+ */
 export function siteOrigin(): string {
-  return (env.APP_URL ?? appConfig.url).replace(/\/$/, "");
+  const raw = (env.APP_URL ?? appConfig.url).replace(/\/$/, "");
+  return raw === "https://zyverralabs.com" ? CANONICAL_ORIGIN : raw;
 }
 
-const orgId = (origin: string) => `${origin}/#organization`;
-const founderId = (origin: string) => `${origin}/#founder`;
+export const orgId = (origin: string) => `${origin}/#organization`;
+export const founderId = (origin: string) => `${origin}/#founder`;
+export const websiteId = (origin: string) => `${origin}/#website`;
 
-function postalAddress() {
-  const a = business.address;
-  const addr: Record<string, string> = {
-    "@type": "PostalAddress",
-    addressLocality: a.city,
-    addressRegion: a.region,
-    addressCountry: a.country,
-  };
-  if (a.street) addr.streetAddress = a.street;
-  if (a.postalCode) addr.postalCode = a.postalCode;
-  return addr;
-}
+const abs = (origin: string, path: string) => (path === "/" ? `${origin}/` : `${origin}${path}`);
 
-export function organizationSchema(origin: string) {
-  return {
-    "@context": CONTEXT,
-    "@type": "Organization",
-    "@id": orgId(origin),
-    name: NAME,
-    url: origin,
-    logo: `${origin}/icon-192.png`,
-    image: `${origin}/og-image.png`,
-    email: EMAIL,
-    description:
-      "Software house in Lahore, Pakistan building custom software, AI solutions, business automation, CRM, web applications, blockchain, and SaaS products.",
-    alternateName: "Zyverra",
-    slogan: "Custom software, AI, and SaaS engineering for modern teams.",
-    knowsAbout: KNOWS_ABOUT,
-    foundingLocation: {
-      "@type": "Place",
-      name: `${business.address.city}, ${business.address.countryName}`,
-    },
-    address: postalAddress(),
-    areaServed: business.areaServed,
-    sameAs: sameAsProfiles,
-    founder: { "@id": founderId(origin) },
-    ...(business.phone ? { telephone: business.phone } : {}),
-  };
-}
-
-// The founder as a first-class entity, linked to the organization from both
-// sides. `sameAs` connects this profile to the same person's public accounts so
-// search engines can reconcile them into one entity.
-export function founderSchema(origin: string) {
-  return {
-    "@context": CONTEXT,
-    "@type": "Person",
-    "@id": founderId(origin),
-    name: founder.name,
-    jobTitle: founder.role,
-    email: founder.email,
-    image: `${origin}${founder.image}`,
-    url: `${origin}/#founder`,
-    worksFor: { "@id": orgId(origin) },
-    founderOf: { "@id": orgId(origin) },
-    knowsAbout: KNOWS_ABOUT,
-    sameAs: sameAsProfiles,
-    address: postalAddress(),
-  };
-}
-
-export function websiteSchema(origin: string, locale: Locale) {
-  return {
-    "@context": CONTEXT,
-    "@type": "WebSite",
-    "@id": `${origin}/#website`,
-    name: NAME,
-    url: origin,
-    inLanguage: locale,
-    publisher: { "@id": orgId(origin) },
-  };
-}
-
-export function localBusinessSchema(origin: string) {
-  return {
-    "@context": CONTEXT,
-    "@type": "ProfessionalService",
-    "@id": `${origin}/#localbusiness`,
-    name: NAME,
-    url: origin,
-    image: `${origin}/og-image.png`,
-    logo: `${origin}/icon-192.png`,
-    email: EMAIL,
-    description:
-      "Zyverra Labs is a software house in Lahore, Pakistan building custom software, AI solutions, business automation, and SaaS products for teams worldwide.",
-    address: postalAddress(),
-    geo: {
-      "@type": "GeoCoordinates",
-      latitude: business.geo.latitude,
-      longitude: business.geo.longitude,
-    },
-    areaServed: business.areaServed,
-    knowsAbout: KNOWS_ABOUT,
-    priceRange: "$$",
-    parentOrganization: { "@id": orgId(origin) },
-    ...(business.phone ? { telephone: business.phone } : {}),
-  };
-}
-
-const SERVICES: { name: string; description: string }[] = [
-  {
-    name: "Custom Software Development",
-    description:
-      "Custom software built around your exact business logic, from CRM development to blockchain solutions.",
-  },
-  {
-    name: "AI Solutions",
-    description: "AI agents and AI-powered products that reason, use your tools, and act in your systems.",
-  },
-  {
-    name: "Business Automation",
-    description: "Automation and smart workflows that remove repetitive work across your data, apps, and teams.",
-  },
-  {
-    name: "Web Application Development",
-    description: "Fast, secure web applications with clean UX, strong performance, and real conversion.",
-  },
-  {
-    name: "SaaS Development",
-    description: "Production-ready, multi-tenant SaaS platforms that are secure and built to scale.",
-  },
-  {
-    name: "CRM Development",
-    description: "Custom CRM platforms that centralize records, enforce role-based access, and track operations.",
-  },
-  {
-    name: "Blockchain Development",
-    description: "Blockchain and Web3 systems with smart contracts and tamper-proof, verifiable records.",
-  },
+const KNOWS_ABOUT = [
+  "Aesthetic clinic website design",
+  "Beauty salon website design",
+  "Website admin dashboards",
+  "Local SEO",
+  "AI search visibility",
+  "Meta advertising",
+  "Social media management",
+  "AI chatbots",
+  "Custom software development",
 ];
 
-export function serviceSchemas(origin: string) {
-  return SERVICES.map((s) => ({
+/** Site-wide graph: Organization + ProfessionalService, WebSite and the founder. */
+export function siteGraph(origin: string) {
+  return {
     "@context": CONTEXT,
-    "@type": "Service",
-    name: s.name,
-    serviceType: s.name,
-    description: s.description,
-    provider: { "@id": orgId(origin) },
-    areaServed: "Worldwide",
-  }));
+    "@graph": [
+      {
+        "@type": ["Organization", "ProfessionalService"],
+        "@id": orgId(origin),
+        name: business.name,
+        url: abs(origin, "/"),
+        logo: `${origin}/zyverra-mark.png`,
+        image: `${origin}/og-image.png`,
+        description:
+          "Zyverra Labs builds websites with a built-in admin dashboard, local SEO, AI search visibility, Meta ads and social media for UK aesthetics clinics, aesthetic practitioners, med spas and beauty salons.",
+        email: business.email,
+        telephone: business.phone,
+        address: {
+          "@type": "PostalAddress",
+          addressLocality: business.address.city,
+          addressRegion: business.address.region,
+          addressCountry: business.address.country,
+        },
+        areaServed: { "@type": "Country", name: business.areaServed },
+        currenciesAccepted: "GBP",
+        priceRange: `£${pricing.optionB.price}–£${pricing.optionA.price}`,
+        founder: { "@id": founderId(origin) },
+        knowsAbout: KNOWS_ABOUT,
+        sameAs: sameAsProfiles,
+        contactPoint: {
+          "@type": "ContactPoint",
+          contactType: "sales",
+          email: business.email,
+          telephone: business.phone,
+          areaServed: "GB",
+          availableLanguage: ["en-GB"],
+        },
+      },
+      {
+        "@type": "WebSite",
+        "@id": websiteId(origin),
+        url: abs(origin, "/"),
+        name: business.name,
+        inLanguage: "en-GB",
+        publisher: { "@id": orgId(origin) },
+      },
+      {
+        "@type": "Person",
+        "@id": founderId(origin),
+        name: founder.name,
+        jobTitle: founder.role,
+        image: `${origin}${founder.image}`,
+        worksFor: { "@id": orgId(origin) },
+        url: `${origin}${founder.profilePath}`,
+        sameAs: [sameAsProfiles[0]],
+      },
+    ],
+  };
 }
 
-export function softwareApplicationSchemas(origin: string) {
-  // Software products and tools built by Zyverra Labs, modeled as
-  // SoftwareApplication (CreativeWork subtype) — never Product/Offer, which
-  // would trigger Merchant Listing requirements meant for e-commerce items.
-  const apps = [
+type Crumb = { name: string; path: string };
+
+export function breadcrumbSchema(origin: string, items: Crumb[]) {
+  return {
+    "@context": CONTEXT,
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((it, i) => ({
+      "@type": "ListItem",
+      position: i + 1,
+      name: it.name,
+      item: abs(origin, it.path),
+    })),
+  };
+}
+
+export function websiteOffers(origin: string) {
+  return [
     {
-      name: "AI Proposal Generator",
-      url: "https://ai-proposal-generator-eta-three.vercel.app/",
-      category: "BusinessApplication",
-      description:
-        "An AI product that drafts customized, professional client proposals in seconds from a few inputs.",
+      "@type": "Offer",
+      name: `${pricing.optionA.name} – website with admin dashboard`,
+      price: String(pricing.optionA.price),
+      priceCurrency: "GBP",
+      url: abs(origin, routes.pricing),
     },
     {
-      name: "Employee Management CRM",
-      url: "https://crms-tan.vercel.app/",
-      category: "BusinessApplication",
-      description:
-        "A custom CRM that centralizes employee records, role-based access, and operations tracking.",
-    },
-    {
-      name: "PDF Merger",
-      url: "https://pdf-merger-liard.vercel.app/",
-      category: "UtilitiesApplication",
-      description:
-        "A fast, zero-install web tool that merges PDF files privately, right in the browser.",
+      "@type": "Offer",
+      name: `${pricing.optionB.name} – website without admin dashboard`,
+      price: String(pricing.optionB.price),
+      priceCurrency: "GBP",
+      url: abs(origin, routes.pricing),
     },
   ];
+}
 
-  return apps.map((a) => ({
+/**
+ * Service schema. Pass `offers: true` only where the price is confirmed and
+ * shown on the page (website services); otherwise offers are omitted.
+ */
+export function serviceSchema(
+  origin: string,
+  opts: {
+    path: string;
+    name: string;
+    serviceType: string;
+    description: string;
+    offers?: boolean;
+    areaServed?: { "@type": "Country" | "City"; name: string };
+  }
+) {
+  return {
     "@context": CONTEXT,
-    "@type": "SoftwareApplication",
-    name: a.name,
-    url: a.url,
-    image: `${origin}/og-image.png`,
-    applicationCategory: a.category,
-    operatingSystem: "Web",
-    description: a.description,
-    publisher: { "@id": orgId(origin) },
-    // Free to use, expressed without an Offer node so this stays an entity
-    // descriptor and does not invoke product/merchant validation.
-    isAccessibleForFree: true,
-  }));
+    "@type": "Service",
+    "@id": `${abs(origin, opts.path)}#service`,
+    name: opts.name,
+    serviceType: opts.serviceType,
+    description: opts.description,
+    url: abs(origin, opts.path),
+    provider: { "@id": orgId(origin) },
+    areaServed: opts.areaServed ?? { "@type": "Country", name: business.areaServed },
+    audience: {
+      "@type": "BusinessAudience",
+      audienceType: "Aesthetics clinics, aesthetic practitioners, med spas and beauty salons",
+    },
+    ...(opts.offers ? { offers: websiteOffers(origin) } : {}),
+  };
 }
 
 export function faqPageSchema(faqs: Faq[]) {
@@ -229,19 +180,79 @@ export function faqPageSchema(faqs: Faq[]) {
   };
 }
 
-export function breadcrumbSchema(
+/** Typed WebPage helper: AboutPage, ContactPage, CollectionPage. */
+export function webPageSchema(
   origin: string,
-  locale: Locale,
-  items: { name: string; path: string }[]
+  type: "AboutPage" | "ContactPage" | "CollectionPage",
+  opts: { path: string; name: string; description: string }
 ) {
   return {
     "@context": CONTEXT,
-    "@type": "BreadcrumbList",
-    itemListElement: items.map((it, i) => ({
-      "@type": "ListItem",
-      position: i + 1,
-      name: it.name,
-      item: `${origin}/${locale}${it.path}`,
+    "@type": type,
+    "@id": `${abs(origin, opts.path)}#webpage`,
+    url: abs(origin, opts.path),
+    name: opts.name,
+    description: opts.description,
+    inLanguage: "en-GB",
+    isPartOf: { "@id": websiteId(origin) },
+    ...(type === "AboutPage" ? { about: { "@id": orgId(origin) }, mainEntity: { "@id": founderId(origin) } } : {}),
+  };
+}
+
+export function blogSchema(origin: string, posts: BlogPost[]) {
+  return {
+    "@context": CONTEXT,
+    "@type": "Blog",
+    "@id": `${abs(origin, routes.blog)}#blog`,
+    url: abs(origin, routes.blog),
+    name: "Zyverra Labs blog",
+    inLanguage: "en-GB",
+    publisher: { "@id": orgId(origin) },
+    blogPost: posts.map((p) => ({
+      "@type": "BlogPosting",
+      headline: p.listingTitle ?? p.title,
+      url: abs(origin, `${routes.blog}/${p.slug}`),
+      datePublished: p.date,
+      dateModified: p.updated,
     })),
+  };
+}
+
+export function blogPostingSchema(origin: string, post: BlogPost) {
+  const url = abs(origin, `${routes.blog}/${post.slug}`);
+  return {
+    "@context": CONTEXT,
+    "@type": "BlogPosting",
+    headline: post.title,
+    description: post.metaDescription,
+    datePublished: post.date,
+    dateModified: post.updated,
+    inLanguage: "en-GB",
+    author: { "@id": founderId(origin) },
+    publisher: { "@id": orgId(origin) },
+    mainEntityOfPage: url,
+    url,
+    image: `${origin}${post.image}`,
+    keywords: post.targetKeyword,
+    articleSection: post.category,
+  };
+}
+
+export function articleSchema(
+  origin: string,
+  opts: { path: string; headline: string; description: string; datePublished: string; image?: string }
+) {
+  return {
+    "@context": CONTEXT,
+    "@type": "Article",
+    headline: opts.headline,
+    description: opts.description,
+    datePublished: opts.datePublished,
+    dateModified: opts.datePublished,
+    inLanguage: "en-GB",
+    author: { "@id": founderId(origin) },
+    publisher: { "@id": orgId(origin) },
+    mainEntityOfPage: abs(origin, opts.path),
+    image: `${origin}${opts.image ?? "/og-image.png"}`,
   };
 }

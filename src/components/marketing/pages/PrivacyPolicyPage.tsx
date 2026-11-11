@@ -8,7 +8,6 @@ import {
   Clock,
   Cookie,
   Database,
-  ExternalLink,
   Eye,
   FileText,
   Globe2,
@@ -24,18 +23,17 @@ import {
   Users,
 } from "lucide-react";
 
-import type { Dictionary } from "@/i18n/types";
-import type { Locale } from "@/i18n/config";
 import { business } from "@/config/business";
-import PageShell from "./PageShell";
+import { routes } from "@/config/site";
 import { PageHero } from "./PageHero";
 import { Reveal } from "./Reveal";
 
 // Human-readable effective date. Update this whenever the policy text changes —
 // it is also surfaced in the page metadata and in the hero chips.
-export const PRIVACY_LAST_UPDATED = "23 July 2026";
+export const PRIVACY_LAST_UPDATED = "11 November 2026";
 
-const LEGAL_ENTITY = "Zyverra Labs LLC";
+// TODO [CONFIRM]: the registered legal entity name, if different from the trading name.
+const LEGAL_ENTITY = "Zyverra Labs";
 const PRIVACY_EMAIL = business.email;
 
 // ---------------------------------------------------------------------------
@@ -49,19 +47,19 @@ const AT_A_GLANCE = [
     icon: ShieldCheck,
     title: "We never sell your data",
     description:
-      "We do not sell, rent, or trade personal information, and we do not share it for cross-context behavioural advertising. We run no ad networks or retargeting pixels on this site.",
+      "We do not sell, rent, or trade personal information. Advertising and marketing tags (Google Analytics and the Meta Pixel) only load if you accept marketing cookies.",
   },
   {
     icon: Database,
     title: "We collect the minimum",
     description:
-      "We ask only for what a project conversation genuinely needs: your name, your email, and what you want built. Nothing on this site requires an account.",
+      "We ask only for what an enquiry genuinely needs: your name, email, clinic name, town and what you want help with. Nothing on this site requires an account.",
   },
   {
     icon: UserCheck,
     title: "You stay in control",
     description:
-      "You can request a copy of your data, ask us to correct it, or ask us to delete it entirely. One email to our team is enough — no forms, no friction.",
+      "Under UK GDPR you can request a copy of your data, ask us to correct it, or ask us to delete it entirely. One email to our team is enough — no forms, no friction.",
   },
   {
     icon: Lock,
@@ -99,12 +97,32 @@ const SUBPROCESSORS = [
     region: "United States",
   },
   {
+    name: "Vercel Web Analytics",
+    purpose: "First-party, cookieless, aggregate visit statistics (you can opt out)",
+    data: "Page views, referrer, country, device and browser type — no cookies, no cross-site identifier",
+    region: "United States / global edge network",
+  },
+  {
     name: "Google Analytics 4",
-    purpose: "Aggregate traffic and page-performance measurement",
+    purpose: "Marketing measurement — only if you accept marketing cookies",
     data: "Pseudonymous usage events, truncated IP address, device and referrer data",
     region: "United States / EU",
   },
+  {
+    name: "Meta (Meta Pixel)",
+    purpose: "Advertising measurement — only if you accept marketing cookies",
+    data: "Pseudonymous browsing events on this site, device and browser data",
+    region: "United States / Ireland",
+  },
+  {
+    name: "WhatsApp (Meta)",
+    purpose: "Messages you choose to send us on WhatsApp",
+    data: "Your phone number, WhatsApp profile name and the messages you send",
+    region: "United States / global",
+  },
 ];
+// TODO [CONFIRM]: confirm this processor list is complete and accurate (including the
+// database region), and remove the Meta Pixel row if the Pixel is never enabled.
 
 // GDPR-style rights. Presented alongside the US (CCPA/CPRA) equivalents below
 // so neither audience has to translate the other's terminology.
@@ -145,7 +163,7 @@ const GDPR_RIGHTS = [
   {
     title: "Complain",
     description:
-      "Lodge a complaint with your local supervisory authority if you believe we have handled your data unlawfully.",
+      "Complain to us first (see our complaints page), and you can always complain to the Information Commissioner's Office (ICO) at ico.org.uk/make-a-complaint.",
   },
 ];
 
@@ -167,7 +185,7 @@ const CCPA_RIGHTS = [
   {
     title: "Right to opt out",
     description:
-      "Opt out of the sale or sharing of personal information. We do not sell or share personal information, so there is nothing to opt out of — but the right stands.",
+      "Opt out of the sale or sharing of personal information. We never sell it; advertising tags load only if you accept marketing cookies, and pressing Reject is your opt-out.",
   },
   {
     title: "Right to limit",
@@ -282,9 +300,9 @@ function MailLink() {
 // Page
 // ---------------------------------------------------------------------------
 
-export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; lang: Locale }) {
+export default function PrivacyPolicyPage() {
   return (
-    <PageShell dict={dict} lang={lang}>
+    <>
       {/* Hero */}
       <PageHero
         eyebrow="Legal"
@@ -296,7 +314,7 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
             </span>
           </>
         }
-        description="Zyverra Labs builds AI agents, automation, SaaS, and custom software — work that only earns trust if we treat data properly, starting with our own. This policy explains exactly what we collect, why, who processes it, and the control you keep over it."
+        description="Zyverra Labs builds websites and marketing for UK clinics, and AI and custom software — work that only earns trust if we treat data properly, starting with our own. This policy explains exactly what we collect, why, who processes it, and the control you keep over it."
         actions={
           <>
             <a
@@ -316,7 +334,7 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
         }
         chips={[
           `Last updated ${PRIVACY_LAST_UPDATED}`,
-          "GDPR aligned",
+          "UK GDPR aligned",
           "CCPA / CPRA aligned",
           "No data selling",
         ]}
@@ -396,14 +414,15 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
               <Section id="scope" index={1} title="Who we are and what this covers" icon={FileText}>
                 <p>
                   <Term>{LEGAL_ENTITY}</Term> (&ldquo;Zyverra Labs&rdquo;, &ldquo;we&rdquo;,
-                  &ldquo;us&rdquo;) is a software studio delivering web development, AI automation,
-                  SaaS products, AI voice agents, and custom software development. We are the
+                  &ldquo;us&rdquo;) based in Lahore, Pakistan, builds websites, admin dashboards,
+                  local SEO, AI search visibility, Meta ads and AI chatbots for UK aesthetics
+                  clinics and beauty salons, and custom software for other businesses. We are the
                   data controller for the personal information described in this policy, and you
                   can reach us at any time at <MailLink />.
                 </p>
                 <p>
-                  This policy applies to <Term>zyverralabs.com</Term> and to the enquiry, chat, and
-                  email channels we operate from it. It explains what we do with information about
+                  This policy applies to <Term>zyverralabs.com</Term> and to the enquiry form, AI
+                  assistant, email and WhatsApp channels we operate from it. It explains what we do with information about
                   visitors, prospective clients, and people who contact us.
                 </p>
                 <p>
@@ -437,11 +456,19 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
                       reply.
                     </>,
                     <>
-                      <Term>Your message</Term> — the description of the project, problem, or
-                      question you want to discuss.
+                      <Term>Your clinic details and message</Term> — your clinic or salon name, town or
+                      city, current website (optional), the services you are interested in, and what
+                      you want to discuss.
                     </>,
                   ]}
                 />
+
+                <SubHeading>Information you give us on WhatsApp</SubHeading>
+                <p>
+                  If you message us on WhatsApp, we receive your phone number, your WhatsApp
+                  profile name and the messages you send. WhatsApp is operated by Meta under its
+                  own terms and privacy policy.
+                </p>
 
                 <SubHeading>Information you give us through the AI assistant</SubHeading>
                 <Bullets
@@ -492,16 +519,17 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
                 <SubHeading>Information we do not collect</SubHeading>
                 <p>
                   This site has no user accounts, no passwords, and no payment processing. We do not
-                  collect special-category or sensitive personal data, we do not use advertising or
-                  retargeting pixels, and we do not buy contact lists or enrich your record from
+                  collect special-category or sensitive personal data, advertising and measurement tags
+                  (Google Analytics, the Meta Pixel) only load after you accept marketing cookies,
+                  and we do not buy contact lists or enrich your record from
                   data brokers.
                 </p>
               </Section>
 
               <Section id="how-we-use" index={3} title="How and why we use it" icon={Scale}>
                 <p>
-                  We only process personal data where we have a lawful basis to do so. For visitors
-                  in the UK, EU, and EEA, those bases under the GDPR are set out explicitly below.
+                  We only process personal data where we have a lawful basis to do so. Under the UK GDPR
+                  (and the EU GDPR for visitors in the EU and EEA), those bases are set out below.
                 </p>
                 <Bullets
                   items={[
@@ -520,9 +548,15 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
                       functioning service (Art. 6(1)(f)).
                     </>,
                     <>
-                      <Term>To understand which pages are useful</Term> and improve our content and
-                      performance — your consent, given through our cookie banner and withdrawable
-                      at any time (Art. 6(1)(a)).
+                      <Term>To count visits in aggregate</Term> with cookieless, first-party statistics —
+                      our legitimate interest in understanding which pages are useful (Art. 6(1)(f)),
+                      relying on the statistical-purposes exemption in PECR as amended by the Data
+                      (Use and Access) Act 2025. You can opt out at any time.
+                    </>,
+                    <>
+                      <Term>To measure marketing and advertising</Term> with Google Analytics and the
+                      Meta Pixel — your consent, given by pressing Accept in our cookie banner and
+                      withdrawable at any time (Art. 6(1)(a)).
                     </>,
                     <>
                       <Term>To triage and prioritise enquiries</Term> using automated summarisation
@@ -545,93 +579,55 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
 
               <Section id="cookies" index={4} title="Cookies and local storage" icon={Cookie}>
                 <p>
-                  We keep this deliberately light. The site sets no marketing cookies and no
-                  cross-site trackers.
+                  We use three categories. Our{" "}
+                  <a href={routes.cookies} className="font-semibold text-primary underline-offset-4 transition-colors hover:underline">
+                    Cookie Policy
+                  </a>{" "}
+                  lists each item in detail, and you can change your choice at any time from the
+                  &ldquo;Cookie settings&rdquo; link in the footer.
                 </p>
-
                 <SubHeading>Strictly necessary</SubHeading>
                 <p>
-                  A preference cookie may record your chosen language so the site loads in the right
-                  locale, and an administrator session cookie exists only for our own internal
-                  dashboard. Neither is used to track you across sites.
+                  Your cookie choice is remembered in your browser&rsquo;s local storage, the AI
+                  assistant keeps a random session identifier there, and an administrator session
+                  cookie exists only for our own internal dashboard. None of these track you across
+                  sites, and they are always on.
                 </p>
-
-                <SubHeading>Browser local storage</SubHeading>
+                <SubHeading>Statistics</SubHeading>
                 <p>
-                  The AI assistant stores a randomly generated session identifier and your saved
-                  project threads in your browser&rsquo;s local storage. This never leaves your
-                  device except as the identifier attached to your own assistant messages, and
-                  clearing your browser storage removes it permanently.
+                  Vercel Web Analytics counts visits in aggregate. It sets no cookies and builds no
+                  cross-site profile. It runs by default under the statistical-purposes exemption in
+                  PECR (as amended by the Data (Use and Access) Act 2025), and you can opt out free of
+                  charge using the &ldquo;Opt out of statistics&rdquo; box in the cookie banner or on
+                  our Cookie Policy page.
                 </p>
-
-                <SubHeading>Analytics</SubHeading>
+                <SubHeading>Marketing</SubHeading>
                 <p>
-                  Google Analytics 4 sets first-party cookies to distinguish returning visits and
-                  measure traffic in aggregate. They are set only if you accept them in our cookie
-                  banner, and only on the production site. You can withdraw that consent at any
-                  time from our{" "}
-                  <a
-                    href={`/${lang}/cookies`}
-                    className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
-                  >
-                    Cookie Policy
-                  </a>
-                  , which also deletes the cookies already set.
-                </p>
-
-                <p>
-                  Every browser lets you block or delete cookies and clear site storage. Blocking
-                  strictly necessary items may mean your language preference or assistant thread is
-                  not remembered, but the site will still work.
+                  Google Analytics 4 and the Meta Pixel are off by default. They load only after you
+                  press Accept, only on the live site, and withdrawing consent deletes the cookies
+                  they set.
                 </p>
               </Section>
 
               <Section id="analytics" index={5} title="Analytics" icon={BarChart3}>
                 <p>
-                  We use <Term>Google Analytics 4</Term> to understand which pages people read, how
-                  they arrive, and where the experience is slow. It is <Term>opt-in</Term>: the
-                  Google script is not loaded until you accept analytics in our cookie banner.
-                  Measurement is also enabled only on the production site, so development and
-                  preview builds send nothing regardless.
+                  <Term>Statistics (Vercel Web Analytics).</Term> We see aggregate numbers — page
+                  views, referring sites, country, device and browser type — so we know which pages
+                  are useful. No cookies are set and no individual is identified. Opt out at any time
+                  in the cookie banner or on our Cookie Policy page.
                 </p>
                 <p>
-                  Analytics data is pseudonymous. We see aggregate patterns — sessions, page views,
-                  approximate location, device and browser type, referrer — not the identity of
-                  individual readers, and we do not attempt to reverse it into an identity or match
-                  it to your enquiry. Google Analytics 4 truncates IP addresses and does not store
-                  them in reports.
+                  <Term>Marketing (Google Analytics 4 and the Meta Pixel).</Term> Only if you press
+                  Accept. Google Analytics 4 truncates IP addresses and does not store them in
+                  reports. The Meta Pixel lets us measure whether our Facebook and Instagram ads lead
+                  to enquiries. Neither is used to identify you or matched to your enquiry by us.
                 </p>
                 <SubHeading>How to opt out</SubHeading>
                 <Bullets
                   items={[
-                    <>
-                      Decline analytics in the cookie banner, or withdraw consent later from our{" "}
-                      <a
-                        href={`/${lang}/cookies`}
-                        className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
-                      >
-                        Cookie Policy
-                      </a>
-                      , which also deletes the cookies already set.
-                    </>,
-                    <>
-                      Install Google&rsquo;s official browser add-on at{" "}
-                      <a
-                        href="https://tools.google.com/dlpage/gaoptout"
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center gap-1 font-semibold text-primary underline-offset-4 transition-colors hover:underline"
-                      >
-                        tools.google.com/dlpage/gaoptout
-                        <ExternalLink className="h-3.5 w-3.5" aria-hidden="true" />
-                      </a>
-                      .
-                    </>,
-                    <>Block analytics cookies or scripts in your browser or extension settings.</>,
-                    <>
-                      Enable a tracking-prevention setting or Global Privacy Control signal — see
-                      section 14.
-                    </>,
+                    <>Press Reject in the cookie banner, or reopen it from &ldquo;Cookie settings&rdquo; in the footer.</>,
+                    <>Tick &ldquo;Opt out of statistics&rdquo; to stop aggregate visit counting on your browser.</>,
+                    <>Block cookies or scripts in your browser or extension settings.</>,
                   ]}
                 />
               </Section>
@@ -786,19 +782,19 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
 
               <Section id="transfers" index={9} title="International data transfers" icon={Globe2}>
                 <p>
-                  We operate from Pakistan and serve clients worldwide, and several of our providers
-                  are based in the United States. Personal data may therefore be transferred to and
-                  processed in countries outside your own, including ones whose data-protection laws
-                  differ from those where you live.
+                  We are based in Lahore, Pakistan, so personal data you send us is accessed and
+                  processed in Pakistan. Several of the providers listed in section 7 are based in the
+                  United States. Personal data may therefore be processed outside the UK, in
+                  countries whose data-protection laws differ from UK law.
                 </p>
                 <p>
-                  Where personal data is transferred out of the UK, EU, or EEA, we rely on the
-                  European Commission&rsquo;s <Term>Standard Contractual Clauses</Term> (and the UK
-                  International Data Transfer Addendum where applicable) in our agreements with those
-                  providers, alongside the technical measures described in section 11. You may
-                  request further detail on the safeguards applied to a specific transfer by
-                  emailing <MailLink />.
+                  Where personal data is transferred out of the UK, we rely on the UK International
+                  Data Transfer Agreement or the International Data Transfer Addendum to the EU
+                  Standard Contractual Clauses in our agreements with providers, alongside the
+                  security measures described in section 11. You can ask for details of the
+                  safeguards for a specific transfer by emailing <MailLink />.
                 </p>
+                {/* TODO [CONFIRM]: the named processors and the transfer mechanism used with each. */}
               </Section>
 
               <Section id="retention" index={10} title="How long we keep data" icon={Clock}>
@@ -883,21 +879,15 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
 
               <Section id="your-rights" index={12} title="Your privacy rights" icon={UserCheck}>
                 <p>
-                  Your rights depend on where you live, but we apply the same process to every
-                  request we receive, wherever it comes from.
+                  Under the UK GDPR you have the following rights. Visitors in the EU and EEA have
+                  equivalent rights under the EU GDPR, and we apply the same process to every
+                  request, wherever it comes from.
                 </p>
-
-                <SubHeading>If you are in the UK, EU, or EEA (GDPR)</SubHeading>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {GDPR_RIGHTS.map((right) => (
-                    <div
-                      key={right.title}
-                      className="rounded-xl border border-border bg-background/60 p-4"
-                    >
+                    <div key={right.title} className="rounded-xl border border-border bg-background/60 p-4">
                       <div className="text-sm font-semibold text-foreground">{right.title}</div>
-                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                        {right.description}
-                      </p>
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground">{right.description}</p>
                     </div>
                   ))}
                 </div>
@@ -905,37 +895,38 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
                 <SubHeading>If you are in California (CCPA / CPRA)</SubHeading>
                 <div className="grid gap-3 sm:grid-cols-2">
                   {CCPA_RIGHTS.map((right) => (
-                    <div
-                      key={right.title}
-                      className="rounded-xl border border-border bg-background/60 p-4"
-                    >
+                    <div key={right.title} className="rounded-xl border border-border bg-background/60 p-4">
                       <div className="text-sm font-semibold text-foreground">{right.title}</div>
-                      <p className="mt-1 text-sm leading-6 text-muted-foreground">
-                        {right.description}
-                      </p>
+                      <p className="mt-1 text-sm leading-6 text-muted-foreground">{right.description}</p>
                     </div>
                   ))}
                 </div>
-                <p>
-                  In the twelve months before this policy was published we collected the categories
-                  of information described in section 2 — identifiers, commercial information about
-                  a prospective project, and internet activity — for the purposes in section 3. We
-                  did not sell or share any of it, and we did not disclose it for anyone else&rsquo;s
-                  commercial purposes.
-                </p>
 
                 <SubHeading>How to exercise a right</SubHeading>
                 <p>
                   Email <MailLink /> and tell us what you want. There is no form to complete and no
-                  fee. We may ask a question or two to verify that the request really comes from you
-                  — usually by confirming details from the email address on record — and we will
-                  respond within <Term>30 days</Term> (45 days for California requests, extendable
-                  once where the statute permits, with notice to you).
+                  fee. We may ask a question or two to confirm the request really comes from you, and
+                  we will respond within <Term>one month</Term>, as the UK GDPR requires (extendable by
+                  up to two further months for complex requests, with notice to you).
                 </p>
+
+                <SubHeading>How to complain</SubHeading>
                 <p>
-                  You may use an authorised agent where the law allows it. If you are unhappy with
-                  our answer you can complain to your local supervisory authority, and we would
-                  appreciate the chance to put it right first.
+                  If you are unhappy with how we have handled your data, please tell us first — our{" "}
+                  <a href={routes.complaints} className="font-semibold text-primary underline-offset-4 transition-colors hover:underline">
+                    complaints page
+                  </a>{" "}
+                  explains the process. You also have the right to complain to the UK{" "}
+                  <Term>Information Commissioner&rsquo;s Office (ICO)</Term> at{" "}
+                  <a
+                    href="https://ico.org.uk/make-a-complaint/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
+                  >
+                    ico.org.uk/make-a-complaint
+                  </a>
+                  .
                 </p>
               </Section>
 
@@ -964,8 +955,9 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
                 </p>
                 <p>
                   We do recognise <Term>Global Privacy Control</Term> as a valid opt-out of the sale
-                  or sharing of personal information. In practice it changes nothing about our
-                  behaviour, because we never sell or share personal information in the first place.
+                  or sharing of personal information. We never sell personal information, and the
+                  only advertising tag on this site (the Meta Pixel) loads solely after you press
+                  Accept in the cookie banner.
                 </p>
               </Section>
 
@@ -1018,17 +1010,17 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
                       Response time
                     </div>
                     <div className="mt-1.5 text-sm font-semibold text-foreground">
-                      Within 30 days
+                      Within one month
                     </div>
                   </div>
                 </div>
                 <p>
                   Prefer to talk about a project instead? Start a conversation from the{" "}
                   <a
-                    href={`/${lang}#contact`}
+                    href={routes.contact}
                     className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
                   >
-                    contact section
+                    contact page
                   </a>{" "}
                   and we will reply personally.
                 </p>
@@ -1062,6 +1054,6 @@ export default function PrivacyPolicyPage({ dict, lang }: { dict: Dictionary; la
           </Reveal>
         </div>
       </section>
-    </PageShell>
+    </>
   );
 }

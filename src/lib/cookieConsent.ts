@@ -1,52 +1,64 @@
-// Cookie consent state, kept in a tiny external store so both the banner and
-// the analytics loader read the same value without prop drilling or context.
+// Cookie consent state (Step 8), kept in a tiny external store so the banner,
+// the analytics loaders and the cookie settings controls all read one value.
 //
-// Deliberately backed by localStorage rather than a cookie: storing the choice
-// itself in a cookie is legal but needs explaining, and nothing server-side
-// needs to read it — analytics is a client-only script.
+// Categories:
+// - Strictly necessary: always on (nothing here stores it — it isn't optional).
+// - Statistics: first-party, cookieless, aggregate-only analytics (Vercel Web
+//   Analytics). Runs under the UK Data (Use and Access) Act 2025 statistical-
+//   purposes exemption to PECR, with a free, simple way to object: the
+//   "Opt out of statistics" control on the banner and on /cookies.
+// - Marketing: GA4 and the Meta Pixel. OFF by default; loads only after Accept.
+//
+// Backed by localStorage rather than a cookie: nothing server-side reads it.
 
-export type ConsentStatus = "granted" | "denied" | "unset";
+export type ConsentState = {
+  /** The visitor has made a choice (Accept or Reject) on the banner. */
+  decided: boolean;
+  /** Marketing scripts (GA4, Meta Pixel) allowed. Opt-in only. */
+  marketing: boolean;
+  /** The visitor objected to first-party statistics. */
+  statisticsOptOut: boolean;
+};
 
 const STORAGE_KEY = "zyverra_cookie_consent";
 const CONSENT_EVENT = "zyverra:cookie-consent";
+const OPEN_EVENT = "zyverra:open-cookie-settings";
 
-// Bump when the cookies we set materially change, so previously stored consent
-// stops applying and visitors are asked again.
-const CONSENT_VERSION = 1;
+// v2: categories replaced the single analytics yes/no. Older decisions no
+// longer apply, so returning visitors are asked again.
+const CONSENT_VERSION = 2;
 
-type StoredConsent = {
-  status: Exclude<ConsentStatus, "unset">;
-  version: number;
-  decidedAt: string;
-};
+const UNDECIDED: ConsentState = { decided: false, marketing: false, statisticsOptOut: false };
 
-function readFromStorage(): ConsentStatus {
-  if (typeof window === "undefined") return "unset";
+type Stored = ConsentState & { version: number; decidedAt: string };
+
+function readFromStorage(): ConsentState {
+  if (typeof window === "undefined") return UNDECIDED;
   try {
     const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return "unset";
-    const parsed = JSON.parse(raw) as Partial<StoredConsent>;
-    if (parsed?.version !== CONSENT_VERSION) return "unset";
-    return parsed.status === "granted" || parsed.status === "denied" ? parsed.status : "unset";
+    if (!raw) return UNDECIDED;
+    const parsed = JSON.parse(raw) as Partial<Stored>;
+    if (parsed?.version !== CONSENT_VERSION) return UNDECIDED;
+    return {
+      decided: parsed.decided === true,
+      marketing: parsed.marketing === true,
+      statisticsOptOut: parsed.statisticsOptOut === true,
+    };
   } catch {
-    // Private mode, disabled storage, or corrupt JSON — treat as no decision.
-    return "unset";
+    return UNDECIDED;
   }
 }
 
-// useSyncExternalStore requires a referentially stable snapshot, so the value is
-// cached and only recomputed when something notifies us of a change.
-let cachedSnapshot: ConsentStatus | null = null;
+// useSyncExternalStore needs a referentially stable snapshot.
+let cachedSnapshot: ConsentState | null = null;
 
-export function getConsentSnapshot(): ConsentStatus {
+export function getConsentSnapshot(): ConsentState {
   if (cachedSnapshot === null) cachedSnapshot = readFromStorage();
   return cachedSnapshot;
 }
 
-// On the server, and during hydration, nobody has decided anything yet. This
-// keeps the server and first client render identical.
-export function getServerConsentSnapshot(): ConsentStatus {
-  return "unset";
+export function getServerConsentSnapshot(): ConsentState {
+  return UNDECIDED;
 }
 
 const listeners = new Set<() => void>();
@@ -56,7 +68,6 @@ function notify() {
   for (const listener of listeners) listener();
 }
 
-// Another tab changed the decision — mirror it here.
 function handleStorage(event: StorageEvent) {
   if (event.key === null || event.key === STORAGE_KEY) notify();
 }
@@ -67,7 +78,6 @@ export function subscribeConsent(onChange: () => void): () => void {
     window.addEventListener(CONSENT_EVENT, notify);
   }
   listeners.add(onChange);
-
   return () => {
     listeners.delete(onChange);
     if (listeners.size === 0 && typeof window !== "undefined") {
@@ -77,59 +87,63 @@ export function subscribeConsent(onChange: () => void): () => void {
   };
 }
 
-function write(status: Exclude<ConsentStatus, "unset">) {
+function write(next: ConsentState) {
   if (typeof window === "undefined") return;
   try {
-    const value: StoredConsent = {
-      status,
-      version: CONSENT_VERSION,
-      decidedAt: new Date().toISOString(),
-    };
+    const value: Stored = { ...next, version: CONSENT_VERSION, decidedAt: new Date().toISOString() };
     window.localStorage.setItem(STORAGE_KEY, JSON.stringify(value));
+    cachedSnapshot = null;
   } catch {
-    // Storage unavailable. The choice still applies for this page view via the
-    // in-memory snapshot below; we simply cannot remember it next time.
+    // Storage unavailable: the choice applies to this page view only.
+    cachedSnapshot = next;
   }
-  cachedSnapshot = status;
   window.dispatchEvent(new Event(CONSENT_EVENT));
 }
 
-export function grantConsent() {
-  write("granted");
+/** Banner "Accept": marketing on; the statistics opt-out choice is kept. */
+export function acceptAll(statisticsOptOut: boolean) {
+  write({ decided: true, marketing: true, statisticsOptOut });
 }
 
-export function denyConsent() {
-  write("denied");
-  clearAnalyticsCookies();
+/** Banner "Reject": marketing off; the statistics opt-out choice is kept. */
+export function rejectMarketing(statisticsOptOut: boolean) {
+  write({ decided: true, marketing: false, statisticsOptOut });
+  clearMarketingCookies();
 }
 
-// Clears the stored decision so the banner is shown again — used by the
-// "Cookie settings" control on the cookie policy page.
-export function resetConsent() {
+/** Toggle the statistics objection without touching the marketing choice. */
+export function setStatisticsOptOut(optOut: boolean) {
+  const current = getConsentSnapshot();
+  write({ ...current, statisticsOptOut: optOut });
+}
+
+/** Reopen the banner (footer "Cookie settings" link and /cookies page). */
+export function openCookieSettings() {
   if (typeof window === "undefined") return;
-  try {
-    window.localStorage.removeItem(STORAGE_KEY);
-  } catch {
-    // Nothing to clear.
-  }
-  cachedSnapshot = "unset";
-  window.dispatchEvent(new Event(CONSENT_EVENT));
+  window.dispatchEvent(new Event(OPEN_EVENT));
 }
 
-// Withdrawal has to actually remove what was set, not just stop setting more.
-// GA4 writes `_ga` and `_ga_<measurement id>` on the registrable domain, so we
-// expire each candidate name across the plausible domain and path scopes.
-export function clearAnalyticsCookies() {
+export function subscribeOpenSettings(onOpen: () => void): () => void {
+  if (typeof window === "undefined") return () => {};
+  window.addEventListener(OPEN_EVENT, onOpen);
+  return () => window.removeEventListener(OPEN_EVENT, onOpen);
+}
+
+// Withdrawal must remove what was set, not just stop setting more. GA4 writes
+// `_ga*`; the Meta Pixel writes `_fbp`/`_fbc`.
+export function clearMarketingCookies() {
   if (typeof document === "undefined") return;
 
   const names = document.cookie
     .split(";")
     .map((entry) => entry.split("=")[0]?.trim())
-    .filter((name): name is string => !!name && (name === "_ga" || name.startsWith("_ga")));
+    .filter(
+      (name): name is string =>
+        !!name && (name.startsWith("_ga") || name === "_fbp" || name === "_fbc")
+    );
 
   const { hostname } = window.location;
   const parts = hostname.split(".");
-  // e.g. "app.zyverralabs.com" -> ["app.zyverralabs.com", "zyverralabs.com"]
   const domains = [
     undefined,
     hostname,

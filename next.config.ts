@@ -4,6 +4,13 @@ const nextConfig: NextConfig = {
   // Tree-shake large named-export packages so only used icons/animations ship.
   experimental: {
     optimizePackageImports: ["lucide-react", "framer-motion"],
+    // Two root layouts ((site) and (admin)) -> unmatched URLs use
+    // app/global-not-found.tsx, which returns a real 404.
+    globalNotFound: true,
+    // Inline the (small, Tailwind) stylesheet into the HTML so first paint
+    // doesn't wait on a separate render-blocking CSS request — the main
+    // FCP/LCP cost for first-time visitors on slow mobile connections.
+    inlineCss: true,
   },
   images: {
     formats: ["image/avif", "image/webp"],
@@ -17,6 +24,26 @@ const nextConfig: NextConfig = {
         hostname: "i.pravatar.cc",
       },
     ],
+  },
+  // URL migration (Step 0): the site moved from /{lang}/... to root URLs in
+  // UK English only. Every old URL 301s straight to its final destination (no
+  // chains). Specific pages first; the generic locale strip last.
+  async redirects() {
+    const L = ":locale(en|ur|ar|de|fr|es)";
+    const moved: [string, string][] = [
+      ["/why-us", "/about"],
+      ["/how-we-deliver", "/about#process"],
+      ["/founder", "/about#founder"],
+      ["/portfolio", "/custom-software-ai-chatbots#work"],
+    ];
+    return [
+      { source: `/${L}`, destination: "/", permanent: true },
+      ...moved.flatMap(([from, to]) => [
+        { source: `/${L}${from}`, destination: to, permanent: true },
+        { source: from, destination: to, permanent: true },
+      ]),
+      { source: `/${L}/:path*`, destination: "/:path*", permanent: true },
+    ];
   },
   // Clean case-study URLs: /case-studies/<slug> serves the static <slug>.html.
   // The slug pattern only matches lowercase-kebab names, so the LandChain PDF
@@ -46,7 +73,9 @@ const nextConfig: NextConfig = {
       "form-action 'self'",
       // 'unsafe-eval' is only needed by React Fast Refresh in development.
       // Google Tag Manager hosts the GA4 (gtag.js) script.
-      `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com${isDev ? " 'unsafe-eval'" : ""}`,
+      // Marketing tags (GA4, Meta Pixel) only load after consent; Vercel Web
+      // Analytics is same-origin in production (va.vercel-scripts.com in dev).
+      `script-src 'self' 'unsafe-inline' https://www.googletagmanager.com https://connect.facebook.net https://va.vercel-scripts.com${isDev ? " 'unsafe-eval'" : ""}`,
       // framer-motion / React render inline style attributes; Tailwind is a sheet.
       "style-src 'self' 'unsafe-inline'",
       // next/image optimizer (self) + direct remote avatars/photos over https.
@@ -54,7 +83,7 @@ const nextConfig: NextConfig = {
       "font-src 'self' data:",
       // Same-origin (chatbot/contact/history) + Google Analytics collection.
       // ws/wss are dev-only (HMR).
-      `connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com${isDev ? " ws: wss:" : ""}`,
+      `connect-src 'self' https://www.googletagmanager.com https://www.google-analytics.com https://*.google-analytics.com https://*.analytics.google.com https://www.facebook.com https://connect.facebook.net https://va.vercel-scripts.com${isDev ? " ws: wss:" : ""}`,
       "frame-src 'self'",
       "worker-src 'self' blob:",
       "manifest-src 'self'",

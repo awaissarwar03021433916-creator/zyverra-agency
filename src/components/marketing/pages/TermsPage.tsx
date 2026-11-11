@@ -18,10 +18,8 @@ import {
   XCircle,
 } from "lucide-react";
 
-import type { Dictionary } from "@/i18n/types";
-import type { Locale } from "@/i18n/config";
 import { business } from "@/config/business";
-import PageShell from "./PageShell";
+import { routes } from "@/config/site";
 import { PageHero } from "./PageHero";
 import { Reveal } from "./Reveal";
 
@@ -29,7 +27,8 @@ import { Reveal } from "./Reveal";
 // also surfaced in the page metadata and in the hero chips.
 export const TERMS_LAST_UPDATED = "23 July 2026";
 
-const LEGAL_ENTITY = "Zyverra Labs LLC";
+// TODO [CONFIRM]: the registered legal entity name, if different from the trading name.
+const LEGAL_ENTITY = "Zyverra Labs";
 const CONTACT_EMAIL = business.email;
 
 // Governing law is deliberately a single constant: it is the one clause most
@@ -179,9 +178,9 @@ function Callout({ children }: { children: ReactNode }) {
 // Page
 // ---------------------------------------------------------------------------
 
-export default function TermsPage({ dict, lang }: { dict: Dictionary; lang: Locale }) {
+export default function TermsPage() {
   return (
-    <PageShell dict={dict} lang={lang}>
+    <>
       {/* Hero */}
       <PageHero
         eyebrow="Legal"
@@ -197,7 +196,7 @@ export default function TermsPage({ dict, lang }: { dict: Dictionary; lang: Loca
         actions={
           <>
             <a
-              href={`/${lang}#contact`}
+              href={routes.contact}
               className="group inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md"
             >
               Start your project
@@ -318,7 +317,7 @@ export default function TermsPage({ dict, lang }: { dict: Dictionary; lang: Loca
                 <p>
                   Personal data is handled as described in our{" "}
                   <a
-                    href={`/${lang}/privacy`}
+                    href={routes.privacy}
                     className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
                   >
                     Privacy Policy
@@ -830,7 +829,7 @@ export default function TermsPage({ dict, lang }: { dict: Dictionary; lang: Loca
                   protected for as long as the law provides. Personal data is additionally governed
                   by our{" "}
                   <a
-                    href={`/${lang}/privacy`}
+                    href={routes.privacy}
                     className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
                   >
                     Privacy Policy
@@ -1011,17 +1010,17 @@ export default function TermsPage({ dict, lang }: { dict: Dictionary; lang: Loca
                 <p>
                   For privacy requests, data access, or deletion, see our{" "}
                   <a
-                    href={`/${lang}/privacy`}
+                    href={routes.privacy}
                     className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
                   >
                     Privacy Policy
                   </a>
                   . To discuss a project, start a conversation from the{" "}
                   <a
-                    href={`/${lang}#contact`}
+                    href={routes.contact}
                     className="font-semibold text-primary underline-offset-4 transition-colors hover:underline"
                   >
-                    contact section
+                    contact page
                   </a>{" "}
                   and we will reply personally.
                 </p>
@@ -1055,6 +1054,6 @@ export default function TermsPage({ dict, lang }: { dict: Dictionary; lang: Loca
           </Reveal>
         </div>
       </section>
-    </PageShell>
+    </>
   );
 }

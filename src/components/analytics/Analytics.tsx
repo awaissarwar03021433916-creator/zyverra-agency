@@ -3,58 +3,69 @@
 import Script from "next/script";
 import { usePathname, useSearchParams } from "next/navigation";
 import { Suspense, useEffect } from "react";
+import { Analytics as VercelAnalytics } from "@vercel/analytics/next";
 
 import { useCookieConsent } from "@/hooks/useCookieConsent";
 
-// Google Analytics 4. Activates only in production, only when
-// NEXT_PUBLIC_GA_ID is set (e.g. "G-XXXXXXXXXX"), and only after the visitor
-// has granted consent via the cookie banner — so dev/preview builds stay
-// analytics-free and no measurement runs before an opt-in.
+// Statistics: Vercel Web Analytics — first-party, cookieless, aggregate only.
+// Runs unless the visitor opts out (see src/lib/cookieConsent.ts).
+//
+// Marketing: GA4 (NEXT_PUBLIC_GA_ID) and the Meta Pixel
+// (NEXT_PUBLIC_META_PIXEL_ID). Production only, and only after the visitor
+// presses Accept — nothing from Google or Meta is requested before that.
 const GA_ID = process.env.NEXT_PUBLIC_GA_ID;
-const GA_ENABLED = !!GA_ID && process.env.NODE_ENV === "production";
+const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID;
+const IS_PROD = process.env.NODE_ENV === "production";
 
-declare global {
-  interface Window {
-    dataLayer: unknown[];
-    gtag: (...args: unknown[]) => void;
-  }
-}
-
-// Send a page_view on client-side route changes (App Router doesn't reload).
 function PageViewTracker() {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
   useEffect(() => {
-    if (!GA_ENABLED || typeof window.gtag !== "function") return;
     const query = searchParams?.toString();
     const url = query ? `${pathname}?${query}` : pathname;
-    window.gtag("event", "page_view", { page_path: url, page_location: window.location.href });
+    if (typeof window.gtag === "function") {
+      window.gtag("event", "page_view", { page_path: url, page_location: window.location.href });
+    }
+    if (typeof window.fbq === "function") window.fbq("track", "PageView");
   }, [pathname, searchParams]);
 
   return null;
 }
 
 export function Analytics() {
-  const { status } = useCookieConsent();
-
-  // No consent, no script. Nothing from Google is requested or executed until
-  // the visitor actively opts in, so no analytics cookie can be set first.
-  if (!GA_ENABLED || status !== "granted") return null;
+  const { marketing, statisticsOptOut } = useCookieConsent();
+  const loadGa = IS_PROD && !!GA_ID && marketing;
+  const loadPixel = IS_PROD && !!META_PIXEL_ID && marketing;
 
   return (
     <>
-      <Script
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
-        strategy="afterInteractive"
-      />
-      <Script id="ga4-init" strategy="afterInteractive">
-        {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}gtag('js',new Date());gtag('config','${GA_ID}');`}
-      </Script>
-      {/* useSearchParams needs a Suspense boundary in the App Router. */}
-      <Suspense fallback={null}>
-        <PageViewTracker />
-      </Suspense>
+      {!statisticsOptOut && <VercelAnalytics />}
+
+      {loadGa && (
+        <>
+          <Script
+            src={`https://www.googletagmanager.com/gtag/js?id=${GA_ID}`}
+            strategy="lazyOnload"
+          />
+          <Script id="ga4-init" strategy="lazyOnload">
+            {`window.dataLayer=window.dataLayer||[];function gtag(){dataLayer.push(arguments);}window.gtag=gtag;gtag('js',new Date());gtag('config','${GA_ID}');`}
+          </Script>
+        </>
+      )}
+
+      {loadPixel && (
+        <Script id="meta-pixel" strategy="lazyOnload">
+          {`!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','${META_PIXEL_ID}');fbq('track','PageView');`}
+        </Script>
+      )}
+
+      {(loadGa || loadPixel) && (
+        // useSearchParams needs a Suspense boundary in the App Router.
+        <Suspense fallback={null}>
+          <PageViewTracker />
+        </Suspense>
+      )}
     </>
   );
 }

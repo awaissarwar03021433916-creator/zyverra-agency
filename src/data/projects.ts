@@ -1,9 +1,5 @@
-// Project records for the standalone /portfolio page.
-//
-// NOTE: the home page's interactive showcase (PortfolioSection) holds its own
-// copy of this data. That component was left untouched by design, so the two
-// lists are intentionally parallel for now — if you want a single source of
-// truth, PortfolioSection can be pointed at this file in a small refactor.
+// Software, AI and web-platform projects shown on /custom-software-ai-chatbots.
+// Clinic case studies live separately in src/data/work.ts.
 
 export type ProjectCategory = "client" | "systems" | "ai" | "innovation";
 
@@ -90,10 +86,10 @@ export const projects: Project[] = [
     problem:
       "Employee records and operations were managed manually across scattered files — slow, risky, no access control.",
     solution:
-      "A custom CRM that centralizes employee data, enforces role-based access, and tracks operations.",
+      "A custom CRM that centralises employee data, enforces role-based access, and tracks operations.",
     tech: ["Role-based Access", "Admin Dashboards", "Data Modelling", "Audit Trails"],
     outcome:
-      "Centralized operations, secured data, and faster, more reliable day-to-day administration.",
+      "Centralised operations, secured data, and faster, more reliable day-to-day administration.",
     status: "live",
   },
   {
@@ -108,10 +104,10 @@ export const projects: Project[] = [
     problem:
       "Writing tailored proposals by hand was slow, inconsistent, and a bottleneck on closing deals.",
     solution:
-      "An AI product that drafts customized, professional proposals in seconds from a few inputs.",
+      "An AI product that drafts customised, professional proposals in seconds from a few inputs.",
     tech: ["LLM Generation", "Prompt Engineering", "Templating", "Structured Output"],
     outcome:
-      "Proposals from hours to seconds, standardized quality, and faster responses to opportunities.",
+      "Proposals from hours to seconds, standardised quality, and faster responses to opportunities.",
     status: "live",
   },
   {

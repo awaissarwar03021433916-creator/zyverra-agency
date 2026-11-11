@@ -1,46 +1,50 @@
 /**
- * Google Analytics 4 event helpers.
+ * One consent-aware tracking helper (Section G8).
  *
- * Thin, type-safe wrappers around `window.gtag` for tracking custom events.
- * Every helper is a no-op when GA hasn't loaded (no measurement ID, or not in
- * production — see `src/components/analytics/Analytics.tsx`), so call sites can
- * fire events unconditionally without guarding for the analytics runtime.
+ * `track()` forwards an event to:
+ * - Vercel Web Analytics (first-party statistics) unless the visitor opted out;
+ * - GA4 and the Meta Pixel only when marketing consent was given (those
+ *   scripts are never loaded otherwise, so the globals don't exist).
  *
- * The page_view event is handled automatically by the Analytics component on
- * route changes; the helpers below are for future custom event tracking.
+ * Safe to call anywhere on the client; it is a no-op on the server.
  */
 
-type EventParams = Record<string, unknown>;
+import { track as vercelTrack } from "@vercel/analytics";
 
-/**
- * Send a custom GA4 event. Safe to call anywhere on the client — silently does
- * nothing when gtag is unavailable (SSR, dev, or analytics disabled).
- */
-export function trackEvent(name: string, params: EventParams = {}): void {
-  if (typeof window === "undefined" || typeof window.gtag !== "function") return;
-  window.gtag("event", name, params);
+import { getConsentSnapshot } from "@/lib/cookieConsent";
+
+export type TrackEvent =
+  | "whatsapp_click"
+  | "quote_form_submit"
+  | "book_call_click"
+  | "email_click"
+  | "pricing_view_option_a"
+  | "pricing_view_option_b";
+
+type Params = Record<string, string | number | boolean | null>;
+
+declare global {
+  interface Window {
+    dataLayer: unknown[];
+    gtag?: (...args: unknown[]) => void;
+    fbq?: (...args: unknown[]) => void;
+  }
 }
 
-// --- Optional prep: ready-to-wire helpers for common conversions. Not yet
-// called anywhere; wire them into the relevant UI when event tracking is
-// switched on. ---
+export function track(event: TrackEvent, params: Params = {}): void {
+  if (typeof window === "undefined") return;
+  const consent = getConsentSnapshot();
 
-/** Contact form submission. */
-export function trackContactSubmit(params: EventParams = {}): void {
-  trackEvent("contact_submit", params);
-}
+  if (!consent.statisticsOptOut) {
+    try {
+      vercelTrack(event, params);
+    } catch {
+      // Analytics must never break the UI.
+    }
+  }
 
-/** Chat widget interaction (e.g. opened, message sent). */
-export function trackChatEvent(action: string, params: EventParams = {}): void {
-  trackEvent("chat_interaction", { action, ...params });
-}
-
-/** Call-to-action click. */
-export function trackCtaClick(label: string, params: EventParams = {}): void {
-  trackEvent("cta_click", { label, ...params });
-}
-
-/** Calendly booking. */
-export function trackCalendlyBooking(params: EventParams = {}): void {
-  trackEvent("calendly_booking", params);
+  if (consent.marketing) {
+    if (typeof window.gtag === "function") window.gtag("event", event, params);
+    if (typeof window.fbq === "function") window.fbq("trackCustom", event, params);
+  }
 }

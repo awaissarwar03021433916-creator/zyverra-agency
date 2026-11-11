@@ -2,25 +2,26 @@ import type { ReactNode } from "react";
 
 import Navbar from "@/components/marketing/navbar/Navbar";
 import Footer from "@/components/layout/Footer";
-import type { Dictionary } from "@/i18n/types";
-import type { Locale } from "@/i18n/config";
+import { Breadcrumbs, type Crumb } from "@/components/marketing/blocks/Breadcrumbs";
 
-// Shared chrome (navbar + footer) for the standalone marketing pages so they
-// match the home page exactly without duplicating layout.
+// Shared chrome for every public page: header, <main id="main"> (the skip-link
+// target), optional breadcrumbs, and the footer.
 export default function PageShell({
-  dict,
-  lang,
   children,
+  breadcrumbs,
 }: {
-  dict: Dictionary;
-  lang: Locale;
   children: ReactNode;
+  /** Every page except Home passes its trail (Home is added automatically). */
+  breadcrumbs?: Crumb[];
 }) {
   return (
-    <div className="min-h-screen bg-background text-foreground">
-      <Navbar dict={dict.nav} lang={lang} />
-      <main id="top">{children}</main>
-      <Footer dict={dict.footer} lang={lang} />
+    <div className="flex min-h-screen flex-col bg-background text-foreground">
+      <Navbar />
+      <main id="main" tabIndex={-1} className="flex-1 focus:outline-none">
+        {breadcrumbs && <Breadcrumbs items={breadcrumbs} />}
+        {children}
+      </main>
+      <Footer />
     </div>
   );
 }

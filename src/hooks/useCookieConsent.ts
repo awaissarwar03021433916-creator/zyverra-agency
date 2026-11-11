@@ -3,33 +3,32 @@
 import { useSyncExternalStore } from "react";
 
 import {
-  denyConsent,
+  acceptAll,
   getConsentSnapshot,
   getServerConsentSnapshot,
-  grantConsent,
-  resetConsent,
+  openCookieSettings,
+  rejectMarketing,
+  setStatisticsOptOut,
   subscribeConsent,
-  type ConsentStatus,
+  type ConsentState,
 } from "@/lib/cookieConsent";
 
 /**
- * Reads the visitor's analytics consent decision.
- *
- * Backed by useSyncExternalStore so the server render and the hydrating client
- * render agree ("unset"), and every consumer updates together the moment a
- * choice is made — in this tab or another one.
+ * Reads the visitor's cookie choices. Server and hydrating client renders agree
+ * (undecided), and every consumer updates together when a choice is made.
  */
-export function useCookieConsent(): {
-  status: ConsentStatus;
-  accept: () => void;
-  reject: () => void;
-  reset: () => void;
+export function useCookieConsent(): ConsentState & {
+  accept: typeof acceptAll;
+  reject: typeof rejectMarketing;
+  setStatisticsOptOut: typeof setStatisticsOptOut;
+  openSettings: typeof openCookieSettings;
 } {
-  const status = useSyncExternalStore(
-    subscribeConsent,
-    getConsentSnapshot,
-    getServerConsentSnapshot
-  );
-
-  return { status, accept: grantConsent, reject: denyConsent, reset: resetConsent };
+  const state = useSyncExternalStore(subscribeConsent, getConsentSnapshot, getServerConsentSnapshot);
+  return {
+    ...state,
+    accept: acceptAll,
+    reject: rejectMarketing,
+    setStatisticsOptOut,
+    openSettings: openCookieSettings,
+  };
 }

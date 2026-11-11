@@ -33,7 +33,7 @@ function getSessionId() {
 const INITIAL_MESSAGE: Message = {
   id: "initial",
   role: "assistant",
-  content: "Hi! I'm Zyverra AI.\nHow can I help you with your software project today?",
+  content: "Hi! I'm Zyverra AI.\nHow can I help with your clinic website, marketing or software project today?",
 };
 
 function extractLeadData(rawText: string): Partial<Lead> {
