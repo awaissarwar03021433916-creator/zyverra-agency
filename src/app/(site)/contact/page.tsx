@@ -1,5 +1,4 @@
-import { CalendarClock, Mail } from "lucide-react";
-
+import { IconTile } from "@/components/marketing/ColorIcon";
 import PageShell from "@/components/marketing/pages/PageShell";
 import { PageHero } from "@/components/marketing/pages/PageHero";
 import { Section, SectionHeading } from "@/components/marketing/blocks";
@@ -22,7 +21,8 @@ export const metadata = pageMetadata({
   path: PATH,
 });
 
-const cardClass = "flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-xs";
+const cardClass =
+  "group flex h-full flex-col rounded-3xl border border-border bg-card p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:shadow-xl motion-reduce:hover:translate-y-0";
 
 export default function Page() {
   const origin = siteOrigin();
@@ -52,9 +52,7 @@ export default function Page() {
           </div>
 
           <div className={cardClass}>
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <Mail aria-hidden className="h-5 w-5" />
-            </span>
+            <IconTile name="envelope" tint="#e0f2fe" />
             <h3 className="mt-5 font-heading text-lg font-semibold text-foreground">Email</h3>
             <p className="mt-2 text-sm text-muted-foreground">{business.email}</p>
             <div className="mt-auto pt-6">
@@ -70,9 +68,7 @@ export default function Page() {
           </div>
 
           <div className={cardClass}>
-            <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-              <CalendarClock aria-hidden className="h-5 w-5" />
-            </span>
+            <IconTile name="calendar" tint="#fce7f3" />
             <h3 className="mt-5 font-heading text-lg font-semibold text-foreground">Book a free 30-minute call</h3>
             <p className="mt-2 text-sm text-muted-foreground">
               Tell us a little about your clinic in the form below and we&apos;ll arrange a time.
@@ -105,7 +101,7 @@ export default function Page() {
       <Section id="details" narrow>
         <h2 className="font-heading text-xl font-semibold text-foreground">Our details</h2>
         <address className="mt-3 text-sm not-italic leading-relaxed text-muted-foreground">
-          Zyverra Labs · Lahore, Pakistan · Serving clinics across the UK · {business.email} · WhatsApp{" "}
+          Zyverra Labs · Aesthetic clinic websites, local SEO and Meta ads · Serving clinics across the UK · {business.email} · WhatsApp{" "}
           {business.phoneDisplay}
         </address>
       </Section>

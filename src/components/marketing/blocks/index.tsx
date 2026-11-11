@@ -8,6 +8,7 @@ import { ArrowRight, Check, LayoutDashboard, X as XIcon } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
 
 import { Reveal } from "@/components/marketing/pages/Reveal";
+import { IconTile, type IconName } from "@/components/marketing/ColorIcon";
 import { WhatsAppInlineLink } from "@/components/contact/WhatsAppButton";
 import { dashboardLines, routes } from "@/config/site";
 import type { Faq } from "@/data/faqs";
@@ -84,22 +85,32 @@ export function Lead({ children }: { children: ReactNode }) {
 /* ------------------------------------------------------------------ */
 
 const primaryBtn =
-  "group inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-primary px-6 text-sm font-semibold text-primary-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md motion-reduce:hover:translate-y-0";
+  "group inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-primary px-4 text-sm font-semibold sm:h-12 sm:px-6 text-primary-foreground shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-primary/90 hover:shadow-md motion-reduce:hover:translate-y-0";
 const secondaryBtn =
-  "inline-flex h-12 items-center justify-center gap-2 rounded-lg border border-border bg-background px-6 text-sm font-semibold text-foreground shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-muted motion-reduce:hover:translate-y-0";
+  "inline-flex h-11 items-center justify-center gap-2 rounded-lg border border-border bg-background px-4 text-sm font-semibold sm:h-12 sm:px-6 text-foreground shadow-xs transition-all duration-200 hover:-translate-y-0.5 hover:border-primary/30 hover:bg-muted motion-reduce:hover:translate-y-0";
 
 export function ButtonLink({
   href,
   children,
+  short,
   variant = "primary",
 }: {
   href: string;
   children: ReactNode;
+  /** Shorter label shown on phones so buttons fit side by side. */
+  short?: string;
   variant?: "primary" | "secondary";
 }) {
   return (
     <Link href={href} className={variant === "primary" ? primaryBtn : secondaryBtn}>
-      {children}
+      {short ? (
+        <>
+          <span className="sm:hidden">{short}</span>
+          <span className="hidden sm:inline">{children}</span>
+        </>
+      ) : (
+        children
+      )}
       {variant === "primary" && (
         <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
       )}
@@ -112,14 +123,20 @@ export function HeroActions({
   primary = { href: routes.contact, label: "Get a quote" },
   secondary,
 }: {
-  primary?: { href: string; label: string };
-  secondary?: { href: string; label: string };
+  primary?: { href: string; label: string; short?: string };
+  secondary?: { href: string; label: string; short?: string };
 }) {
   return (
     <>
-      <ButtonLink href={primary.href}>{primary.label}</ButtonLink>
+      <ButtonLink href={primary.href} short={primary.short ?? (primary.label.length > 14 ? "Get a quote" : undefined)}>
+        {primary.label}
+      </ButtonLink>
       {secondary && (
-        <ButtonLink href={secondary.href} variant="secondary">
+        <ButtonLink
+          href={secondary.href}
+          variant="secondary"
+          short={secondary.short ?? (secondary.label.length > 14 ? secondary.label.split(" ").slice(-2).join(" ") : undefined)}
+        >
           {secondary.label}
         </ButtonLink>
       )}
@@ -137,29 +154,43 @@ export type CardItem = {
   description: ReactNode;
   href?: string;
   icon?: LucideIcon;
+  /** Colourful 3D icon (preferred over `icon`). */
+  emoji?: IconName;
+  /** Tile tint behind the colourful icon. */
+  tint?: string;
   linkLabel?: string;
 };
 
+// Rotating soft tints so a grid of colourful icons doesn't look uniform.
+const TINTS = ["#e0f2fe", "#fce7f3", "#ede9fe", "#dcfce7", "#fef3c7", "#ffe4e6", "#cffafe", "#e0e7ff"];
+
 export function CardGrid({ items, columns = 3 }: { items: CardItem[]; columns?: 2 | 3 | 4 }) {
-  const cols =
-    columns === 4 ? "sm:grid-cols-2 lg:grid-cols-4" : columns === 2 ? "sm:grid-cols-2" : "sm:grid-cols-2 lg:grid-cols-3";
+  // Two per row on phones (side by side, not a long vertical stack).
+  const cols = columns === 4 ? "lg:grid-cols-4" : columns === 2 ? "" : "lg:grid-cols-3";
   return (
-    <div className={`mt-10 grid gap-5 ${cols}`}>
+    <div className={`mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-5 ${cols}`}>
       {items.map((item, i) => {
         const Icon = item.icon;
+        const hasIcon = Boolean(item.emoji || Icon);
         const body = (
           <>
-            {Icon && (
-              <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
-                <Icon aria-hidden className="h-5 w-5" />
-              </span>
+            {item.emoji ? (
+              <IconTile name={item.emoji} tint={item.tint ?? TINTS[i % TINTS.length]} />
+            ) : (
+              Icon && (
+                <span className="flex h-11 w-11 items-center justify-center rounded-xl bg-primary/10 text-primary">
+                  <Icon aria-hidden className="h-5 w-5" />
+                </span>
+              )
             )}
-            <h3 className={`${Icon ? "mt-5" : ""} font-heading text-lg font-semibold text-foreground`}>
+            <h3 className={`${hasIcon ? "mt-3 sm:mt-5" : ""} font-heading text-sm font-semibold leading-snug text-foreground sm:text-lg`}>
               {item.title}
             </h3>
-            <div className="mt-2 text-sm leading-relaxed text-muted-foreground">{item.description}</div>
+            <div className="mt-1.5 line-clamp-4 text-xs leading-relaxed text-muted-foreground sm:mt-2 sm:line-clamp-none sm:text-sm">
+              {item.description}
+            </div>
             {item.href && (
-              <span className="mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+              <span className="mt-auto inline-flex items-center gap-1.5 pt-3 text-xs font-semibold text-primary sm:pt-4 sm:text-sm">
                 {item.linkLabel ?? "Learn more"}
                 <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
               </span>
@@ -171,12 +202,12 @@ export function CardGrid({ items, columns = 3 }: { items: CardItem[]; columns?: 
             {item.href ? (
               <Link
                 href={item.href}
-                className="group flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-xs transition-all duration-300 hover:-translate-y-1 hover:border-primary/30 hover:shadow-lg motion-reduce:hover:translate-y-0"
+                className="group relative flex h-full flex-col overflow-hidden rounded-2xl border border-border bg-card p-4 shadow-xs sm:rounded-3xl sm:p-6 transition-all duration-300 before:pointer-events-none before:absolute before:inset-x-0 before:top-0 before:h-1 before:bg-gradient-to-r before:from-primary before:via-sky-500 before:to-fuchsia-500 before:opacity-0 before:transition-opacity hover:-translate-y-1.5 hover:border-primary/30 hover:shadow-xl hover:before:opacity-100 motion-reduce:hover:translate-y-0"
               >
                 {body}
               </Link>
             ) : (
-              <div className="flex h-full flex-col rounded-2xl border border-border bg-card p-6 shadow-xs">{body}</div>
+              <div className="group flex h-full flex-col rounded-2xl border border-border bg-card p-4 shadow-xs transition-shadow duration-300 hover:shadow-lg sm:rounded-3xl sm:p-6">{body}</div>
             )}
           </Reveal>
         );
@@ -200,16 +231,19 @@ export function CheckList({ items, className = "mt-6" }: { items: ReactNode[]; c
   );
 }
 
-export function Steps({ steps }: { steps: { title: string; description: string }[] }) {
+export function Steps({ steps }: { steps: { title: string; description: string; emoji?: IconName }[] }) {
   return (
-    <ol className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+    <ol className="mt-8 grid grid-cols-2 gap-3 sm:mt-10 sm:gap-5 lg:grid-cols-4">
       {steps.map((step, i) => (
         <li key={step.title}>
           <Reveal delay={i * 0.06} className="h-full">
-            <div className="h-full rounded-2xl border border-border bg-card p-6 shadow-xs">
-              <div className="font-heading text-sm font-bold text-primary">{String(i + 1).padStart(2, "0")}</div>
-              <h3 className="mt-3 font-heading text-lg font-semibold text-foreground">{step.title}</h3>
-              <p className="mt-2 text-sm leading-relaxed text-muted-foreground">{step.description}</p>
+            <div className="group relative h-full rounded-2xl border border-border bg-card p-4 shadow-xs sm:rounded-3xl sm:p-6 transition-all duration-300 hover:-translate-y-1 hover:shadow-lg motion-reduce:hover:translate-y-0">
+              <div className="flex items-center justify-between">
+                {step.emoji ? <IconTile name={step.emoji} tint={TINTS[(i + 2) % TINTS.length]} /> : <span />}
+                <span className="font-heading text-3xl font-bold text-primary/15">{String(i + 1).padStart(2, "0")}</span>
+              </div>
+              <h3 className="mt-3 font-heading text-sm font-semibold text-foreground sm:mt-4 sm:text-lg">{step.title}</h3>
+              <p className="mt-1.5 text-xs leading-relaxed text-muted-foreground sm:mt-2 sm:text-sm">{step.description}</p>
             </div>
           </Reveal>
         </li>
@@ -365,10 +399,10 @@ export function CtaBand({
             {title}
           </h2>
           <p className="mx-auto mt-3 max-w-xl text-sm leading-relaxed text-white/90 sm:text-base">{description}</p>
-          <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
+          <div className="mt-8 flex flex-row flex-wrap items-center justify-center gap-2.5 sm:gap-3">
             <Link
               href={routes.contact}
-              className="group inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-white px-6 text-sm font-bold text-[#0a4f8c] shadow-lg transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
+              className="group inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-white px-4 text-sm font-bold text-[#0a4f8c] sm:h-12 sm:px-6 shadow-lg transition-transform duration-200 hover:-translate-y-0.5 motion-reduce:hover:translate-y-0"
             >
               {primaryLabel}
               <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
@@ -388,5 +422,46 @@ export function DevConfirm({ children }: { children: ReactNode }) {
     <p className="mt-3 rounded-lg border border-dashed border-amber-400 bg-amber-50 px-3 py-2 text-xs font-medium text-amber-900">
       TODO [CONFIRM] (dev only): {children}
     </p>
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* Related links (internal linking on every service page)              */
+/* ------------------------------------------------------------------ */
+
+export type RelatedLink = { href: string; label: string };
+
+/**
+ * Descriptive, keyword-led internal links. Every service page passes its
+ * related blog posts and a clinic-type page; pricing, the admin dashboard,
+ * our work and the free audit are always included.
+ */
+export function RelatedLinks({ links }: { links: RelatedLink[] }) {
+  const always: RelatedLink[] = [
+    { href: routes.pricing, label: "Clinic website pricing" },
+    { href: routes.adminDashboard, label: "Clinic website admin dashboard" },
+    { href: routes.work, label: "Aesthetic clinic website examples" },
+    { href: routes.freeAudit, label: "Free clinic website audit" },
+  ];
+  const all = [...links, ...always.filter((a) => !links.some((l) => l.href === a.href))];
+  return (
+    <section aria-labelledby="related-heading" className="mx-auto max-w-6xl px-4 py-12 sm:px-6">
+      <h2 id="related-heading" className="font-heading text-xl font-bold text-foreground">
+        Related
+      </h2>
+      <ul className="mt-4 flex flex-wrap gap-2.5">
+        {all.map((l) => (
+          <li key={l.href}>
+            <Link
+              href={l.href}
+              className="inline-flex items-center gap-1.5 rounded-full border border-border bg-card px-4 py-2 text-sm font-medium text-foreground transition-colors hover:border-primary/40 hover:text-primary"
+            >
+              {l.label}
+              <ArrowRight aria-hidden className="h-3.5 w-3.5" />
+            </Link>
+          </li>
+        ))}
+      </ul>
+    </section>
   );
 }

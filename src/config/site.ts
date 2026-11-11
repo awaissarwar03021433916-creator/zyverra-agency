@@ -6,6 +6,7 @@ export const routes = {
   home: "/",
   aestheticClinicWebsites: "/aesthetic-clinic-website-design",
   bristol: "/aesthetic-clinic-website-design/bristol",
+  london: "/aesthetic-clinic-website-design/london",
   beautySalonWebsites: "/beauty-salon-website-design",
   adminDashboard: "/clinic-website-admin-dashboard",
   seoAiSearch: "/seo-ai-search-for-aesthetic-clinics",
@@ -22,6 +23,13 @@ export const routes = {
   cookies: "/cookies",
   terms: "/terms",
   complaints: "/complaints",
+  // SEO expansion
+  googleBusinessProfile: "/google-business-profile-for-aesthetic-clinics",
+  nurseWebsites: "/website-for-aesthetic-nurses",
+  redesign: "/clinic-website-redesign",
+  freeAudit: "/free-clinic-website-audit",
+  clinicTypes: "/clinic-types",
+  treatmentPages: "/treatment-pages",
 } as const;
 
 export type ServiceKey =
@@ -111,6 +119,7 @@ export type NavItem =
   | { label: string; children: { label: string; href: string; description: string }[] };
 
 export const mainNav: NavItem[] = [
+  { label: "Home", href: routes.home },
   {
     label: "Clinic Websites",
     children: [
@@ -129,6 +138,13 @@ export const mainNav: NavItem[] = [
         href: routes.adminDashboard,
         description: "Update your website yourself",
       },
+      {
+        label: "Aesthetic Nurse Websites",
+        href: routes.nurseWebsites,
+        description: "For nurse prescribers and practitioners",
+      },
+      { label: "Website Redesign", href: routes.redesign, description: "Replace a Wix or tired website" },
+      { label: "Treatment Pages", href: routes.treatmentPages, description: "Treatment pages built to rank" },
     ],
   },
   {
@@ -145,19 +161,50 @@ export const mainNav: NavItem[] = [
         href: routes.socialReels,
         description: "Reels, posts and content calendars",
       },
+      {
+        label: "Google Business Profile",
+        href: routes.googleBusinessProfile,
+        description: "Rank higher on Google Maps",
+      },
+      { label: "AI Chatbots & Software", href: routes.customSoftware, description: "Chatbots, CRMs and SaaS" },
     ],
   },
-  { label: "AI & Software", href: routes.customSoftware },
+  {
+    label: "Clinic Types",
+    children: [
+      { label: "All clinic types", href: routes.clinicTypes, description: "Who we build for" },
+      { label: "Aesthetics clinics", href: "/clinic-types/aesthetics-clinics", description: "Multi-treatment clinics" },
+      { label: "Skin clinics", href: "/clinic-types/skin-clinics", description: "Skin journeys and courses" },
+      { label: "Med spas", href: "/clinic-types/med-spas", description: "Packages and memberships" },
+      { label: "Aesthetic nurses", href: "/clinic-types/aesthetic-nurses", description: "Solo practitioners" },
+      { label: "Beauty salons", href: "/clinic-types/beauty-salons", description: "Menus, prices and booking" },
+      { label: "Lash & brow studios", href: "/clinic-types/lash-and-brow-studios", description: "Small, booking-led studios" },
+    ],
+  },
   { label: "Pricing", href: routes.pricing },
   { label: "Work", href: routes.work },
   { label: "Blog", href: routes.blog },
-  { label: "Contact", href: routes.contact },
 ];
 
 export const footerColumns: { title: string; links: { label: string; href: string }[] }[] = [
   {
     title: "Services",
-    links: services.map((s) => ({ label: s.short, href: s.href })),
+    links: [
+      ...services.map((s) => ({ label: s.short, href: s.href })),
+      { label: "Clinic websites in London", href: routes.london },
+      { label: "Clinic websites in Bristol", href: routes.bristol },
+    ],
+  },
+  {
+    title: "Resources",
+    links: [
+      { label: "Blog", href: routes.blog },
+      { label: "FAQ", href: routes.faq },
+      { label: "Free clinic website audit", href: routes.freeAudit },
+      { label: "Clinic website pricing guide", href: "/blog/aesthetic-clinic-website-cost-uk" },
+      { label: "Treatment pages that rank", href: routes.treatmentPages },
+      { label: "Clinic types", href: routes.clinicTypes },
+    ],
   },
   {
     title: "Company",
@@ -165,8 +212,6 @@ export const footerColumns: { title: string; links: { label: string; href: strin
       { label: "Pricing", href: routes.pricing },
       { label: "Work", href: routes.work },
       { label: "About", href: routes.about },
-      { label: "FAQ", href: routes.faq },
-      { label: "Blog", href: routes.blog },
       { label: "Contact", href: routes.contact },
     ],
   },
@@ -189,3 +234,18 @@ export const dashboardLines = {
   comparison:
     "Most clinic websites need a developer for every edit. With Option A, you make day-to-day changes yourself.",
 } as const;
+
+// UK search keywords surfaced in the footer and hero strips, so every page
+// reinforces what the site should rank for.
+export const ukKeywords = [
+  "Aesthetic clinic website design UK",
+  "Beauty salon websites",
+  "Clinic website with admin dashboard",
+  "Local SEO for aesthetic clinics",
+  "AI search visibility",
+  "Meta ads for aesthetics clinics",
+  "Instagram reels for clinics",
+  "Med spa web design",
+  "Aesthetic nurse websites",
+  "Skin clinic web design",
+] as const;

@@ -145,7 +145,7 @@ export const softwarePosts: BlogPost[] = [
     excerpt:
       "An MVP is your first impression and your first attack surface. The security fundamentals that are cheap to add early and painful to retrofit later.",
     metaDescription:
-      "A practical guide to building a secure SaaS MVP: authentication, tenant isolation, input validation, secrets, and the security basics to get right from day one.",
+      "A practical guide to a secure SaaS MVP: authentication, tenant isolation, input validation and the security basics to get right from day one.",
     date: "2026-04-22",
     updated: "2026-04-22",
     category: "AI & software",
@@ -211,7 +211,7 @@ export const softwarePosts: BlogPost[] = [
     excerpt:
       "More people does not mean more progress. Why a small, senior team often out-delivers a large agency, and how to tell which one you're really hiring.",
     metaDescription:
-      "Why senior-led engineering often beats the big-agency model: less coordination overhead, direct access to builders, and accountability that doesn't get diluted.",
+      "Why senior-led engineering often beats the big-agency model: less coordination overhead, direct access to builders and undiluted accountability.",
     date: "2026-04-03",
     updated: "2026-04-03",
     category: "AI & software",

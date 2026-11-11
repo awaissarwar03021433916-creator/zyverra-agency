@@ -383,3 +383,13 @@
 .animate-chat-nudge {
   animation: chatNudge 4.6s ease-in-out infinite;
 }
+
+/* Gentle floating for the hero screenshot collage (transform-only, cheap).
+   Disabled by the global prefers-reduced-motion rule. */
+@keyframes floatY {
+  0%, 100% { translate: 0 0; }
+  50% { translate: 0 -10px; }
+}
+.animate-float { animation: floatY 6s ease-in-out infinite; }
+.animate-float-slow { animation: floatY 8s ease-in-out infinite; animation-delay: -2s; }
+.animate-float-slower { animation: floatY 10s ease-in-out infinite; animation-delay: -4s; }

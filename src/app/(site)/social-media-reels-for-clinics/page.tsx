@@ -1,5 +1,4 @@
 import Link from "next/link";
-import { CalendarDays, Clapperboard, FileVideo, PenLine } from "lucide-react";
 
 import PageShell from "@/components/marketing/pages/PageShell";
 import { Accent, PageHero } from "@/components/marketing/pages/PageHero";
@@ -8,14 +7,16 @@ import {
   CheckList,
   CtaBand,
   DashboardCallout,
-  DevConfirm,
   FaqList,
   HeroActions,
   Lead,
   Section,
   SectionHeading,
+  RelatedLinks,
 } from "@/components/marketing/blocks";
+import { PackageCards } from "@/components/marketing/blocks/showcase";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { marketingPackages } from "@/config/business";
 import { routes } from "@/config/site";
 import { faqsById } from "@/data/faqs";
 import { serviceSchema, siteOrigin } from "@/lib/schema";
@@ -24,9 +25,9 @@ import { pageMetadata } from "@/lib/seo";
 const PATH = routes.socialReels;
 
 export const metadata = pageMetadata({
-  title: "Social Media & Reels for Aesthetics Clinics | Zyverra Labs",
+  title: "Social Media Management for Aesthetic Clinics | Zyverra",
   description:
-    "Instagram and TikTok reels, content calendars and social media management for UK aesthetics clinics and salons, written to stay within ASA rules.",
+    "Social media management for aesthetic clinics: Instagram reels, posts and calendars written within ASA rules. From £300/month. Start this month.",
   path: PATH,
 });
 
@@ -38,6 +39,7 @@ export default function Page() {
       <JsonLd
         data={serviceSchema(origin, {
           path: PATH,
+          monthlyOffers: marketingPackages.social,
           name: "Social media management and reels for aesthetics clinics",
           serviceType: "Social media management and short-form video",
           description:
@@ -49,7 +51,7 @@ export default function Page() {
         eyebrow="Social media & reels"
         title={
           <>
-            Social media management and reels for <Accent>aesthetics clinics</Accent>
+            Social media management <Accent>for aesthetic clinics</Accent>
           </>
         }
         description="Reels and posts that show your clinic, your results (with consent) and your expertise."
@@ -68,10 +70,10 @@ export default function Page() {
         <CardGrid
           columns={4}
           items={[
-            { icon: Clapperboard, title: "Reels", description: "Short videos about treatments, your clinic and your team." },
-            { icon: PenLine, title: "Posts & captions", description: "Written in your voice, in UK English." },
-            { icon: CalendarDays, title: "Content calendars", description: "A planned month of content, agreed in advance." },
-            { icon: FileVideo, title: "Editing & scheduling", description: "Edited, captioned and scheduled for you." },
+            { emoji: "movie-camera", title: "Reels", description: "Short videos about treatments, your clinic and your team." },
+            { emoji: "memo", title: "Posts & captions", description: "Written in your voice, in UK English." },
+            { emoji: "spiral-calendar", title: "Content calendars", description: "A planned month of content, agreed in advance." },
+            { emoji: "camera", title: "Editing & scheduling", description: "Edited, captioned and scheduled for you." },
           ]}
         />
       </Section>
@@ -107,12 +109,11 @@ export default function Page() {
       <Section id="packages" tone="muted">
         <SectionHeading
           eyebrow="Packages"
-          title="Packages"
-          description="Social media packages are quoted separately from your website."
+          title="Social media & reels packages"
+          description="Pick a monthly package. Both include planning, writing, editing and scheduling, checked against UK advertising rules."
         />
-        {/* TODO [CONFIRM]: social media & reels packages and prices. */}
-        <DevConfirm>add social media and reels packages and prices.</DevConfirm>
-        <p className="mt-6 text-sm text-muted-foreground">
+        <PackageCards packages={marketingPackages.social} />
+        <p className="mt-4 text-sm text-muted-foreground">
           <Link href={routes.pricing} className="font-semibold text-primary hover:underline">Website pricing</Link>
           {" · "}
           <Link href={routes.work} className="font-semibold text-primary hover:underline">Our work</Link>
@@ -123,6 +124,14 @@ export default function Page() {
         <SectionHeading eyebrow="FAQ" title="Social media FAQs" />
         <FaqList faqs={faqsById(["reels", "before-after", "meta-ads"])} />
       </Section>
+
+      <RelatedLinks
+        links={[
+          { href: "/blog/botox-advertising-rules-clinic-website", label: "UK advertising rules for clinic websites" },
+          { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
+          { href: "/clinic-types/aesthetic-nurses", label: "Aesthetic nurse marketing" },
+        ]}
+      />
 
       <CtaBand title="Talk to us about your social media" />
     </PageShell>

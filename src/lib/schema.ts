@@ -6,7 +6,7 @@
 
 import { env } from "@/config/env";
 import { appConfig, CANONICAL_ORIGIN } from "@/config/app";
-import { business, pricing } from "@/config/business";
+import { business, pricing, type MarketingPackage } from "@/config/business";
 import { founder, sameAsProfiles } from "@/config/founder";
 import { routes } from "@/config/site";
 import type { Faq } from "@/data/faqs";
@@ -58,12 +58,6 @@ export function siteGraph(origin: string) {
           "Zyverra Labs builds websites with a built-in admin dashboard, local SEO, AI search visibility, Meta ads and social media for UK aesthetics clinics, aesthetic practitioners, med spas and beauty salons.",
         email: business.email,
         telephone: business.phone,
-        address: {
-          "@type": "PostalAddress",
-          addressLocality: business.address.city,
-          addressRegion: business.address.region,
-          addressCountry: business.address.country,
-        },
         areaServed: { "@type": "Country", name: business.areaServed },
         currenciesAccepted: "GBP",
         priceRange: `£${pricing.optionB.price}–£${pricing.optionA.price}`,
@@ -147,6 +141,8 @@ export function serviceSchema(
     serviceType: string;
     description: string;
     offers?: boolean;
+    /** Monthly packages shown on the page (marketing services). */
+    monthlyOffers?: MarketingPackage[];
     areaServed?: { "@type": "Country" | "City"; name: string };
   }
 ) {
@@ -165,6 +161,24 @@ export function serviceSchema(
       audienceType: "Aesthetics clinics, aesthetic practitioners, med spas and beauty salons",
     },
     ...(opts.offers ? { offers: websiteOffers(origin) } : {}),
+    ...(opts.monthlyOffers
+      ? {
+          offers: opts.monthlyOffers.map((p) => ({
+            "@type": "Offer",
+            name: `${p.name} – ${p.summary}`,
+            price: String(p.price),
+            priceCurrency: "GBP",
+            url: abs(origin, opts.path),
+            priceSpecification: {
+              "@type": "UnitPriceSpecification",
+              price: String(p.price),
+              priceCurrency: "GBP",
+              unitText: "MONTH",
+              referenceQuantity: { "@type": "QuantitativeValue", value: 1, unitCode: "MON" },
+            },
+          })),
+        }
+      : {}),
   };
 }
 

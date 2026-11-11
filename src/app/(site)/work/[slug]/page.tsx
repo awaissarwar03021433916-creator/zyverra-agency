@@ -1,11 +1,11 @@
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import Image from "next/image";
 import { ArrowRight, ArrowUpRight } from "lucide-react";
 
 import PageShell from "@/components/marketing/pages/PageShell";
 import { PageHero } from "@/components/marketing/pages/PageHero";
-import { CheckList, CtaBand, DashboardCallout, DevConfirm, HeroActions, Section, SectionHeading } from "@/components/marketing/blocks";
+import { CheckList, CtaBand, DashboardCallout, HeroActions, Section, SectionHeading } from "@/components/marketing/blocks";
+import { AdminGallery, BrowserFrame, WorkShowcase } from "@/components/marketing/blocks/showcase";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { routes } from "@/config/site";
 import { getCaseStudy, publishedCaseStudies } from "@/data/work";
@@ -27,7 +27,7 @@ export async function generateMetadata({ params }: { params: Promise<{ slug: str
   if (!c) return {};
   return pageMetadata({
     title: `${c.name} Website: ${c.location} | Zyverra Labs`.slice(0, 60),
-    description: c.summary.slice(0, 155),
+    description: c.metaDescription,
     path: `${routes.work}/${c.slug}`,
     type: "article",
     publishedTime: VERIFIED_ON,
@@ -55,6 +55,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           headline: `${c.name} website: ${c.location}`,
           description: c.summary,
           datePublished: VERIFIED_ON,
+          image: c.screenshot.src,
         })}
       />
 
@@ -80,23 +81,9 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         chips={[c.locationDetail]}
       />
 
-      {c.screenshot ? (
-        <div className="mx-auto max-w-5xl px-4 pt-12 sm:px-6">
-          <Image
-            src={c.screenshot.src}
-            alt={c.screenshot.alt}
-            width={c.screenshot.width}
-            height={c.screenshot.height}
-            sizes="(max-width: 1024px) 100vw, 1024px"
-            className="w-full rounded-2xl border border-border shadow-lg"
-          />
-        </div>
-      ) : (
-        <div className="mx-auto max-w-5xl px-4 sm:px-6">
-          {/* TODO [CONFIRM]: add a real screenshot of the live site to /public/work/ and set `screenshot` in src/data/work.ts. */}
-          <DevConfirm>add a real screenshot of {c.name} to /public/work/ and reference it in src/data/work.ts.</DevConfirm>
-        </div>
-      )}
+      <div className="mx-auto max-w-5xl px-4 pt-12 sm:px-6">
+        <BrowserFrame shot={c.screenshot} url={c.liveUrl} sizes="(max-width: 1024px) 100vw, 1024px" eager />
+      </div>
 
       <Section id="goal" narrow>
         <SectionHeading eyebrow="The client" title="The client and their goal" />
@@ -108,16 +95,16 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
         <CheckList items={c.built} />
       </Section>
 
-      {c.ownerCanUpdate.length > 0 ? (
-        <Section id="owner-updates" narrow>
-          <SectionHeading eyebrow="Admin dashboard" title="What the owner can update themselves" />
+      {c.ownerCanUpdate.length > 0 && (
+        <Section id="owner-updates">
+          <SectionHeading
+            eyebrow="Admin dashboard"
+            title="What the owner can update themselves"
+            description="Real screenshots of this clinic's admin dashboard."
+          />
           <CheckList items={c.ownerCanUpdate} />
+          {c.adminShots && <AdminGallery shots={c.adminShots} />}
         </Section>
-      ) : (
-        <div className="mx-auto max-w-4xl px-4 sm:px-6">
-          {/* TODO [CONFIRM]: what this client edits themselves; fill `ownerCanUpdate` in src/data/work.ts. */}
-          <DevConfirm>list what {c.name} can update themselves (ownerCanUpdate in src/data/work.ts).</DevConfirm>
-        </div>
       )}
 
       <Section id="pages" narrow>
@@ -139,6 +126,11 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           </figure>
         </Section>
       )}
+
+      <Section tone="tint">
+        <SectionHeading eyebrow="More work" title="More clinic websites" />
+        <WorkShowcase items={publishedCaseStudies.filter((o) => o.slug !== c.slug)} />
+      </Section>
 
       <DashboardCallout />
 

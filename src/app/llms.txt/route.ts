@@ -1,4 +1,4 @@
-import { business, pricing } from "@/config/business";
+import { business, marketingPackages, pricing } from "@/config/business";
 import { routes, services } from "@/config/site";
 import { blogPosts } from "@/data/blog";
 import { siteOrigin } from "@/lib/schema";
@@ -8,7 +8,7 @@ import { siteOrigin } from "@/lib/schema";
 export const dynamic = "force-static";
 
 const GUIDE_LABELS: Record<string, string> = {
-  "aesthetic-clinic-website-cost-uk": "Aesthetic clinic website cost in the UK",
+  "aesthetic-clinic-website-cost-uk": "Clinic website prices in the UK (2026 guide)",
   "botox-advertising-rules-clinic-website": "Prescription-only medicines and ASA advertising rules for clinic websites",
   "get-clinic-recommended-by-chatgpt": "Getting your clinic recommended by ChatGPT and Google AI",
 };
@@ -30,7 +30,7 @@ export function GET() {
 
   const text = `# Zyverra Labs
 
-> Zyverra Labs is a founder-led web studio based in Lahore, Pakistan, serving UK aesthetics clinics, aesthetic nurses and practitioners, med spas and beauty salons. We build custom clinic websites with a built-in admin dashboard (clients update treatments, prices, images, before-and-after photos, offers and blogs themselves), plus local SEO, AI search visibility, Meta ads, social media and reels, AI chatbots and custom software. Prices: £${pricing.optionA.price} website with admin dashboard; £${pricing.optionB.price} without. Live in ${pricing.timeline}. Payment plans: 50/50 or 30/40/30. Contact: ${business.email}, WhatsApp ${business.phoneDisplay}.
+> Zyverra Labs is a founder-led web studio serving UK aesthetics clinics, aesthetic nurses and practitioners, med spas and beauty salons. We build custom clinic websites with a built-in admin dashboard (clients update treatments, prices, images, before-and-after photos, offers and blogs themselves), plus local SEO, AI search visibility, Meta ads, social media and reels, AI chatbots and custom software. Prices: £${pricing.optionA.price} website with admin dashboard; £${pricing.optionB.price} without. Live in ${pricing.timeline}. Payment plans: 50/50 or 30/40/30 over 45 days. Option A includes 3 SEO-optimised blog posts; major changes cost ${pricing.updateFee} per update. Monthly marketing: Meta ads management from £${marketingPackages.metaAds[0].price}/month (ad spend separate), local SEO from £${marketingPackages.seo[0].price}/month, social media and reels from £${marketingPackages.social[0].price}/month. Clinic websites built for clients in London and Bristol. Contact: ${business.email}, WhatsApp ${business.phoneDisplay}.
 
 ## Services
 ${services
@@ -39,6 +39,18 @@ ${services
     return `- [${s.short.charAt(0).toUpperCase()}${s.short.slice(1)}](${u(s.href)})${extra ? `: ${extra}` : ""}`;
   })
   .join("\n")}
+
+## More for clinics
+- [Website for aesthetic nurses](${u(routes.nurseWebsites)})
+- [Clinic website redesign](${u(routes.redesign)})
+- [Google Business Profile for aesthetic clinics](${u(routes.googleBusinessProfile)})
+- [Treatment pages that rank](${u(routes.treatmentPages)})
+- [Free clinic website audit](${u(routes.freeAudit)})
+- [Websites and marketing by clinic type](${u(routes.clinicTypes)})
+
+## Locations
+- [Aesthetic clinic website design in London](${u(routes.london)})
+- [Aesthetic clinic website design in Bristol](${u(routes.bristol)})
 
 ## Key pages
 - [Pricing](${u(routes.pricing)})

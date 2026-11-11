@@ -16,8 +16,8 @@ export default function Footer() {
   return (
     <footer className="mt-auto border-t border-border bg-card">
       <div className="mx-auto max-w-6xl px-4 py-14 sm:px-6">
-        <div className="grid gap-10 md:grid-cols-[1.5fr_1fr_1fr_1fr]">
-          <div>
+        <div className="grid grid-cols-2 gap-8 md:grid-cols-4 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1fr] lg:gap-10">
+          <div className="col-span-2 md:col-span-4 lg:col-span-1">
             <Link href="/" className="inline-flex items-center gap-2.5" aria-label="Zyverra Labs, home">
               <Image src="/zyverra-mark.png" alt="" width={256} height={219} sizes="44px" className="h-9 w-auto" />
               <span className="text-base font-semibold tracking-tight text-foreground">{business.name}</span>
@@ -26,7 +26,7 @@ export default function Footer() {
 
             {/* NAP block — identical wording to the schema and contact page. */}
             <address className="mt-3 max-w-xs text-sm not-italic leading-relaxed text-muted-foreground">
-              Zyverra Labs · Lahore, Pakistan · Serving clinics across the UK ·{" "}
+              Websites, local SEO and Meta ads for UK aesthetics clinics · Serving clinics across the UK ·{" "}
               <a href={`mailto:${business.email}`} className="hover:text-primary">
                 {business.email}
               </a>{" "}

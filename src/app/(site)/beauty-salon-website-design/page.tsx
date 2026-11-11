@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CalendarCheck, Images, ListChecks, MapPin, PoundSterling, Star } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import PageShell from "@/components/marketing/pages/PageShell";
 import { Accent, PageHero } from "@/components/marketing/pages/PageHero";
@@ -12,6 +12,7 @@ import {
   Lead,
   Section,
   SectionHeading,
+  RelatedLinks,
 } from "@/components/marketing/blocks";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pricing } from "@/config/business";
@@ -25,7 +26,7 @@ const PATH = routes.beautySalonWebsites;
 export const metadata = pageMetadata({
   title: "Beauty Salon Website Design UK | From £300 | Zyverra",
   description:
-    "Salon websites with your treatment menu, prices, gallery and booking link — plus a dashboard to update them yourself. From £300, live in 7–10 days.",
+    "Beauty salon website design UK: menu, prices, gallery and booking, with a dashboard to update it. From £300, live in 7–10 days. Get a quote today.",
   path: PATH,
 });
 
@@ -73,12 +74,12 @@ export default function Page() {
         <CardGrid
           columns={3}
           items={[
-            { icon: ListChecks, title: "Treatment menu", description: "Every treatment, grouped the way clients search for them." },
-            { icon: PoundSterling, title: "Clear prices", description: "Prices on the page, so clients don't have to ask." },
-            { icon: Images, title: "Gallery", description: "Your best work, shown off on a fast, mobile-friendly gallery." },
-            { icon: CalendarCheck, title: "Booking", description: "A booking button on every page, linked to the system you already use." },
-            { icon: Star, title: "Reviews", description: "Genuine client reviews, displayed where they help clients decide." },
-            { icon: MapPin, title: "Map & directions", description: "Your address, opening hours and a map, so clients can find you." },
+            { emoji: "clipboard", title: "Treatment menu", description: "Every treatment, grouped the way clients search for them." },
+            { emoji: "pound", title: "Clear prices", description: "Prices on the page, so clients don't have to ask." },
+            { emoji: "picture", title: "Gallery", description: "Your best work, shown off on a fast, mobile-friendly gallery." },
+            { emoji: "calendar", title: "Booking", description: "A booking button on every page, linked to the system you already use." },
+            { emoji: "star", title: "Reviews", description: "Genuine client reviews, displayed where they help clients decide." },
+            { emoji: "pin", title: "Map & directions", description: "Your address, opening hours and a map, so clients can find you." },
           ]}
         />
       </Section>
@@ -152,6 +153,15 @@ export default function Page() {
         <SectionHeading eyebrow="FAQ" title="Salon website FAQs" />
         <FaqList faqs={faqsById(["options", "timeline", "booking", "dashboard-edits", "instalments"])} />
       </Section>
+
+      <RelatedLinks
+        links={[
+          { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
+          { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
+          { href: "/clinic-types/beauty-salons", label: "Beauty salon marketing UK" },
+          { href: "/clinic-types/lash-and-brow-studios", label: "Lash and brow studio website" },
+        ]}
+      />
 
       <CtaBand title="Get your salon website quote" />
     </PageShell>

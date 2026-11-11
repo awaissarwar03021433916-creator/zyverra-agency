@@ -13,11 +13,14 @@ import {
   Lead,
   Section,
   SectionHeading,
+  RelatedLinks,
 } from "@/components/marketing/blocks";
 import { TrackView } from "@/components/analytics/TrackView";
 import { WhatsAppInlineLink } from "@/components/contact/WhatsAppButton";
+import { PackageCards } from "@/components/marketing/blocks/showcase";
+import { ColorIcon } from "@/components/marketing/ColorIcon";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { pricing } from "@/config/business";
+import { marketingPackages, pricing } from "@/config/business";
 import { dashboardLines, routes } from "@/config/site";
 import { faqsById } from "@/data/faqs";
 import { serviceSchema, siteOrigin } from "@/lib/schema";
@@ -26,9 +29,9 @@ import { pageMetadata } from "@/lib/seo";
 const PATH = routes.pricing;
 
 export const metadata = pageMetadata({
-  title: "Clinic Website Pricing UK: £400 or £300 | Zyverra Labs",
+  title: "Aesthetic Clinic Website Cost UK: £300 or £400 | Zyverra",
   description:
-    "Clear GBP pricing: £400 clinic website with admin dashboard or £300 without. Live in 7–10 working days. Pay 50/50 or in three parts (30/40/30).",
+    "Aesthetic clinic website cost UK: £300, or £400 with an admin dashboard. Live in 7–10 days, pay 50/50 or over 45 days. Compare plans and get a quote.",
   path: PATH,
 });
 
@@ -40,6 +43,7 @@ const OPTIONS = [
     points: [
       "Custom clinic website, designed around your treatments",
       "Admin dashboard: edit treatments, prices, photos, offers and blogs yourself",
+      `${pricing.blogPostsIncluded} SEO-optimised blog posts included, and add as many as you like`,
       "Mobile-first design, SEO and schema setup",
       "WhatsApp and booking buttons",
       `Live in ${pricing.timeline}`,
@@ -51,7 +55,8 @@ const OPTIONS = [
     highlight: false,
     points: [
       "The same custom clinic website",
-      "Content changes made by us on request",
+      `${pricing.blogPostsIncluded} blog posts included`,
+      `Content changes made by us on request (${pricing.updateFee} per update)`,
       "Mobile-first design, SEO and schema setup",
       "WhatsApp and booking buttons",
       `Live in ${pricing.timeline}`,
@@ -76,7 +81,7 @@ export default function Page() {
 
       <PageHero
         eyebrow="Pricing in pounds sterling"
-        title="Clinic website pricing"
+        title="Aesthetic clinic website cost in the UK"
         description={dashboardLines.comparison}
         actions={<HeroActions />}
         chips={[`Option A £${pricing.optionA.price}`, `Option B £${pricing.optionB.price}`, "Pay 50/50 or 30/40/30"]}
@@ -86,7 +91,7 @@ export default function Page() {
         Option A costs £{pricing.optionA.price} and includes a custom clinic website plus an admin dashboard
         for updating it yourself. Option B costs £{pricing.optionB.price} for the same custom website without
         the dashboard. Both go live in {pricing.timeline}. Pay 50% upfront and 50% at launch, or split it
-        30/40/30.
+        30/40/30 over 45 days.
       </Lead>
 
       <Section id="options">
@@ -145,14 +150,14 @@ export default function Page() {
             { label: "SEO and schema setup", a: true, b: true },
             { label: "WhatsApp and booking buttons", a: true, b: true },
             { label: "Timeline", a: pricing.timeline, b: pricing.timeline },
-            { label: "Small changes after launch", a: "Do it yourself", b: "By request" },
+            { label: "Blog", a: `${pricing.blogPostsIncluded} SEO-optimised posts + add your own`, b: `${pricing.blogPostsIncluded} posts` },
+            { label: "Small changes after launch", a: "Do it yourself", b: `By request, ${pricing.updateFee} per update` },
+            { label: "Major changes (new features, layouts)", a: `${pricing.updateFee} per update`, b: `${pricing.updateFee} per update` },
+            { label: "Dashboard training", a: `Live on ${pricing.trainingFormat}`, b: false },
           ]}
         />
-        {/* TODO [CONFIRM]: blog included in Option A/B; fee for Option B changes; hosting/domain costs; page count per option. */}
-        <DevConfirm>
-          confirm the blog row for each option, the fee for small changes on Option B, hosting/domain costs and how
-          many pages each option includes — then add those rows.
-        </DevConfirm>
+        {/* TODO [CONFIRM]: hosting/domain costs and how many pages each option includes — then add those rows. */}
+        <DevConfirm>confirm hosting/domain costs and how many pages each option includes — then add those rows.</DevConfirm>
       </Section>
 
       <DashboardCallout />
@@ -171,12 +176,10 @@ export default function Page() {
           <div className="rounded-2xl border border-border bg-card p-6 shadow-xs">
             <h3 className="font-heading text-lg font-semibold text-foreground">30/40/30</h3>
             <p className="mt-2 text-sm leading-relaxed text-muted-foreground">
-              30% to start, 40% at design approval and 30% at launch.
+              Spread over 45 days: {pricing.instalments}.
             </p>
           </div>
         </div>
-        {/* TODO [CONFIRM]: the 30/40/30 milestones. */}
-        <DevConfirm>confirm the 30/40/30 milestones (start / design approval / launch).</DevConfirm>
       </Section>
 
       <Section id="not-included" tone="tint">
@@ -193,7 +196,7 @@ export default function Page() {
             <SectionHeading
               eyebrow="Marketing"
               title="Ongoing marketing"
-              description="Local SEO, Meta ads and social media management are quoted separately, based on what your clinic needs."
+              description="Local SEO, Meta ads and social media management are separate monthly packages — see the prices below."
             />
             <p className="mt-4 text-sm text-muted-foreground">
               <Link href={routes.seoAiSearch} className="font-semibold text-primary hover:underline">SEO & AI search</Link>
@@ -204,6 +207,29 @@ export default function Page() {
             </p>
           </div>
         </div>
+      </Section>
+
+      <Section id="marketing">
+        <SectionHeading
+          eyebrow="Monthly marketing"
+          title="Marketing packages"
+          description="Add marketing when you're ready. Simple monthly fees in pounds sterling; Meta ad spend is paid directly to Meta."
+        />
+        {(
+          [
+            { key: "metaAds", title: "Meta ads", href: routes.metaAds, emoji: "megaphone" },
+            { key: "seo", title: "Local SEO & AI search", href: routes.seoAiSearch, emoji: "search" },
+            { key: "social", title: "Social media & reels", href: routes.socialReels, emoji: "movie-camera" },
+          ] as const
+        ).map((g) => (
+          <div key={g.key} className="mt-12">
+            <h3 className="flex items-center gap-3 font-heading text-xl font-bold text-foreground">
+              <ColorIcon name={g.emoji} size={32} />
+              <Link href={g.href} className="hover:text-primary">{g.title}</Link>
+            </h3>
+            <PackageCards packages={marketingPackages[g.key]} />
+          </div>
+        ))}
       </Section>
 
       <Section id="compare-uk">
@@ -232,6 +258,15 @@ export default function Page() {
         <SectionHeading eyebrow="FAQ" title="Cost and payment questions" />
         <FaqList faqs={faqsById(["cost", "options", "instalments", "monthly-fees"])} />
       </Section>
+
+      <RelatedLinks
+        links={[
+          { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
+          { href: "/blog/botox-advertising-rules-clinic-website", label: "UK advertising rules for clinic websites" },
+          { href: "/clinic-types/aesthetic-nurses", label: "Aesthetic nurse marketing" },
+          { href: routes.redesign, label: "Clinic website redesign UK" },
+        ]}
+      />
 
       <CtaBand />
     </PageShell>

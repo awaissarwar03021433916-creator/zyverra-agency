@@ -2,16 +2,16 @@ import type { BlogPost } from "../types";
 
 export const websiteCostPost: BlogPost = {
   slug: "aesthetic-clinic-website-cost-uk",
-  title: "How much does an aesthetic clinic website cost in the UK? (2026)",
-  seoTitle: "Aesthetic Clinic Website Cost UK (2026 Guide) | Zyverra",
+  title: "Clinic website prices in the UK: what to expect in 2026",
+  seoTitle: "Clinic Website Prices in the UK: 2026 Guide | Zyverra",
   metaDescription:
-    "What does an aesthetic clinic website cost in the UK in 2026? Real price ranges, ongoing costs, hidden extras and what to ask before you pay.",
+    "Clinic website prices in the UK in 2026: real price ranges, ongoing costs, hidden extras and the questions to ask before you pay. Read the guide.",
   excerpt:
     "Real UK price bands for clinic websites, the costs people forget, and the three questions that matter more than the build price.",
   date: "2026-11-11",
   updated: "2026-11-11",
   category: "Websites",
-  targetKeyword: "aesthetic clinic website cost UK",
+  targetKeyword: "clinic website prices UK",
   image: "/og-image.png",
   imageAlt: "Zyverra Labs guide to aesthetic clinic website costs in the UK",
   servicePath: "/aesthetic-clinic-website-design",

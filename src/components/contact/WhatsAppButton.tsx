@@ -65,7 +65,7 @@ export function WhatsAppInlineLink({
       className={
         className ??
         // Dark text on WhatsApp green (~9:1) — white text would fail 4.5:1.
-        "inline-flex h-12 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-6 text-sm font-semibold text-[#0f1a24] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2ee072] hover:shadow-md motion-reduce:hover:translate-y-0"
+        "inline-flex h-11 items-center justify-center gap-2 rounded-lg bg-[#25D366] px-4 text-sm font-semibold sm:h-12 sm:px-6 text-[#0f1a24] shadow-sm transition-all duration-200 hover:-translate-y-0.5 hover:bg-[#2ee072] hover:shadow-md motion-reduce:hover:translate-y-0"
       }
     >
       <WhatsAppGlyph className="h-4 w-4" />

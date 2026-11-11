@@ -2,6 +2,7 @@ import type { MetadataRoute } from "next";
 
 import { routes } from "@/config/site";
 import { blogPosts } from "@/data/blog";
+import { clinicTypes } from "@/data/clinicTypes";
 import { publishedCaseStudies } from "@/data/work";
 import { siteOrigin } from "@/lib/schema";
 
@@ -27,6 +28,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: routes.home, priority: 1 },
     { path: routes.aestheticClinicWebsites, priority: 0.9 },
     { path: routes.bristol, priority: 0.7 },
+    { path: routes.london, priority: 0.7 },
     { path: routes.beautySalonWebsites, priority: 0.8 },
     { path: routes.adminDashboard, priority: 0.8 },
     { path: routes.seoAiSearch, priority: 0.8 },
@@ -43,6 +45,13 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: routes.cookies, priority: 0.2 },
     { path: routes.terms, priority: 0.2 },
     { path: routes.complaints, priority: 0.2 },
+    { path: routes.googleBusinessProfile, priority: 0.7 },
+    { path: routes.nurseWebsites, priority: 0.8 },
+    { path: routes.redesign, priority: 0.7 },
+    { path: routes.freeAudit, priority: 0.8 },
+    { path: routes.clinicTypes, priority: 0.6 },
+    { path: routes.treatmentPages, priority: 0.6 },
+    ...clinicTypes.map((t) => ({ path: t.content.path, priority: 0.6 })),
   ];
 
   return [

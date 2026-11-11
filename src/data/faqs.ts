@@ -21,12 +21,12 @@ export const faqGroups: FaqGroup[] = [
       {
         id: "options",
         q: "What is the difference between Option A and Option B?",
-        a: "Option A (£400) includes the admin dashboard, so you can change treatments, prices, photos, offers and blog posts yourself. Option B (£300) is the same custom website without the dashboard, so content changes are made by us on request.",
+        a: "Option A (£400) includes the admin dashboard, so you can change treatments, prices, photos, offers and blog posts yourself, and comes with 3 SEO-optimised blog posts you can add to. Option B (£300) is the same custom website with 3 blog posts but no dashboard, so content changes are made by us on request at £50–£100 per update.",
       },
       {
         id: "instalments",
         q: "Can I pay in instalments?",
-        a: "Yes. You can pay 50% to start and 50% at launch, or split the cost into three payments of 30%, 40% and 30%.",
+        a: "Yes. You can pay 50% to start and 50% at launch, or split the cost into three payments over 45 days: 30% to start, 40% after 15 days and the final 30% by day 45.",
       },
       {
         id: "monthly-fees",
@@ -48,18 +48,18 @@ export const faqGroups: FaqGroup[] = [
       {
         id: "dashboard-edits",
         q: "What can I change myself with the admin dashboard?",
-        a: "You can add or edit treatments, update prices, upload images and before-and-after photos, publish offers and write blog posts, all without a developer.",
+        a: "Everything. You can add, rename or remove service categories, add services to any category, update prices, edit every page section, upload images and before-and-after photos, publish offers, write blog posts and change your opening hours and contact details, all without a developer.",
       },
       {
         id: "developer",
         q: "When would I still need a developer?",
-        a: "Only for major changes, such as a new feature, a new page layout, a third-party integration or a redesign. Day-to-day content changes are yours to make.",
+        a: "Only for major changes, such as a new feature, a new page layout, a third-party integration or a redesign. These cost £50–£100 per update depending on the change, and we confirm the price before we start. Day-to-day content changes are yours to make.",
       },
       {
         id: "booking",
         q: "Can clients book online through my website?",
         // TODO [CONFIRM]: the list of supported booking systems.
-        a: "Yes. We link or embed the booking system you already use, so clients can go from a treatment page to booking in a couple of taps.",
+        a: "Yes. We link or embed the booking system you already use, including Fresha, Treatwell, Timely and Phorest, so clients can go from a treatment page to booking in a couple of taps.",
       },
       {
         id: "redesign",
@@ -120,8 +120,8 @@ export const faqGroups: FaqGroup[] = [
     items: [
       {
         id: "location",
-        q: "Where are you based, and do you work with UK clinics?",
-        a: "Zyverra Labs is based in Lahore, Pakistan, and works with clinics across the UK remotely by video call, email and WhatsApp. Prices are in pounds sterling and all copy is written in UK English.",
+        q: "Do you work with clinics across the UK?",
+        a: "Yes. We build websites and run marketing for aesthetics clinics, aesthetic nurses, med spas and beauty salons across the UK, including London and Bristol. Everything is handled remotely by video call, email and WhatsApp, from 6am to 8pm UK time, prices are in pounds sterling and all copy is written in UK English.",
       },
       {
         id: "solo",

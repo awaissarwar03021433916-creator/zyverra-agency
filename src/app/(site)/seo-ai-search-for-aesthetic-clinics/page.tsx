@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, BarChart3, Bot, Building2, FileSearch, Globe, MapPin } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import PageShell from "@/components/marketing/pages/PageShell";
 import { Accent, PageHero } from "@/components/marketing/pages/PageHero";
@@ -8,14 +8,16 @@ import {
   CheckList,
   CtaBand,
   DashboardCallout,
-  DevConfirm,
   FaqList,
   HeroActions,
   Lead,
   Section,
   SectionHeading,
+  RelatedLinks,
 } from "@/components/marketing/blocks";
+import { PackageCards } from "@/components/marketing/blocks/showcase";
 import { JsonLd } from "@/components/seo/JsonLd";
+import { marketingPackages } from "@/config/business";
 import { routes } from "@/config/site";
 import { faqsById } from "@/data/faqs";
 import { serviceSchema, siteOrigin } from "@/lib/schema";
@@ -24,9 +26,9 @@ import { pageMetadata } from "@/lib/seo";
 const PATH = routes.seoAiSearch;
 
 export const metadata = pageMetadata({
-  title: "SEO & AI Search Visibility for Aesthetic Clinics | Zyverra",
+  title: "SEO for Aesthetic Clinics & AI Search Visibility | Zyverra",
   description:
-    "Local SEO and AI search visibility for UK aesthetics clinics: Google Business Profile, schema, content and citations so Google and ChatGPT can find you.",
+    "SEO for aesthetic clinics: local SEO, Google Business Profile and AI search visibility for ChatGPT and Google. From £300/month. Book a free audit.",
   path: PATH,
 });
 
@@ -38,6 +40,7 @@ export default function Page() {
       <JsonLd
         data={serviceSchema(origin, {
           path: PATH,
+          monthlyOffers: marketingPackages.seo,
           name: "Local SEO and AI search visibility for aesthetic clinics",
           serviceType: "Local SEO and AI search optimisation",
           description:
@@ -49,7 +52,7 @@ export default function Page() {
         eyebrow="Local SEO & AI search"
         title={
           <>
-            Local SEO and AI search visibility for <Accent>aesthetics clinics</Accent>
+            SEO for aesthetic clinics <Accent>and AI search visibility</Accent>
           </>
         }
         description="Built to be found and understood by Google, Bing, ChatGPT, Gemini and Perplexity."
@@ -74,10 +77,10 @@ export default function Page() {
         <CardGrid
           columns={4}
           items={[
-            { icon: MapPin, title: "Google Business Profile", description: "Services, photos, opening hours and categories kept accurate and current." },
-            { icon: Building2, title: "Reviews", description: "A simple routine for asking happy clients for genuine reviews." },
-            { icon: Globe, title: "Consistent details", description: "The same name, address, phone and hours on every listing." },
-            { icon: FileSearch, title: "Treatment & location pages", description: "One clear page per treatment or concern, written answer-first." },
+            { emoji: "pin", title: "Google Business Profile", description: "Services, photos, opening hours and categories kept accurate and current." },
+            { emoji: "star", title: "Reviews", description: "A simple routine for asking happy clients for genuine reviews." },
+            { emoji: "link", title: "Consistent details", description: "The same name, address, phone and hours on every listing." },
+            { emoji: "search", title: "Treatment & location pages", description: "One clear page per treatment or concern, written answer-first." },
           ]}
         />
       </Section>
@@ -106,20 +109,11 @@ export default function Page() {
 
       <Section id="monthly">
         <SectionHeading
-          eyebrow="Ongoing work"
+          eyebrow="Monthly packages"
           title="What we do month to month"
-          description="Ongoing local SEO and AI search work is quoted separately from your website, based on what your clinic needs."
+          description="Ongoing local SEO and AI search work, quoted as a simple monthly fee separate from your website."
         />
-        <CheckList
-          items={[
-            "Keep your Google Business Profile and Bing Places details accurate",
-            "Add and improve answer-first treatment pages and FAQs",
-            "Maintain structured data as your treatments and prices change",
-            "Find genuine opportunities for mentions on other websites",
-          ]}
-        />
-        {/* TODO [CONFIRM]: monthly packages and prices. */}
-        <DevConfirm>add monthly SEO packages and prices.</DevConfirm>
+        <PackageCards packages={marketingPackages.seo} />
       </Section>
 
       <DashboardCallout />
@@ -129,9 +123,9 @@ export default function Page() {
         <CardGrid
           columns={3}
           items={[
-            { icon: BarChart3, title: "Google Search Console", description: "Impressions, clicks and the generative AI performance report." },
-            { icon: Bot, title: "Bing Webmaster Tools", description: "Indexing and search performance in Bing, which feeds ChatGPT search." },
-            { icon: FileSearch, title: "Enquiry tracking", description: "Which pages turn visits into WhatsApp messages, calls and quote requests." },
+            { emoji: "bar-chart", title: "Google Search Console", description: "Impressions, clicks and the generative AI performance report." },
+            { emoji: "robot", title: "Bing Webmaster Tools", description: "Indexing and search performance in Bing, which feeds ChatGPT search." },
+            { emoji: "envelope", title: "Enquiry tracking", description: "Which pages turn visits into WhatsApp messages, calls and quote requests." },
           ]}
         />
         <p className="mt-8 text-sm text-muted-foreground">
@@ -154,6 +148,16 @@ export default function Page() {
         <SectionHeading eyebrow="FAQ" title="SEO & AI search FAQs" />
         <FaqList faqs={faqsById(["rank", "chatgpt", "ai-visibility"])} />
       </Section>
+
+      <RelatedLinks
+        links={[
+          { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
+          { href: "/blog/botox-advertising-rules-clinic-website", label: "UK advertising rules for clinic websites" },
+          { href: "/clinic-types/skin-clinics", label: "Skin clinic website design" },
+          { href: routes.googleBusinessProfile, label: "Google Business Profile for aesthetic clinics" },
+          { href: routes.treatmentPages, label: "Treatment pages that rank" },
+        ]}
+      />
 
       <CtaBand title="Make your clinic easier to find" />
     </PageShell>

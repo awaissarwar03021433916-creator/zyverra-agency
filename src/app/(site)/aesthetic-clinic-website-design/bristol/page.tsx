@@ -12,12 +12,14 @@ import {
   Lead,
   Section,
   SectionHeading,
+  RelatedLinks,
 } from "@/components/marketing/blocks";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pricing } from "@/config/business";
 import { routes } from "@/config/site";
 import { faqsById } from "@/data/faqs";
-import { getCaseStudy } from "@/data/work";
+import { getCaseStudy, publishedCaseStudies } from "@/data/work";
+import { WorkShowcase } from "@/components/marketing/blocks/showcase";
 import { serviceSchema, siteOrigin } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 
@@ -26,7 +28,7 @@ const PATH = routes.bristol;
 export const metadata = pageMetadata({
   title: "Aesthetic Clinic Website Design Bristol | Zyverra Labs",
   description:
-    "Websites with a self-edit admin dashboard for Bristol aesthetics clinics and practitioners. From £400, live in 7–10 working days. See our work.",
+    "Websites with a self-edit admin dashboard for Bristol aesthetics clinics and practitioners. From £300, live in 7–10 working days. See our Bristol work.",
   path: PATH,
 });
 
@@ -59,7 +61,7 @@ export default function Page() {
             Aesthetic clinic website design for <Accent>Bristol clinics</Accent>
           </>
         }
-        description="We already build for clinics in Bristol, including Belgrave Cosmetics in Whitchurch."
+        description="We already build for Bristol clinics, including Belgrave Cosmetics in Whitchurch and Penelope J Aesthetics in Hanham."
         actions={<HeroActions secondary={{ href: `${routes.work}/belgrave-cosmetics`, label: "Read the Belgrave case study" }} />}
         chips={[`From £${pricing.optionB.price}`, `Live in ${pricing.timeline}`, "Self-edit admin dashboard"]}
       />
@@ -87,6 +89,11 @@ export default function Page() {
           </Link>
         </Section>
       )}
+
+      <Section id="bristol-work" tone="muted">
+        <SectionHeading eyebrow="Bristol work" title="Bristol clinic websites we've built" />
+        <WorkShowcase items={publishedCaseStudies.filter((c) => c.location === "Bristol")} />
+      </Section>
 
       <Section id="local-search" tone="tint">
         <SectionHeading
@@ -132,6 +139,14 @@ export default function Page() {
         <SectionHeading eyebrow="FAQ" title="Questions from Bristol clinics" />
         <FaqList faqs={faqsById(["location", "timeline", "cost"])} />
       </Section>
+
+      <RelatedLinks
+        links={[
+          { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
+          { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
+          { href: "/clinic-types/aesthetics-clinics", label: "Aesthetics clinic marketing" },
+        ]}
+      />
 
       <CtaBand title="Tell us about your Bristol clinic" />
     </PageShell>

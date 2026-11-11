@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, CalendarCheck, Image as ImageIcon, MapPin, ShieldCheck, Smartphone, Stethoscope } from "lucide-react";
+import { ArrowRight, MapPin } from "lucide-react";
 
 import PageShell from "@/components/marketing/pages/PageShell";
 import { Accent, PageHero } from "@/components/marketing/pages/PageHero";
@@ -8,13 +8,16 @@ import {
   CheckList,
   CtaBand,
   DashboardCallout,
-  DevConfirm,
   FaqList,
   HeroActions,
   Lead,
   Section,
   SectionHeading,
+  RelatedLinks,
 } from "@/components/marketing/blocks";
+import { WorkShowcase } from "@/components/marketing/blocks/showcase";
+import { ColorIcon } from "@/components/marketing/ColorIcon";
+import { clinicTypes } from "@/data/clinicTypes";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pricing } from "@/config/business";
 import { dashboardLines, routes } from "@/config/site";
@@ -26,13 +29,13 @@ import { pageMetadata } from "@/lib/seo";
 const PATH = routes.aestheticClinicWebsites;
 
 export const metadata = pageMetadata({
-  title: "Aesthetic Clinic Website Design UK from £400 | Zyverra",
+  title: "Aesthetic Clinic Website Design from £300 | Zyverra",
   description:
-    "Custom aesthetic clinic websites for UK clinics, nurses and med spas. Edit treatments, prices and before/afters yourself. Live in 7–10 working days.",
+    "Aesthetic clinic website design for UK clinics, nurses and med spas. Edit treatments and prices yourself. From £300, live in 7–10 days. Get a quote.",
   path: PATH,
 });
 
-const UK_CITIES = ["London", "Manchester", "Birmingham", "Leeds", "Bristol", "Glasgow", "Cardiff", "Belfast"];
+const UK_CITIES = ["London", "Manchester", "Birmingham", "Leeds", "Liverpool", "Bristol", "Edinburgh", "Glasgow", "Cardiff", "Belfast"];
 
 export default function Page() {
   const origin = siteOrigin();
@@ -124,22 +127,22 @@ export default function Page() {
           columns={4}
           items={[
             {
-              icon: ShieldCheck,
+              emoji: "shield",
               title: "Trust signals",
               description: "Qualifications, insurance and genuine reviews where clients look for them.",
             },
             {
-              icon: Stethoscope,
+              emoji: "trophy",
               title: "Qualifications first",
               description: "A practitioner page that explains who treats clients and how they trained.",
             },
             {
-              icon: CalendarCheck,
+              emoji: "calendar",
               title: "Consultation-first journeys",
               description: "Treatment pages lead to a consultation, not a hard sell.",
             },
             {
-              icon: Smartphone,
+              emoji: "mobile",
               title: "Mobile speed",
               description: "Most clients find you on their phone, so pages are built to load fast on mobile.",
             },
@@ -175,10 +178,8 @@ export default function Page() {
             <SectionHeading
               eyebrow="Booking"
               title="Booking that fits your clinic"
-              description="We link or embed the booking system you already use, so clients can go from a treatment page to booking in a couple of taps."
+              description={`We link or embed the booking system you already use, including ${pricing.bookingSystems.join(", ")} and others, so clients can go from a treatment page to booking in a couple of taps.`}
             />
-            {/* TODO [CONFIRM]: the list of supported booking systems (e.g. Fresha, Treatwell, Timely, Phorest). */}
-            <DevConfirm>list the booking systems you support (e.g. Fresha, Treatwell, Timely, Phorest).</DevConfirm>
           </div>
         </div>
       </Section>
@@ -187,85 +188,82 @@ export default function Page() {
         <SectionHeading eyebrow="Who we build for" title="Who we build for" />
         <CardGrid
           columns={3}
-          items={[
-            { title: "Aesthetics clinics", description: "Single-room clinics to multi-room practices." },
-            {
-              title: "Aesthetic nurses & independent practitioners",
-              description: "A professional site that makes a solo practice look as established as it is.",
-            },
-            { title: "Skin clinics & med spas", description: "Treatment menus, packages and consultation journeys." },
-            {
-              title: "Beauty salons",
-              description: "Menus, prices, gallery and booking.",
-              href: routes.beautySalonWebsites,
-              linkLabel: "Beauty salon websites",
-            },
-          ]}
+          items={clinicTypes.map((t) => ({
+            emoji: t.emoji,
+            title: t.name,
+            description: t.short,
+            href: t.content.path,
+            linkLabel: "Learn more",
+          }))}
         />
       </Section>
 
       <Section id="uk">
         <SectionHeading eyebrow="Across the UK" title="We work with clinics across the UK" />
         <p className="mt-4 max-w-3xl text-base leading-relaxed text-muted-foreground">
-          We build websites for clinics in {UK_CITIES.slice(0, -1).join(", ")} and {UK_CITIES.at(-1)}, and
-          everywhere in between. Everything is done remotely by video call, email and WhatsApp, during UK
-          working hours.
+          We build aesthetic clinic websites for clinics in England, Scotland, Wales and Northern Ireland, including{" "}
+          {UK_CITIES.slice(0, -1).join(", ")} and {UK_CITIES.at(-1)}. Everything is done remotely by video call, email
+          and WhatsApp, and we&apos;re available {pricing.hours}.
         </p>
-        {/* TODO [CONFIRM]: the exact UK hours you are available. */}
-        <DevConfirm>state the exact UK hours you are available.</DevConfirm>
-        <Link
-          href={routes.bristol}
-          className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary"
-        >
-          <MapPin aria-hidden className="h-4 w-4" />
-          Aesthetic clinic website design in Bristol
-          <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-        </Link>
+        <ul className="mt-6 grid grid-cols-2 gap-3 sm:grid-cols-4" aria-label="UK nations we work with">
+          {["England", "Scotland", "Wales", "Northern Ireland"].map((n) => (
+            <li key={n} className="flex items-center gap-2 rounded-2xl border border-border bg-card px-4 py-3 text-sm font-semibold text-foreground">
+              <ColorIcon name="pin" size={22} />
+              {n}
+            </li>
+          ))}
+        </ul>
+        <div className="mt-6 flex flex-wrap gap-x-6 gap-y-3">
+          {[
+            { href: routes.london, label: "Aesthetic clinic website design in London" },
+            { href: routes.bristol, label: "Aesthetic clinic website design in Bristol" },
+          ].map((l) => (
+            <Link key={l.href} href={l.href} className="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+              <MapPin aria-hidden className="h-4 w-4" />
+              {l.label}
+              <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+            </Link>
+          ))}
+        </div>
       </Section>
 
-      <Section id="pricing-examples" tone="tint">
-        <div className="grid gap-10 lg:grid-cols-2">
-          <div>
-            <SectionHeading
-              eyebrow="Pricing"
-              title="Pricing"
-              description={`Option A costs £${pricing.optionA.price} with the admin dashboard. Option B costs £${pricing.optionB.price} without it. Both go live in ${pricing.timeline}, and you can pay 50/50 or 30/40/30.`}
-            />
-            <Link href={routes.pricing} className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-              Compare Option A and Option B
-              <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-            </Link>
-          </div>
-          <div>
-            <SectionHeading eyebrow="Examples" title="Examples" description="Live clinic websites we've built." />
-            <ul className="mt-6 grid gap-3">
-              {publishedCaseStudies.map((c) => (
-                <li key={c.slug}>
-                  <Link
-                    href={`${routes.work}/${c.slug}`}
-                    className="group flex items-center justify-between rounded-xl border border-border bg-card px-5 py-4 text-sm font-semibold text-foreground transition-colors hover:border-primary/30"
-                  >
-                    <span className="flex items-center gap-3">
-                      <ImageIcon aria-hidden className="h-4 w-4 text-primary" />
-                      {c.name}, {c.location}
-                    </span>
-                    <ArrowRight aria-hidden className="h-4 w-4 text-primary transition-transform duration-200 group-hover:translate-x-0.5" />
-                  </Link>
-                </li>
-              ))}
-            </ul>
-            <Link href={routes.work} className="group mt-4 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
-              All work
-              <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
-            </Link>
-          </div>
+      <Section id="examples" tone="tint">
+        <div className="flex flex-wrap items-end justify-between gap-4">
+          <SectionHeading eyebrow="Examples" title="Clinic websites we've built" description="Live sites for clinics in London and Bristol." />
+          <Link href={routes.work} className="group inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+            All work
+            <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+          </Link>
         </div>
+        <WorkShowcase items={publishedCaseStudies} />
+      </Section>
+
+      <Section id="pricing">
+        <SectionHeading
+          eyebrow="Pricing"
+          title="Pricing"
+          description={`Option A costs £${pricing.optionA.price} with the admin dashboard. Option B costs £${pricing.optionB.price} without it. Both go live in ${pricing.timeline}, and you can pay 50/50 or 30/40/30.`}
+        />
+        <Link href={routes.pricing} className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+          Compare Option A and Option B
+          <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+        </Link>
       </Section>
 
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="Clinic website FAQs" />
         <FaqList faqs={faqsById(["cost", "timeline", "dashboard-edits", "booking", "redesign"])} />
       </Section>
+
+      <RelatedLinks
+        links={[
+          { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
+          { href: "/blog/botox-advertising-rules-clinic-website", label: "UK advertising rules for clinic websites" },
+          { href: "/clinic-types/aesthetics-clinics", label: "Aesthetics clinic marketing" },
+          { href: routes.nurseWebsites, label: "Website for aesthetic nurses" },
+          { href: routes.redesign, label: "Clinic website redesign UK" },
+        ]}
+      />
 
       <CtaBand title="Get your clinic website quote" primaryLabel="Get your clinic website quote" />
     </PageShell>

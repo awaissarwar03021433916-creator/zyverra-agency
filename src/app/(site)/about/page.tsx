@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { Check, Eye, Handshake, MapPin, MessageSquare, ShieldCheck, Users, X } from "lucide-react";
+import { Check, X } from "lucide-react";
 
 import PageShell from "@/components/marketing/pages/PageShell";
 import { Accent, PageHero } from "@/components/marketing/pages/PageHero";
@@ -7,7 +7,6 @@ import { BRAND_ICONS } from "@/components/marketing/BrandIcons";
 import {
   CardGrid,
   CtaBand,
-  DevConfirm,
   HeroActions,
   Lead,
   Section,
@@ -84,7 +83,7 @@ export default function Page() {
       />
 
       <Lead>
-        Zyverra Labs is a founder-led web studio based in Lahore, Pakistan, working with aesthetics clinics,
+        Zyverra Labs is a founder-led web studio working with aesthetics clinics,
         aesthetic nurses, med spas and beauty salons across the UK. We build clinic websites with a built-in
         admin dashboard, plus local SEO, AI search visibility, Meta ads and social media.
       </Lead>
@@ -92,11 +91,9 @@ export default function Page() {
       <Section id="who-we-are">
         <SectionHeading
           eyebrow="Who we are"
-          title="Lahore-based, UK-focused"
-          description="We work remotely by video call, email and WhatsApp, during UK working hours. Prices are in pounds sterling, copy is written in UK English, and every site is built with UK advertising and data-protection rules in mind. Working remotely never means a hand-off to someone you haven't met: you deal with the person building your site."
+          title="Built for UK clinics"
+          description="We work remotely by video call, email and WhatsApp, available 6am to 8pm UK time. Prices are in pounds sterling, copy is written in UK English, and every site is built with UK advertising and data-protection rules in mind. Working remotely never means a hand-off to someone you haven't met: you deal with the person building your site."
         />
-        {/* TODO [CONFIRM]: exact UK-hours availability. */}
-        <DevConfirm>state the exact UK hours you are available.</DevConfirm>
       </Section>
 
       <Section id="founder" tone="tint">
@@ -121,10 +118,6 @@ export default function Page() {
               <div className="font-heading text-xl font-bold tracking-tight text-foreground">{founder.name}</div>
               <div className="mt-0.5 text-sm font-semibold text-primary">
                 {founder.role}, {founder.company}
-              </div>
-              <div className="mt-3 flex items-center justify-center gap-1.5 text-xs font-medium text-muted-foreground">
-                <MapPin aria-hidden className="h-3.5 w-3.5" />
-                {founder.location}
               </div>
               <ul className="mt-4 flex items-center justify-center gap-2.5" aria-label={`${founder.name}'s profiles`}>
                 {founderSocialLinks.map((s) => {
@@ -180,12 +173,12 @@ export default function Page() {
         <CardGrid
           columns={3}
           items={[
-            { icon: Users, title: "Founder-led, end to end", description: "The person who designs your site is the one who builds it." },
-            { icon: Handshake, title: "You stay in control", description: "With Option A you update treatments, prices and photos yourself." },
-            { icon: ShieldCheck, title: "Compliance-aware", description: "Consultation-led wording and consented before-and-afters, by default." },
-            { icon: Eye, title: "Real transparency", description: "Clear prices in pounds, honest timelines and no ranking guarantees." },
-            { icon: MessageSquare, title: "Direct communication", description: "Plain-English updates by WhatsApp, email and video call." },
-            { icon: MapPin, title: "Built for UK clinics", description: "UK English, £ pricing and UK GDPR-ready cookie and privacy pages." },
+            { emoji: "handshake", title: "Founder-led, end to end", description: "The person who designs your site is the one who builds it." },
+            { emoji: "mobile", title: "You stay in control", description: "With Option A you update treatments, prices and photos yourself." },
+            { emoji: "shield", title: "Compliance-aware", description: "Consultation-led wording and consented before-and-afters, by default." },
+            { emoji: "light-bulb", title: "Real transparency", description: "Clear prices in pounds, honest timelines and no ranking guarantees." },
+            { emoji: "speech", title: "Direct communication", description: "Plain-English updates by WhatsApp, email and video call." },
+            { emoji: "pin", title: "Built for UK clinics", description: "UK English, £ pricing and UK GDPR-ready cookie and privacy pages." },
           ]}
         />
       </Section>

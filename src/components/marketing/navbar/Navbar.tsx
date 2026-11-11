@@ -57,7 +57,7 @@ function Dropdown({
         aria-expanded={open}
         aria-controls={menuId}
         onClick={() => setOpen((v) => !v)}
-        className={`inline-flex items-center gap-1 px-3 py-2 text-sm font-medium transition-colors ${
+        className={`inline-flex items-center gap-1 px-2 py-2 text-sm font-medium transition-colors xl:px-3 ${
           active ? "text-foreground" : "text-muted-foreground hover:text-foreground"
         }`}
       >
@@ -161,7 +161,7 @@ export default function Navbar() {
             <span className="text-base font-semibold tracking-tight text-foreground sm:text-lg">{BRAND}</span>
           </Link>
 
-          <div className="hidden items-center gap-0.5 lg:flex">
+          <div className="hidden items-center gap-0.5 xl:flex">
             {mainNav.map((item) =>
               "children" in item ? (
                 <Dropdown key={item.label} item={item} pathname={pathname} />
@@ -170,7 +170,7 @@ export default function Navbar() {
                   key={item.href}
                   href={item.href}
                   aria-current={isActivePath(pathname, item.href) ? "page" : undefined}
-                  className={`group relative px-3 py-2 text-sm font-medium transition-colors ${
+                  className={`group relative px-2 py-2 text-sm font-medium transition-colors xl:px-3 ${
                     isActivePath(pathname, item.href)
                       ? "text-foreground"
                       : "text-muted-foreground hover:text-foreground"
@@ -179,7 +179,7 @@ export default function Navbar() {
                   {item.label}
                   <span
                     aria-hidden
-                    className={`pointer-events-none absolute inset-x-3 bottom-1 h-0.5 origin-left rounded-full bg-primary transition-transform duration-300 ${
+                    className={`pointer-events-none absolute inset-x-2 bottom-1 h-0.5 xl:inset-x-3 origin-left rounded-full bg-primary transition-transform duration-300 ${
                       isActivePath(pathname, item.href) ? "scale-x-100" : "scale-x-0 group-hover:scale-x-100"
                     }`}
                   />
@@ -188,7 +188,13 @@ export default function Navbar() {
             )}
           </div>
 
-          <div className="hidden lg:block">
+          <div className="hidden items-center gap-2 xl:flex">
+            <Link
+              href={routes.freeAudit}
+              className="inline-flex h-10 items-center rounded-lg border border-primary/30 bg-white px-3.5 text-sm font-semibold text-primary transition-colors hover:bg-primary/5"
+            >
+              Free audit
+            </Link>
             <Link
               href={routes.contact}
               className="group inline-flex h-10 items-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-xs transition-all duration-200 hover:bg-primary/90 hover:shadow-md"
@@ -200,7 +206,7 @@ export default function Navbar() {
 
           <button
             type="button"
-            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background text-foreground shadow-xs transition-colors hover:bg-muted lg:hidden"
+            className="inline-flex h-10 w-10 items-center justify-center rounded-lg border border-border bg-background text-foreground shadow-xs transition-colors hover:bg-muted xl:hidden"
             aria-label={open ? "Close menu" : "Open menu"}
             aria-expanded={open}
             aria-controls="mobile-menu"
@@ -217,7 +223,7 @@ export default function Navbar() {
 
       {/* Mobile drawer — outside the header so `fixed` is relative to the viewport. */}
       {open && (
-          <div className="lg:hidden" role="dialog" aria-modal="true" aria-label="Menu" id="mobile-menu">
+          <div className="xl:hidden" role="dialog" aria-modal="true" aria-label="Menu" id="mobile-menu">
             <div
               className="fixed inset-0 z-[60] bg-foreground/50 backdrop-blur-sm animate-in fade-in duration-200"
               onClick={() => setOpen(false)}
@@ -270,7 +276,13 @@ export default function Navbar() {
                 )}
               </div>
 
-              <div className="border-t border-border p-4">
+              <div className="grid gap-2 border-t border-border p-4">
+                <Link
+                  href={routes.freeAudit}
+                  className="inline-flex h-11 w-full items-center justify-center rounded-lg border border-primary/30 bg-white px-4 text-sm font-semibold text-primary"
+                >
+                  Free clinic website audit
+                </Link>
                 <Link
                   href={routes.contact}
                   className="inline-flex h-11 w-full items-center justify-center gap-1.5 rounded-lg bg-primary px-4 text-sm font-semibold text-primary-foreground shadow-xs transition-colors hover:bg-primary/90"

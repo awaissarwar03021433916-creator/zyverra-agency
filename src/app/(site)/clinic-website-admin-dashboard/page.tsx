@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ArrowRight, Clock, FileText, Receipt, RefreshCw, Sparkles, TrendingUp } from "lucide-react";
+import { ArrowRight } from "lucide-react";
 
 import PageShell from "@/components/marketing/pages/PageShell";
 import { Accent, PageHero } from "@/components/marketing/pages/PageHero";
@@ -7,41 +7,47 @@ import {
   CardGrid,
   CompareTable,
   CtaBand,
-  DevConfirm,
   FaqList,
   HeroActions,
   Lead,
   Section,
   SectionHeading,
+  RelatedLinks,
 } from "@/components/marketing/blocks";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pricing } from "@/config/business";
 import { dashboardLines, routes } from "@/config/site";
 import { faqsById } from "@/data/faqs";
+import { clinicCaseStudies } from "@/data/work";
+import { AdminGallery } from "@/components/marketing/blocks/showcase";
+import Image from "next/image";
 import { serviceSchema, siteOrigin } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 
 const PATH = routes.adminDashboard;
 
 export const metadata = pageMetadata({
-  title: "Clinic Website Admin Dashboard: Edit It Yourself | Zyverra",
+  title: "Clinic Website You Can Update Yourself | Zyverra Labs",
   description:
-    "Update treatments, prices, before/after photos, offers and blogs yourself — no developer fees for small changes. See how our clinic dashboard works.",
+    "A clinic website you can update yourself: edit treatments, prices, photos and blogs in our admin dashboard. Included in Option A, £400. See it in action.",
   path: PATH,
 });
 
-// Rows marked `confirm` depend on scope the owner still has to confirm; they
-// are labelled neutrally on the page and listed in the TODO note below.
-const CAN_CHANGE: { item: string; what: string; confirm?: boolean }[] = [
-  { item: "Treatments", what: "Add, edit or hide treatments" },
+// Confirmed by the owner: clients can change everything on their site.
+const CAN_CHANGE: { item: string; what: string }[] = [
+  { item: "Service categories", what: "Add a new category, rename, reorder or remove one" },
+  { item: "Treatments & services", what: "Add a new service to any category, edit it or remove it" },
   { item: "Prices", what: "Change any price, any time" },
+  { item: "Pages & sections", what: "Edit every section, add new treatment pages, hide or remove them" },
   { item: "Images and galleries", what: "Upload, replace or remove images" },
-  { item: "Before-and-after photos", what: "Add new results to your gallery" },
+  { item: "Before-and-after photos", what: "Add new results and choose which show on the home page" },
   { item: "Offers and promotions", what: "Publish and remove offers" },
-  { item: "Blog posts", what: "Write, edit and publish posts" },
-  { item: "New pages or sections", what: "Agreed at the start of your project", confirm: true },
-  { item: "Opening hours and contact details", what: "Agreed at the start of your project", confirm: true },
+  { item: "Blog posts", what: "Write, edit, publish and delete posts" },
+  { item: "Opening hours & contact details", what: "Update hours, clinics, phone and email" },
+  { item: "Reviews & FAQs", what: "Add, edit, reorder or hide them" },
 ];
+
+const SHOTS = clinicCaseStudies.flatMap((c) => c.adminShots ?? []);
 
 export default function Page() {
   const origin = siteOrigin();
@@ -62,12 +68,29 @@ export default function Page() {
         eyebrow={dashboardLines.tagline}
         title={
           <>
-            An admin dashboard that lets you <Accent>run your clinic website yourself</Accent>
+            A clinic website <Accent>you can update yourself</Accent>
           </>
         }
         description={dashboardLines.core}
         actions={<HeroActions primary={{ href: routes.contact, label: "See the dashboard on a free call" }} secondary={{ href: routes.pricing, label: "Pricing" }} />}
         chips={["Included with Option A", "Works on phone and laptop", "Changes go live straight away"]}
+        aside={
+          SHOTS[1] && (
+            <div className="relative">
+              <div aria-hidden className="absolute -inset-4 -z-10 rounded-[2rem] bg-gradient-to-tr from-primary/25 via-sky-300/20 to-fuchsia-300/25 blur-2xl" />
+              <div className="animate-float overflow-hidden rounded-2xl border border-border bg-white shadow-xl">
+                <Image
+                  src={SHOTS[1].src}
+                  alt={SHOTS[1].alt}
+                  width={SHOTS[1].width}
+                  height={SHOTS[1].height}
+                  sizes="(max-width: 1024px) 100vw, 540px"
+                  className="block h-auto w-full"
+                />
+              </div>
+            </div>
+          )
+        }
       />
 
       <Lead>
@@ -98,18 +121,23 @@ export default function Page() {
             </tbody>
           </table>
         </div>
-        {/* TODO [CONFIRM]: whether clients can add new pages/sections and edit opening hours/contact details themselves. */}
-        <DevConfirm>confirm whether clients can add new pages/sections and edit opening hours and contact details themselves.</DevConfirm>
+      </Section>
+
+      <Section id="screenshots" tone="tint">
+        <SectionHeading
+          eyebrow="Real screenshots"
+          title="Inside the dashboard"
+          description="Real admin dashboards from clinic websites we've built for Belgrave Cosmetics and Penelope J Aesthetics."
+        />
+        <AdminGallery shots={SHOTS} />
       </Section>
 
       <Section id="developer" tone="muted">
         <SectionHeading
           eyebrow="When you need us"
           title="What still needs a developer"
-          description={`${dashboardLines.proof} Major changes, such as new features, new page layouts, integrations and redesigns, are handled by us and quoted separately.`}
+          description={`${dashboardLines.proof} Major changes, such as new features, new page layouts, integrations and redesigns, are handled by us at ${pricing.updateFee} per update, depending on the change. We always confirm the price before we start.`}
         />
-        {/* TODO [CONFIRM]: pricing for major changes. */}
-        <DevConfirm>state how major changes are priced.</DevConfirm>
       </Section>
 
       <Section id="why">
@@ -117,12 +145,12 @@ export default function Page() {
         <CardGrid
           columns={3}
           items={[
-            { icon: RefreshCw, title: "Prices change", description: "Update a price the day it changes, not when a developer is free." },
-            { icon: Sparkles, title: "New treatments launch", description: "Add a new treatment page as soon as you start offering it." },
-            { icon: Clock, title: "Seasonal offers", description: "Publish and remove offers on your own timetable." },
-            { icon: TrendingUp, title: "Fresh content helps SEO", description: "An up-to-date site is easier for Google and AI assistants to trust." },
-            { icon: Receipt, title: "No extra invoices", description: "Small edits don't come with a bill or a wait." },
-            { icon: FileText, title: "Your words, your way", description: "Write blog posts and treatment updates in your own voice." },
+            { emoji: "pound", title: "Prices change", description: "Update a price the day it changes, not when a developer is free." },
+            { emoji: "sparkles", title: "New treatments launch", description: "Add a new treatment page as soon as you start offering it." },
+            { emoji: "gem", title: "Seasonal offers", description: "Publish and remove offers on your own timetable." },
+            { emoji: "chart-up", title: "Fresh content helps SEO", description: "An up-to-date site is easier for Google and AI assistants to trust." },
+            { emoji: "money-bag", title: "No extra invoices", description: "Small edits don't come with a bill or a wait." },
+            { emoji: "memo", title: "Your words, your way", description: "Write blog posts and treatment updates in your own voice." },
           ]}
         />
       </Section>
@@ -141,10 +169,8 @@ export default function Page() {
             <SectionHeading
               eyebrow="Handover"
               title="Dashboard training at handover"
-              description="When your site launches, we walk you through the dashboard so you know how to make every everyday change yourself."
+              description={`When your site launches, we walk you through the dashboard live on ${pricing.trainingFormat}, so you know how to make every everyday change yourself.`}
             />
-            {/* TODO [CONFIRM]: training format and length. */}
-            <DevConfirm>confirm the training format (e.g. a recorded video call) and length.</DevConfirm>
           </div>
         </div>
       </Section>
@@ -161,7 +187,8 @@ export default function Page() {
             { label: "Price", a: `£${pricing.optionA.price}`, b: `£${pricing.optionB.price}` },
             { label: "Admin dashboard", a: true, b: false },
             { label: "Edit treatments, prices and before-and-afters yourself", a: true, b: false },
-            { label: "Small changes after launch", a: "Do it yourself", b: "By request" },
+            { label: "Small changes after launch", a: "Do it yourself", b: `By request, ${pricing.updateFee} per update` },
+            { label: "Major changes (new features, layouts)", a: `${pricing.updateFee} per update`, b: `${pricing.updateFee} per update` },
             { label: "Timeline", a: pricing.timeline, b: pricing.timeline },
           ]}
         />
@@ -176,16 +203,18 @@ export default function Page() {
         </Link>
       </Section>
 
-      {/* TODO [CONFIRM]: add 3–4 real dashboard screenshots (e.g. /public/dashboard/*.png) with descriptive alt text,
-          such as "Zyverra clinic admin dashboard: editing a treatment price". No mock-ups presented as real. */}
-      <div className="mx-auto max-w-6xl px-4 sm:px-6">
-        <DevConfirm>add 3–4 real admin dashboard screenshots here. Do not use mock-ups.</DevConfirm>
-      </div>
-
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="Admin dashboard FAQs" />
         <FaqList faqs={faqsById(["dashboard-edits", "developer", "options", "before-after"])} />
       </Section>
+
+      <RelatedLinks
+        links={[
+          { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
+          { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
+          { href: "/clinic-types/aesthetic-nurses", label: "Aesthetic nurse marketing" },
+        ]}
+      />
 
       <CtaBand title="See the dashboard on a free call" primaryLabel="Book a free call" />
     </PageShell>

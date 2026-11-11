@@ -11,7 +11,6 @@ export const founder = {
   role: "Founder & CEO",
   company: "Zyverra Labs",
   email: business.email,
-  location: `${business.address.city}, ${business.address.countryName}`,
   // 560×560 portrait, a circular crop on a square canvas — always framed as a circle.
   image: "/awais.jpg",
   imageAlt: "Muhammad Awais, founder of Zyverra Labs",
