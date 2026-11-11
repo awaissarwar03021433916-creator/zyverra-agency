@@ -14,12 +14,13 @@ import {
   Section,
   SectionHeading,
   RelatedLinks,
+  KeyFacts,
 } from "@/components/marketing/blocks";
 import { WorkShowcase } from "@/components/marketing/blocks/showcase";
 import { ColorIcon } from "@/components/marketing/ColorIcon";
 import { clinicTypes } from "@/data/clinicTypes";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { pricing } from "@/config/business";
+import { pricing, keyFacts } from "@/config/business";
 import { dashboardLines, routes } from "@/config/site";
 import { faqsById } from "@/data/faqs";
 import { publishedCaseStudies } from "@/data/work";
@@ -71,6 +72,50 @@ export default function Page() {
         booking or enquiry buttons, and, with Option A, an admin dashboard so you can keep everything up to
         date yourself. From £400, live in {pricing.timeline}.
       </Lead>
+
+      <KeyFacts facts={keyFacts.map((f) => ({ label: f.label, value: f.value }))} />
+
+      <Section id="diy-template-custom" tone="muted">
+        <SectionHeading
+          eyebrow="Compare"
+          title="DIY, template or custom: which clinic website is right for you?"
+          description="An honest comparison of the three main routes to a clinic website."
+        />
+        <div className="mt-8 overflow-x-auto rounded-2xl border border-border bg-card shadow-xs">
+          <table className="w-full min-w-[36rem] text-left text-sm">
+            <caption className="sr-only">DIY builder vs template vs custom clinic website</caption>
+            <thead>
+              <tr className="border-b border-border bg-secondary/50">
+                <th scope="col" className="px-5 py-4 font-semibold text-foreground"></th>
+                <th scope="col" className="px-5 py-4 font-semibold text-foreground">DIY builder</th>
+                <th scope="col" className="px-5 py-4 font-semibold text-foreground">Template site</th>
+                <th scope="col" className="px-5 py-4 font-semibold text-primary">Custom (Zyverra)</th>
+              </tr>
+            </thead>
+            <tbody>
+              {[
+                ["Who builds it", "You", "You or a freelancer", "Us, in 7–10 working days"],
+                ["Treatment pages with prices", "Possible, often inconsistent", "Limited by the template", "Built around your treatments"],
+                ["Speed on mobile", "Varies with add-ons", "Varies", "Built for speed"],
+                ["Who edits it", "You", "You or the freelancer", "You, via the admin dashboard (Option A)"],
+                ["UK advertising rules", "Your responsibility", "Your responsibility", "Wording reviewed against ASA rules"],
+                ["Ongoing cost", "Monthly subscription", "Hosting + paid changes", "Hosting + optional £50–£100 updates"],
+              ].map(([label, ...cells]) => (
+                <tr key={label} className="border-b border-border last:border-0">
+                  <th scope="row" className="px-5 py-3.5 font-medium text-foreground">{label}</th>
+                  {cells.map((c, i) => (
+                    <td key={i} className="px-5 py-3.5 text-muted-foreground">{c}</td>
+                  ))}
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+        <Link href="/blog/wix-squarespace-or-custom-clinic-website" className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
+          Wix, Squarespace or custom? Read the full comparison
+          <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />
+        </Link>
+      </Section>
 
       <Section id="included">
         <SectionHeading

@@ -2,6 +2,7 @@ import { business, marketingPackages, pricing } from "@/config/business";
 import { routes, services } from "@/config/site";
 import { blogPosts, listingTitle } from "@/data/blog";
 import { siteOrigin } from "@/lib/schema";
+import { ENTITY_DESCRIPTION } from "@/config/app";
 
 // /llms.txt (Section G6). Optional and low-cost: Google says it is not needed
 // for Search, so this is generated from the site data and left at that.
@@ -25,7 +26,7 @@ export function GET() {
 
   const text = `# Zyverra Labs
 
-> Zyverra Labs is a founder-led web studio serving UK aesthetics clinics, aesthetic nurses and practitioners, med spas and beauty salons. We build custom clinic websites with a built-in admin dashboard (clients update treatments, prices, images, before-and-after photos, offers and blogs themselves), plus local SEO, AI search visibility, Meta ads, social media and reels, AI chatbots and custom software. Prices: £${pricing.optionA.price} website with admin dashboard; £${pricing.optionB.price} without. Live in ${pricing.timeline}. Payment plans: 50/50 or 30/40/30 over 45 days. Option A includes 3 SEO-optimised blog posts; major changes cost ${pricing.updateFee} per update. Monthly marketing: Meta ads management from £${marketingPackages.metaAds[0].price}/month (ad spend separate), local SEO from £${marketingPackages.seo[0].price}/month, social media and reels from £${marketingPackages.social[0].price}/month. Clinic websites built for clients in London and Bristol. Contact: ${business.email}, WhatsApp ${business.phoneDisplay}.
+> ${ENTITY_DESCRIPTION} Founder-led. With the admin dashboard, clients update treatments, prices, images, before-and-after photos, offers and blogs themselves. Prices: £${pricing.optionA.price} website with admin dashboard; £${pricing.optionB.price} without. Live in ${pricing.timeline}. Payment plans: 50/50 or 30/40/30 over 45 days. Option A includes 3 SEO-optimised blog posts; major changes cost ${pricing.updateFee} per update. Monthly marketing: Meta ads management from £${marketingPackages.metaAds[0].price}/month (ad spend separate), local SEO from £${marketingPackages.seo[0].price}/month, social media and reels from £${marketingPackages.social[0].price}/month. Clinic websites built for clients in London and Bristol. Contact: ${business.email}, WhatsApp ${business.phoneDisplay}.
 
 ## Services
 ${services

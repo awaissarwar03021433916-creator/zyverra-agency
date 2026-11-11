@@ -1,0 +1,24 @@
+# Pings IndexNow (Bing and other engines) after every successful production
+# deployment, so new and changed pages are re-crawled quickly.
+#
+# Vercel's GitHub integration reports deployments to GitHub as
+# "deployment_status" events. This job runs only when a Production deployment
+# succeeds, then submits every URL in the live sitemap via scripts/indexnow.mjs.
+name: IndexNow ping
+
+on:
+  deployment_status:
+
+jobs:
+  indexnow:
+    if: github.event.deployment_status.state == 'success' && github.event.deployment.environment == 'Production'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - name: Submit sitemap URLs to IndexNow
+        run: node scripts/indexnow.mjs
+        env:
+          APP_URL: https://www.zyverralabs.com

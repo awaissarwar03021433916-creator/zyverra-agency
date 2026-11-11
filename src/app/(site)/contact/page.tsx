@@ -6,7 +6,7 @@ import ContactForm from "@/components/forms/ContactForm";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { WhatsAppGlyph, WhatsAppInlineLink } from "@/components/contact/WhatsAppButton";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { business } from "@/config/business";
+import { business, pricing } from "@/config/business";
 import { routes } from "@/config/site";
 import { siteOrigin, webPageSchema } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
@@ -104,6 +104,8 @@ export default function Page() {
           Zyverra Labs · Aesthetic clinic websites, local SEO and Meta ads · Serving clinics across the UK · {business.email} · WhatsApp{" "}
           {business.phoneDisplay}
         </address>
+        <p className="mt-3 text-sm text-muted-foreground">Available {pricing.hours}.</p>
+        {/* TODO [CONFIRM]: the days you're available and a reply-time promise (e.g. "we reply within 2 working hours"). */}
       </Section>
     </PageShell>
   );

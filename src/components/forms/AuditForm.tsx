@@ -62,7 +62,7 @@ export default function AuditForm() {
         );
         return;
       }
-      track("quote_form_submit", { page_path: window.location.pathname, form: "free_audit" });
+      track("audit_form_submit", { page_path: window.location.pathname });
       setDone(true);
       form.reset(initial);
     } catch {

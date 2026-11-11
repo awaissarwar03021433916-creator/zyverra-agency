@@ -51,6 +51,8 @@ export default function sitemap(): MetadataRoute.Sitemap {
     { path: routes.freeAudit, priority: 0.8 },
     { path: routes.clinicTypes, priority: 0.6 },
     { path: routes.treatmentPages, priority: 0.6 },
+    { path: routes.htmlSitemap, priority: 0.3 },
+    { path: routes.accessibility, priority: 0.2 },
     ...clinicTypes.map((t) => ({ path: t.content.path, priority: 0.6 })),
   ];
 

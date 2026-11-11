@@ -2,11 +2,12 @@ import type { MetadataRoute } from "next";
 
 import { siteOrigin } from "@/lib/schema";
 
-// Section G1. Private paths and the duplicate ".html" case-study URLs are
-// blocked; search engines and AI assistants are explicitly allowed.
+// Search engines and AI assistants are explicitly allowed. Only the API and
+// the private admin area are disallowed. (The static /case-studies/*.html
+// duplicates carry canonical tags pointing to their clean URLs.)
 export default function robots(): MetadataRoute.Robots {
   const origin = siteOrigin();
-  const disallow = ["/api/", "/admin", "/case-studies/*.html"];
+  const disallow = ["/api/", "/admin"];
 
   const allowedBots = [
     "Googlebot",
@@ -17,6 +18,7 @@ export default function robots(): MetadataRoute.Robots {
     "PerplexityBot",
     "ClaudeBot",
     "Google-Extended",
+    "Applebot",
   ];
 
   return {

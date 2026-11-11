@@ -30,6 +30,8 @@ export const routes = {
   freeAudit: "/free-clinic-website-audit",
   clinicTypes: "/clinic-types",
   treatmentPages: "/treatment-pages",
+  htmlSitemap: "/sitemap",
+  accessibility: "/accessibility",
 } as const;
 
 export type ServiceKey =
@@ -222,6 +224,8 @@ export const footerColumns: { title: string; links: { label: string; href: strin
       { label: "Cookies", href: routes.cookies },
       { label: "Terms", href: routes.terms },
       { label: "Complaints", href: routes.complaints },
+      { label: "Accessibility", href: routes.accessibility },
+      { label: "Site map", href: routes.htmlSitemap },
     ],
   },
 ];

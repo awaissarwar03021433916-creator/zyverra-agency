@@ -15,9 +15,10 @@ import {
   SectionHeading,
   Steps,
   type CardItem,
+  KeyFacts,
 } from "@/components/marketing/blocks";
 import { KeywordMarquee, ScreenshotCollage, WorkShowcase } from "@/components/marketing/blocks/showcase";
-import { marketingPackages, pricing } from "@/config/business";
+import { marketingPackages, pricing, keyFacts } from "@/config/business";
 import { dashboardLines, routes, services, type ServiceKey } from "@/config/site";
 import { allFaqs } from "@/data/faqs";
 import { publishedCaseStudies } from "@/data/work";
@@ -122,6 +123,8 @@ export default function HomePage() {
         developer for small changes. Websites start at £{pricing.optionB.price}, go live in {pricing.timeline},
         and you can pay 50/50 or in three parts.
       </Lead>
+
+      <KeyFacts facts={keyFacts.map((f) => ({ label: f.label, value: f.value }))} />
 
       <Section id="services">
         <SectionHeading

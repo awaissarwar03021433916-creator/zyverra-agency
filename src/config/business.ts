@@ -165,3 +165,15 @@ export const whatsappMessage =
 export function whatsappHref(message: string = whatsappMessage): string {
   return `https://wa.me/${business.whatsappNumber}?text=${encodeURIComponent(message)}`;
 }
+
+// Shared "Key facts" (Home, Pricing, clinic websites page). Plain facts only.
+export const keyFacts = [
+  { label: "Price", value: `£${pricing.optionB.price} website, or £${pricing.optionA.price} with an admin dashboard` },
+  { label: "Timeline", value: `Live in ${pricing.timeline} once we have your content` },
+  { label: "Payment", value: "50/50, or 30/40/30 over 45 days" },
+  { label: "What's included", value: "Custom design, treatment pages with prices, booking links, SEO and schema set-up, legal pages" },
+  { label: "Who it's for", value: "UK aesthetics clinics, aesthetic nurses, med spas and beauty salons" },
+  { label: "UK coverage", value: "England, Scotland, Wales and Northern Ireland, remotely" },
+  { label: "Updates after launch", value: `Do it yourself (Option A), or ${pricing.updateFee} per update` },
+  { label: "Contact", value: `${business.email} · WhatsApp ${business.phoneDisplay} · ${pricing.hours}` },
+] as const;

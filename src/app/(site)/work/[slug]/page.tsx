@@ -56,6 +56,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
           description: c.summary,
           datePublished: VERIFIED_ON,
           image: c.screenshot.src,
+          about: { name: c.name, url: c.liveUrl },
         })}
       />
 

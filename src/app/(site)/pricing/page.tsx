@@ -14,16 +14,17 @@ import {
   Section,
   SectionHeading,
   RelatedLinks,
+  KeyFacts,
 } from "@/components/marketing/blocks";
 import { TrackView } from "@/components/analytics/TrackView";
 import { WhatsAppInlineLink } from "@/components/contact/WhatsAppButton";
 import { PackageCards } from "@/components/marketing/blocks/showcase";
 import { ColorIcon } from "@/components/marketing/ColorIcon";
 import { JsonLd } from "@/components/seo/JsonLd";
-import { marketingPackages, pricing } from "@/config/business";
+import { marketingPackages, pricing, keyFacts } from "@/config/business";
 import { dashboardLines, routes } from "@/config/site";
 import { faqsById } from "@/data/faqs";
-import { serviceSchema, siteOrigin } from "@/lib/schema";
+import { serviceSchema, siteOrigin, updatesOfferCatalog } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 
 const PATH = routes.pricing;
@@ -35,10 +36,14 @@ export const metadata = pageMetadata({
   path: PATH,
 });
 
+// Stable objects so TrackView effects don't re-run on every render.
+const PARAMS: Record<string, Record<string, string>> = { A: { option: "A" }, B: { option: "B" } };
+
 const OPTIONS = [
   {
     opt: pricing.optionA,
-    event: "pricing_view_option_a" as const,
+    event: "pricing_view" as const,
+    option: "A",
     highlight: true,
     points: [
       "Custom clinic website, designed around your treatments",
@@ -51,7 +56,8 @@ const OPTIONS = [
   },
   {
     opt: pricing.optionB,
-    event: "pricing_view_option_b" as const,
+    event: "pricing_view" as const,
+    option: "B",
     highlight: false,
     points: [
       "The same custom clinic website",
@@ -69,6 +75,7 @@ export default function Page() {
 
   return (
     <PageShell breadcrumbs={[{ name: "Pricing", path: PATH }]}>
+      <JsonLd data={updatesOfferCatalog(origin)} />
       <JsonLd
         data={serviceSchema(origin, {
           path: PATH,
@@ -94,10 +101,12 @@ export default function Page() {
         30/40/30 over 45 days.
       </Lead>
 
+      <KeyFacts facts={keyFacts.map((f) => ({ label: f.label, value: f.value }))} />
+
       <Section id="options">
         <div className="grid gap-6 md:grid-cols-2">
-          {OPTIONS.map(({ opt, event, highlight, points }) => (
-            <TrackView key={opt.name} event={event} className="h-full">
+          {OPTIONS.map(({ opt, event, option, highlight, points }) => (
+            <TrackView key={opt.name} event={event} params={PARAMS[option]} className="h-full">
               <div
                 className={`flex h-full flex-col rounded-2xl border p-7 shadow-xs ${
                   highlight ? "border-primary/40 bg-primary/[0.04] shadow-md" : "border-border bg-card"

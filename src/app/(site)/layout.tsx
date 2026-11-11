@@ -11,7 +11,7 @@ import { JsonLd } from "@/components/seo/JsonLd";
 import { siteGraph, siteOrigin } from "@/lib/schema";
 
 const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap", preload: false });
-const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], display: "swap", preload: false });
+const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], display: "swap", preload: true });
 
 const origin = siteOrigin();
 

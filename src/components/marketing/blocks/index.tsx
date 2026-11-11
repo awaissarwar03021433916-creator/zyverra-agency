@@ -465,3 +465,27 @@ export function RelatedLinks({ links }: { links: RelatedLink[] }) {
     </section>
   );
 }
+
+/* ------------------------------------------------------------------ */
+/* Key facts (plain list AI assistants can quote)                      */
+/* ------------------------------------------------------------------ */
+
+export function KeyFacts({ title = "Key facts", facts }: { title?: string; facts: { label: string; value: ReactNode }[] }) {
+  return (
+    <section aria-labelledby="key-facts-heading" className="mx-auto max-w-4xl px-4 pt-8 sm:px-6">
+      <div className="rounded-2xl border border-primary/25 bg-primary/[0.04] p-6 sm:p-7">
+        <h2 id="key-facts-heading" className="font-heading text-lg font-bold text-foreground">
+          {title}
+        </h2>
+        <dl className="mt-4 grid gap-x-8 gap-y-3 sm:grid-cols-2">
+          {facts.map((f) => (
+            <div key={f.label} className="border-t border-primary/15 pt-3">
+              <dt className="text-xs font-semibold uppercase tracking-widest text-muted-foreground">{f.label}</dt>
+              <dd className="mt-1 text-sm text-foreground">{f.value}</dd>
+            </div>
+          ))}
+        </dl>
+      </div>
+    </section>
+  );
+}

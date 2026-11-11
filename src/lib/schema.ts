@@ -5,12 +5,12 @@
 // or unconfirmed values, and never emit Review/AggregateRating for Zyverra Labs.
 
 import { env } from "@/config/env";
-import { appConfig, CANONICAL_ORIGIN } from "@/config/app";
+import { appConfig, CANONICAL_ORIGIN, ENTITY_DESCRIPTION } from "@/config/app";
 import { business, pricing, type MarketingPackage } from "@/config/business";
 import { founder, sameAsProfiles } from "@/config/founder";
 import { routes } from "@/config/site";
 import type { Faq } from "@/data/faqs";
-import type { BlogPost } from "@/data/blog";
+import { postSources, type BlogPost } from "@/data/blog";
 
 const CONTEXT = "https://schema.org";
 
@@ -29,6 +29,15 @@ export const founderId = (origin: string) => `${origin}/#founder`;
 export const websiteId = (origin: string) => `${origin}/#website`;
 
 const abs = (origin: string, path: string) => (path === "/" ? `${origin}/` : `${origin}${path}`);
+
+// The UK and its four nations, used as areaServed on the Organization.
+const UK_AREA = [
+  { "@type": "Country", name: "United Kingdom" },
+  { "@type": "Place", name: "England" },
+  { "@type": "Place", name: "Scotland" },
+  { "@type": "Place", name: "Wales" },
+  { "@type": "Place", name: "Northern Ireland" },
+];
 
 const KNOWS_ABOUT = [
   "Aesthetic clinic website design",
@@ -54,11 +63,10 @@ export function siteGraph(origin: string) {
         url: abs(origin, "/"),
         logo: `${origin}/zyverra-mark.png`,
         image: `${origin}/og-image.png`,
-        description:
-          "Zyverra Labs builds websites with a built-in admin dashboard, local SEO, AI search visibility, Meta ads and social media for UK aesthetics clinics, aesthetic practitioners, med spas and beauty salons.",
+        description: ENTITY_DESCRIPTION,
         email: business.email,
         telephone: business.phone,
-        areaServed: { "@type": "Country", name: business.areaServed },
+        areaServed: UK_AREA,
         currenciesAccepted: "GBP",
         priceRange: `£${pricing.optionB.price}–£${pricing.optionA.price}`,
         founder: { "@id": founderId(origin) },
@@ -86,6 +94,9 @@ export function siteGraph(origin: string) {
         "@id": founderId(origin),
         name: founder.name,
         jobTitle: founder.role,
+        description:
+          "Founder of Zyverra Labs. Designs and builds websites, admin dashboards and AI search foundations for UK aesthetics clinics and practitioners.",
+        knowsAbout: ["Aesthetic clinic website design", "Website admin dashboards", "Local SEO", "AI search visibility", "Software engineering"],
         image: `${origin}${founder.image}`,
         worksFor: { "@id": orgId(origin) },
         url: `${origin}${founder.profilePath}`,
@@ -249,12 +260,21 @@ export function blogPostingSchema(origin: string, post: BlogPost) {
     image: `${origin}${routes.blog}/${post.slug}/og`,
     keywords: post.targetKeyword,
     articleSection: post.category,
+    ...(postSources(post).length ? { citation: postSources(post).map((s) => s.url) } : {}),
   };
 }
 
 export function articleSchema(
   origin: string,
-  opts: { path: string; headline: string; description: string; datePublished: string; image?: string }
+  opts: {
+    path: string;
+    headline: string;
+    description: string;
+    datePublished: string;
+    image?: string;
+    /** The client organisation the case study is about. */
+    about?: { name: string; url: string };
+  }
 ) {
   return {
     "@context": CONTEXT,
@@ -268,5 +288,52 @@ export function articleSchema(
     publisher: { "@id": orgId(origin) },
     mainEntityOfPage: abs(origin, opts.path),
     image: `${origin}${opts.image ?? "/og-image.png"}`,
+    ...(opts.about ? { about: { "@type": "Organization", name: opts.about.name, url: opts.about.url } } : {}),
+  };
+}
+
+/** Post-launch updates (confirmed: £50–£100 per update), as an OfferCatalog. */
+export function updatesOfferCatalog(origin: string) {
+  return {
+    "@context": CONTEXT,
+    "@type": "OfferCatalog",
+    "@id": `${abs(origin, routes.pricing)}#updates`,
+    name: "Post-launch website updates",
+    itemListElement: [
+      {
+        "@type": "Offer",
+        name: "Website update or major change (new feature, layout or integration)",
+        priceCurrency: "GBP",
+        priceSpecification: {
+          "@type": "PriceSpecification",
+          minPrice: "50",
+          maxPrice: "100",
+          priceCurrency: "GBP",
+        },
+        url: abs(origin, routes.pricing),
+        seller: { "@id": orgId(origin) },
+      },
+    ],
+  };
+}
+
+/** Free audit: a Service with a contact action. */
+export function auditSchema(origin: string, path: string) {
+  return {
+    "@context": CONTEXT,
+    "@type": "Service",
+    "@id": `${abs(origin, path)}#service`,
+    name: "Free clinic website audit",
+    serviceType: "Website audit for aesthetics clinics",
+    description:
+      "A free, personalised review of a UK clinic's website: speed, Google visibility, treatment pages, booking journey, advertising wording and AI search readiness.",
+    provider: { "@id": orgId(origin) },
+    areaServed: { "@type": "Country", name: "United Kingdom" },
+    offers: { "@type": "Offer", price: "0", priceCurrency: "GBP", url: abs(origin, path) },
+    potentialAction: {
+      "@type": "CommunicateAction",
+      name: "Request a free clinic website audit",
+      target: { "@type": "EntryPoint", urlTemplate: `${abs(origin, path)}#request` },
+    },
   };
 }

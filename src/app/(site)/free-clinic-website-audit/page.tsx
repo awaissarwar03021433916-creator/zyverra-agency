@@ -5,7 +5,7 @@ import AuditForm from "@/components/forms/AuditForm";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pricing } from "@/config/business";
 import { routes } from "@/config/site";
-import { serviceSchema, siteOrigin } from "@/lib/schema";
+import { auditSchema, siteOrigin } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 
 const PATH = routes.freeAudit;
@@ -20,15 +20,7 @@ export const metadata = pageMetadata({
 export default function Page() {
   return (
     <PageShell breadcrumbs={[{ name: "Free Clinic Website Audit", path: PATH }]}>
-      <JsonLd
-        data={serviceSchema(siteOrigin(), {
-          path: PATH,
-          name: "Free clinic website audit",
-          serviceType: "Website audit for aesthetics clinics",
-          description:
-            "A free, personalised review of a UK clinic's website: speed, Google visibility, treatment pages, booking and advertising wording.",
-        })}
-      />
+      <JsonLd data={auditSchema(siteOrigin(), PATH)} />
 
       <PageHero
         eyebrow="Free · no obligation"

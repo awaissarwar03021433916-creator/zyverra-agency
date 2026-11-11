@@ -1,3 +1,4 @@
+import Link from "next/link";
 import Image from "next/image";
 import { Check, X } from "lucide-react";
 
@@ -157,6 +158,19 @@ export default function Page() {
                 For clinics, that means a website built around how your clients actually choose a practitioner,
                 written with UK advertising rules in mind, and an admin dashboard so you&apos;re never waiting on a
                 developer to change a price. The same engineering runs the AI assistant on this site.
+              </p>
+              <p>
+                Clinics I&apos;ve designed and built websites for include{" "}
+                <Link href="/work/belgrave-cosmetics" className="font-semibold text-primary hover:underline">Belgrave Cosmetics</Link> and{" "}
+                <Link href="/work/penelope-j-aesthetics" className="font-semibold text-primary hover:underline">Penelope J Aesthetics</Link> in Bristol, and{" "}
+                <Link href="/work/serra-aesthetics" className="font-semibold text-primary hover:underline">Serra Aesthetics</Link> in London. Alongside
+                clinic websites, I&apos;ve built CRMs, AI products and e-commerce platforms, which you can see on our{" "}
+                <Link href="/custom-software-ai-chatbots#work" className="font-semibold text-primary hover:underline">AI &amp; software</Link> page.
+              </p>
+              <p>
+                My approach is simple: understand how your clients choose and book, build the site around that, keep
+                the wording honest and within UK advertising rules, and hand you the controls so the website keeps up
+                with your clinic.
               </p>
             </div>
           </div>

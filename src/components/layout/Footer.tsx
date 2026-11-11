@@ -3,6 +3,7 @@ import Image from "next/image";
 import { ArrowRight } from "lucide-react";
 
 import { business } from "@/config/business";
+import { ENTITY_DESCRIPTION } from "@/config/app";
 import { founderSocialLinks } from "@/config/founder";
 import { dashboardLines, footerColumns, routes } from "@/config/site";
 import { CookieSettingsButton } from "@/components/analytics/CookieSettingsButton";
@@ -26,7 +27,7 @@ export default function Footer() {
 
             {/* NAP block — identical wording to the schema and contact page. */}
             <address className="mt-3 max-w-xs text-sm not-italic leading-relaxed text-muted-foreground">
-              Websites, local SEO and Meta ads for UK aesthetics clinics · Serving clinics across the UK ·{" "}
+              {ENTITY_DESCRIPTION} Serving clinics across England, Scotland, Wales and Northern Ireland ·{" "}
               <a href={`mailto:${business.email}`} className="hover:text-primary">
                 {business.email}
               </a>{" "}

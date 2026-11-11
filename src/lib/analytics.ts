@@ -16,10 +16,10 @@ import { getConsentSnapshot } from "@/lib/cookieConsent";
 export type TrackEvent =
   | "whatsapp_click"
   | "quote_form_submit"
+  | "audit_form_submit"
   | "book_call_click"
   | "email_click"
-  | "pricing_view_option_a"
-  | "pricing_view_option_b";
+  | "pricing_view";
 
 type Params = Record<string, string | number | boolean | null>;
 
