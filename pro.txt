@@ -1,0 +1,967 @@
+# Zyverra Labs: UK SEO + AEO Audit, Keyword Map and One-Run Implementation Prompt
+
+zyverralabs.com can't rank for "aesthetic clinic website" yet. The homepage presents Zyverra Labs as a global AI and software studio and never mentions aesthetics clinics, the UK, £ prices, the admin dashboard or your three clinic websites. Technical fixes only start to matter once the site has been rebuilt around UK clinics. This report covers the audit, the keyword and page plan, and ends with one copy-paste prompt for your coding agent.
+
+Some things are still unconfirmed:
+- **Files and pages I couldn't open:** robots.txt, sitemap.xml, llms.txt and your blog page. The prompt makes the agent check them first.
+- **Search volumes:** I found no public UK figures for any of the keywords, so the keyword map is based on who ranks, not on numbers. Run the list through Google Keyword Planner before treating any keyword as a priority.
+- **Two portfolio sites:** I couldn't confirm serraaesthetics.co.uk or penelopejaesthetics.com are live. A "Serra aesthetics" is listed at Priory Court, London E17, but I can't be sure it's the same clinic.
+
+The prompt also contains `[CONFIRM]` placeholders for facts only you know: hosting and domain costs, who owns the domain, which booking systems you support, page counts, and whether you have real testimonials with permission. Fill these in before you run it, or the agent will leave them as visible to-do notes.
+
+Fix two things on belgravecosmetics.co.uk before you show it off. Its homepage uses the word "Botox", which UK advertising rules don't allow in adverts to the public. Its contact page says "Banbury", although the clinic is in Bristol.
+
+## TL;DR
+
+- **The biggest problem is how the site is positioned, not technical SEO.** The homepage title is "Zyverra Labs | AI Agents, Automation & Custom Software", the H1 is "We build AI Agents for modern teams.", and the portfolio shows LandChain, VAREZA and PDF Merger, not clinic websites. So Google, ChatGPT and Perplexity have nothing that links "Zyverra Labs" to "UK aesthetics clinic websites". The fix: one page per service that search engines can read, £ pricing, the clinic portfolio, UK English and the same business details everywhere.
+- **Compete where other agencies don't.** "Aesthetic clinic website design" is crowded with UK specialists (Aesthetic Web, Ashrose, BoutiqueSEO, AETHUS, Podium Design, Aesthetics Desk), and Aesthetics Desk sells sites from £350, live in 5 days, which is cheaper than your £400 offer. Almost no specialist targets searches about a self-edit admin dashboard, clear £300/£400 pricing or AI search visibility. Lead with those.
+- **Do the AI-search (AEO) work in this order.** (1) Pages that search engines can read, which answer the question in the first lines, with accurate schema markup. (2) Bing Webmaster Tools: in a 2025 Seer Interactive study, 87% of ChatGPT search citations matched Bing's top results, compared with 56% for Google's; a later 400-query test found only 27%, so treat this as a direction, not a fixed number. (3) Mentions of your brand on other websites: Ahrefs' 75,000-brand study found mentions correlated 0.664 with appearing in Google AI Overviews, against 0.218 for backlinks (sites rated DR 40+; correlation, not proof of cause). An llms.txt file is optional and cheap, but no reliable evidence shows it helps. Google stopped showing FAQ rich results on 7 May 2026, according to its Search Central changelog, but FAQPage schema still has value.
+
+---
+
+## A) Audit of zyverralabs.com (November 2026)
+
+**What I could check.** I opened the homepage (https://www.zyverralabs.com/en) and /en/why-us. I could not open robots.txt, sitemap.xml, llms.txt, /en/blog or /en/founder, so the prompt tells the agent to check those.
+
+**How the site is built:** Next.js. Images go through `/_next/image` and the HTML has the `next-size-adjust` tag. URLs have an `/en` language prefix and there is an "EN" language switcher.
+
+### Issues in priority order
+
+| # | Priority | Issue (evidence) | Fix |
+|---|---|---|---|
+| 1 | Critical | **Positioned for the wrong market.** Title: "Zyverra Labs \| AI Agents, Automation & Custom Software". Meta description mentions "startups and businesses worldwide". H1: "We build AI Agents for modern teams." "Healthcare" is one of eight generic industry tiles. "Aesthetic", "clinic", "UK" and "£" never appear. | Rebuild the homepage and site structure around UK aesthetics and beauty clinics. Move the software/AI work to its own service page. |
+| 2 | Critical | **No separate service pages.** Services ("AI Agents", "SaaS Development" etc.) are sections on one page. Every "Learn more" link goes to `#contact`, and the menu uses `#services` and `#portfolio` anchors. | Give each service its own URL, using the structure in section C. |
+| 3 | Critical | **Clinic portfolio missing.** The homepage shows LandChain, AI Sales Engineer, Aura Manufacturers, VAREZA, Employee Management CRM, AI Proposal Generator and PDF Merger. Your three clinic sites are not there. | Add a clinic portfolio with honest case studies. |
+| 4 | High | **Two versions of the domain.** The canonical tag and og:url say `https://zyverralabs.com/en` (no www), but pages are served and linked at `https://www.zyverralabs.com/...`. | Pick one, permanently redirect (301) the other, and make canonicals, internal links and the sitemap match. |
+| 5 | High | **Not set up as a UK site.** `og:locale` is `en`, spellings are American ("Optimized Core Web Vitals", "Centralized records") and nothing marks the site as `en-GB`. | Set `<html lang="en-GB">` and `og:locale` to `en_GB`, and convert all copy to UK English. |
+| 6 | High | **Stats show as zero.** The page source shows "0 Problems solved", "0 Live client platforms" and "0% Built in-house". The animated counters read as zeros to Google and AI tools. | Put the real numbers in the page HTML, or remove the counters. Never invent stats. |
+| 7 | High | **No phone, WhatsApp, UK pricing or payment plans.** The only contact options are email (hello@zyverralabs.com) and a form. | Add the WhatsApp button, a pricing page and a contact page. |
+| 8 | High | **No proof for clinic owners.** No testimonials or reviews from clinics. "Why us" talks about engineering, not clinic results. | Get real, named testimonials from your three clinic clients, with their permission. |
+| 9 | Medium | **Inconsistent business details.** Schema names the founder "Muhammad Awais" with job title "Founder & CEO", but the LinkedIn URL is `/in/awaissarwar898/`. The two business descriptions differ ("software studio…worldwide" vs "software house in Lahore"). Facebook links to a `profile.php?id=` personal profile, not a Page. | Use one founder name, one business description and a proper Facebook Page URL everywhere. |
+| 10 | Medium | **Heavy images.** Images request `w=3840` (e.g. `/_next/image?url=%2Fportfolio%2Flandchain.PNG&w=3840`), which suggests the `sizes` setting is missing. The industry carousel repeats eight images. | Add `sizes`, serve AVIF/WebP and lazy-load below the fold. |
+| 11 | Medium | **Blog not showing in Google.** /en/blog is linked, but a `site:` search found only the homepage and /why-us. | Build a clinic-focused blog, link to it internally and add it to the sitemap. |
+| 12 | Low (good) | **Already in place:** a skip link, descriptive alt text on portfolio images, social sharing tags with a 1200×630 image, privacy/terms/cookie pages and an opt-in analytics cookie banner. | Keep these, and update the cookie wording for the 2026 UK rules. |
+
+**Fix these on the portfolio sites before you show them off:**
+- **"Botox" on Belgrave.** belgravecosmetics.co.uk lists "Botox" in its public homepage description. ASA guidance says prescription-only medicines "may not be advertised to the public". Fix this before you present the site as compliant work.
+- **Wrong town on Belgrave.** The contact page says "Belgrave Cosmetics Banbury, United Kingdom", but the clinic is at 1st floor, 25 Osprey Court, Bristol BS14 0BB.
+- **Old Belgrave pages still in Google**, such as belgravecosmetics.co.uk/about-us/. Redirect them.
+- **The other two sites couldn't be checked.** I couldn't confirm serraaesthetics.co.uk is live. A Faces listing shows a "Serra aesthetics" at Priory Court, London E17 5LX, probably but not certainly the same clinic. penelopejaesthetics.com doesn't show up in search at all. Confirm both before you publish case studies.
+
+---
+
+## B) Keyword map (UK)
+
+**Search volumes.** I found no published UK search volumes for these terms. Before you finalise, run the list through Google Keyword Planner or Semrush/Ahrefs (UK database), then track impressions in Search Console. The difficulty ratings below are relative: they reflect how many specialist UK agencies have a dedicated page for the term, not tool scores.
+
+**Who already ranks, and what they do well:**
+
+| Competitor | What they do well |
+|---|---|
+| **Aesthetic Web** (aestheticweb.co.uk) | Dedicated "Aesthetic clinic website design" page. Claims "10+ years" and "Trusted by 100+ Cosmetic Clinics". Case studies and a blog. Bespoke WordPress. |
+| **Aesthetics Desk** | "From £350", "Live in just 5 days", aimed at practitioners and nurses. **Your closest price competitor.** |
+| **Ashrose Agency** | Large visual grid of named clinic sites (e.g. "Nurse Billie Aesthetics", "Hoole MediSpa"). |
+| **BoutiqueSEO** (Leeds) | FAQs that answer the question up front, plus compliance content such as a post on advertising Botox. |
+| **AETHUS** | Answers "how much does it cost" on the page ("from £8,000 excluding VAT"). |
+| **Podium Design** | Claims sites are "built to GMC, ASA and CAP rules", with consent-managed before/after galleries. |
+| **Aesthetic Launch Lab** | Market pages for 12 UK cities. |
+| **Cosmetic Digital** | Sells AI search optimisation ("AI SEARCH — AEO") as a named service. |
+| **Cliniq Media** | Meta ads only, for UK aesthetics clinics. Its schema lists "Monthly Meta Ads Management" at a price of 500. |
+
+| Page | Main keyword | Other keywords | What the searcher wants | Relative difficulty |
+|---|---|---|---|---|
+| Home | aesthetic clinic websites UK | aesthetics marketing agency UK, tech services for aesthetic clinics, web design for aesthetics clinics | To find or compare an agency | High |
+| Aesthetic Clinic Website Design | aesthetic clinic website design | aesthetics website design, website for aesthetics clinic, aesthetic practitioner website, aesthetics nurse website, med spa website design, skin clinic website design | To hire someone | High |
+| Beauty Salon Website Design | beauty salon website design UK | salon website with booking, beauty therapist website, nail and lash salon website | To hire someone | Medium–High (many generalists, e.g. StaticSwift "from £149") |
+| Admin Dashboard | clinic website admin dashboard | website I can update myself, edit treatment prices myself, clinic website CMS, update before and after photos | Fed up with paying for edits; looking for a fix | **Low (no specialist owns this)** |
+| SEO & AI Search Visibility | SEO for aesthetic clinics | local SEO for aesthetics clinic, AI search visibility for clinics, get my clinic recommended by ChatGPT, AEO for clinics | To hire someone | High (SEO) / Low (AI-search wording) |
+| Meta Ads | Meta ads for aesthetic clinics | Facebook ads for aesthetics clinic, Instagram ads for beauty salon, aesthetics lead generation | To hire someone | Medium |
+| Social Media & Reels | social media management for aesthetics clinics | reels for aesthetics clinic, Instagram content for beauty salon | To hire someone | Medium |
+| Custom Software & AI Chatbots | AI chatbot for aesthetics clinic | custom software for clinics, clinic booking software development, SaaS development Pakistan/UK | To hire someone | Low–Medium |
+| Pricing | aesthetic clinic website cost UK | how much does an aesthetics website cost, aesthetics website £400, website payment plan | Ready to buy / comparing prices | Medium |
+| Portfolio | aesthetic clinic website examples | aesthetics website examples UK, clinic website case study | Comparing options | Low |
+| Location: Bristol | aesthetic clinic website design Bristol | aesthetics web design Bristol | To hire someone locally | Low |
+| Location: London (only if the Serra client is confirmed) | aesthetic clinic website design London | aesthetics web design London | To hire someone locally | High |
+| FAQ | aesthetic clinic website FAQs | question-style searches (see section E) | Looking for answers / AI-assistant questions | Low–Medium |
+| Blog | see section F | ASA botox rules, clinic website cost, ChatGPT recommendations | Looking for information | Mixed |
+
+**City pages.** Cover Manchester, Birmingham, Leeds, Glasgow, Cardiff and Belfast in one "We work with clinics across the UK" section on the service page, not on separate pages. Separate pages for cities where you have no clients and nothing unique to say count as doorway pages, which Google penalises. Add a city page only once you have a real case study there. Bristol already qualifies through Belgrave.
+
+**Questions people ask AI assistants** (each should map to an FAQ answer or a blog post):
+- "Who builds websites for aesthetics clinics in the UK that I can update myself?"
+- "Cheapest professional website for an aesthetics nurse UK"
+- "How much should an aesthetic clinic website cost?"
+- "Agency that does website, SEO and Meta ads for my beauty clinic"
+- "How do I get my clinic recommended by ChatGPT?"
+- "Can I advertise Botox on my website UK?"
+- "Best booking setup for an aesthetics clinic website"
+- "AI chatbot for my clinic website"
+
+---
+
+## C) Recommended site structure
+
+One language version, in UK English. Serve pages at the root, and permanently redirect every `/en/*` URL to the same page without `/en`, unless the agent finds a real need to keep multiple languages.
+
+```
+/                                         Home
+/aesthetic-clinic-website-design          Primary service page
+  /aesthetic-clinic-website-design/bristol   Location page (real client: Belgrave)
+  /aesthetic-clinic-website-design/london    ONLY if Serra Aesthetics (E17) is confirmed as a client
+/beauty-salon-website-design              Secondary service page
+/clinic-website-admin-dashboard           USP page
+/seo-ai-search-for-aesthetic-clinics      Local SEO & AI Search Visibility
+/meta-ads-for-aesthetic-clinics           Meta Ads
+/social-media-reels-for-clinics           Social Media & Reels
+/custom-software-ai-chatbots              Custom Software & AI Chatbots (keeps existing software portfolio)
+/pricing                                  Pricing (£400 / £300, payment plans)
+/work                                     Portfolio hub
+  /work/belgrave-cosmetics                Case study
+  /work/serra-aesthetics                  Case study (after confirmation)
+  /work/penelope-j-aesthetics             Case study (after confirmation)
+  /case-studies/* (existing)              Keep existing software case studies, linked from /custom-software-ai-chatbots
+/about                                    About + founder (merge /why-us, /how-we-deliver, /founder; 301 old URLs)
+/contact                                  Contact
+/faq                                      FAQ
+/blog                                     Blog index
+  /blog/[slug]                            Posts
+/privacy  /cookies  /terms  /complaints   Legal
+```
+
+**Main menu:** Clinic Websites (Aesthetic Clinic Websites, Beauty Salon Websites, Admin Dashboard) · Marketing (SEO & AI Search, Meta Ads, Social & Reels) · AI & Software · Pricing · Work · Blog · Contact. The main button is "Get a quote".
+
+---
+
+## D–I) Full specifications (inside the prompt)
+
+Sections D to I are all inside the prompt below, so one paste gives the agent everything: page-by-page specs (D), FAQ (E), blog plan and three starter posts (F), technical SEO including JSON-LD and llms.txt (G), WhatsApp button (H) and admin dashboard messaging (I).
+
+**Confirm these before you run the prompt.** They are marked `[CONFIRM]` in the prompt; don't let the agent make them up.
+
+**Your offer:**
+- Hosting and domain costs, and whether there is any monthly fee.
+- Who owns the domain and code.
+- What counts as a "major change" that needs a developer.
+- Which booking systems you integrate with.
+- How many pages each option includes.
+- Whether Option A includes a blog and offers manager.
+
+**Your business and clients:**
+- The founder name you want shown publicly ("Muhammad Awais" or "Muhammad Awais Sarwar").
+- Your Clutch, GoodFirms and DesignRush URLs.
+- Real testimonials, with written permission.
+- Whether Serra and Penelope J are live clients you may name.
+
+---
+
+## J) The one-run implementation prompt
+
+Copy everything between the two markers and paste it into your AI coding agent (Claude Code, Cursor or similar) with the zyverralabs.com repository open.
+
+===== BEGIN PROMPT =====
+
+# Role and goal
+
+You are a senior Next.js engineer, technical SEO and UK conversion copywriter. Your job is to reposition and rebuild zyverralabs.com in this repository, in ONE run, so it ranks in the UK and gets cited by AI assistants for aesthetics and beauty clinic websites and marketing. Implement every section below (D to I), then run the verification checklist and report results.
+
+**Business facts (use exactly; never invent others):**
+
+*Identity and services*
+- Brand: Zyverra Labs. Founder: Muhammad Awais [CONFIRM final public name]. Based in Lahore, Punjab, Pakistan, serving UK clients remotely.
+- Email: hello@zyverralabs.com. WhatsApp: +92 302 4258017.
+- Audience: UK aesthetics clinics, beauty clinics, aesthetic nurses and practitioners, med spas and salons.
+- Services: custom clinic websites; a built-in admin dashboard (the USP); local SEO; AI search visibility (ChatGPT, Google AI Overviews, Gemini, Perplexity); Meta ads; reels and social media management; custom software, SaaS and AI chatbots.
+
+*Pricing and terms*
+- Option A: £400, website with admin dashboard. Option B: £300, website without the dashboard.
+- Live in 7–10 working days [CONFIRM: from receipt of content].
+- Payment plans: 50/50, or 30/40/30.
+
+*Portfolio and socials*
+- Portfolio: belgravecosmetics.co.uk (Belgrave Cosmetics, 1st floor, 25 Osprey Court, Whitchurch, Bristol BS14 0BB); serraaesthetics.co.uk [CONFIRM live + permission]; penelopejaesthetics.com [CONFIRM live + permission].
+- Existing socials: LinkedIn https://www.linkedin.com/in/awaissarwar898/, Instagram https://www.instagram.com/zyverralabs/, GitHub https://github.com/awaissarwar03021433916-creator, Facebook [CONFIRM a Page URL to replace profile.php?id=100072383062556].
+
+**Non-negotiable rules:**
+
+*Honesty and compliance*
+1. **No fabrication.** Do not invent testimonials, reviews, star ratings, client counts, awards, statistics or guarantees. Where a fact is unknown, insert a visible `TODO [CONFIRM]` comment in code, keep the copy neutral, and list it in your final report. Do not output AggregateRating or Review schema unless real reviews are supplied.
+2. **UK English throughout** (optimise, colour, enquiry, organisation), £ GBP, and dates written like 11 November 2026.
+3. **ASA/CAP-safe language.** Never use "Botox", "Vistabel", "Dysport", "Azzalure" or "Bocouture" as promotional words anywhere on the site, including in examples. Use "anti-wrinkle treatments" or "consultation-led injectable treatments". Never use "wrinkle-relaxing". The only exception is the compliance blog post, which explains the rule.
+4. **Never promise rankings or AI recommendations.** Use phrases like "built to be found and understood by", not "guaranteed #1".
+
+*How to build*
+
+5. **Preserve the brand.** Keep the existing logo (`/zyverra-mark.png`), colour tokens, fonts, component library and design language. Reuse existing components. Do not introduce a new UI framework.
+6. **Keep the existing software and AI portfolio and case-study URLs working.** Move them under `/custom-software-ai-chatbots`, and link the existing `/case-studies/*` pages from there.
+7. **Everything important must be server-rendered HTML** (no client-only text). Counters must render their real final value in the HTML, or be removed.
+
+# Step 0: Inspect before changing anything
+
+1. Read `package.json`, the `next.config.*` file, the `app/` or `pages/` directory, the i18n/middleware config, the layout, metadata helpers, existing JSON-LD, the cookie banner component, and the blog implementation (MDX, CMS or hard-coded).
+2. Report the Next.js version, router type, styling system and hosting (look for a `vercel.json`).
+3. Check whether these exist and what they contain: `/robots.txt`, `/sitemap.xml`, `/llms.txt`, any `noindex` (meta or `X-Robots-Tag`), and the `<html lang>` value.
+4. Find which host is primary (`zyverralabs.com` vs `www.zyverralabs.com`). The current canonical says `https://zyverralabs.com/en`, but links use `www`. Choose `https://zyverralabs.com` as canonical unless hosting makes that impossible. 301 the other host, and use the chosen host consistently in canonicals, OG URLs, the sitemap and JSON-LD.
+5. URL migration: serve all pages at the root (no `/en` prefix) unless removing i18n would break something. 301 these: `/en` → `/`; `/en/why-us` → `/about`; `/en/how-we-deliver` → `/about#process`; `/en/founder` → `/about#founder`; `/en/blog` → `/blog`; `/en/blog/*` → `/blog/*`; `/en/privacy|terms|cookies` → `/privacy|terms|cookies`.
+6. Write a short plan, then implement it.
+
+# Step 1: Global layout and metadata
+
+- `<html lang="en-GB">`. Default metadata: `og:locale` `en_GB`, `og:site_name` "Zyverra Labs", `twitter:card` `summary_large_image`.
+- Every page gets a unique `<title>` and meta description exactly as in Section D; a self-referencing absolute canonical; `alternates.languages` = `{ "en-GB": url, "x-default": url }`; an OG image (1200×630; create per-service variants with the page H1 over the brand background, or reuse `/og-image.png`).
+- Exactly one H1 per page, and logical H2/H3 order.
+- Header nav: Clinic Websites (Aesthetic Clinic Websites, Beauty Salon Websites, Admin Dashboard) · Marketing (SEO & AI Search, Meta Ads, Social & Reels) · AI & Software · Pricing · Work · Blog · Contact, plus a primary button "Get a quote" → `/contact`.
+- Footer: NAP block "Zyverra Labs · Lahore, Pakistan · Serving clinics across the UK · hello@zyverralabs.com · WhatsApp +92 302 4258017"; links to all service pages, Pricing, Work, FAQ, Blog, About, Contact, Privacy, Cookies, Terms and Complaints; social links; "© 2026 Zyverra Labs".
+- Breadcrumbs (visible plus BreadcrumbList JSON-LD) on every page except Home.
+- Replace every `#contact` "Learn more" link with a link to the relevant service page.
+
+# Section D: Page specifications
+
+Character limits: titles ≤60 characters, descriptions ≤155 characters. These are already counted, so use them verbatim.
+
+## D1. Home `/`
+- **Title:** Aesthetic Clinic Websites & Marketing UK | Zyverra Labs
+- **Meta description:** Websites for UK aesthetics clinics with a built-in admin dashboard, so you update prices, treatments and photos yourself. From £400, live in 7–10 days.
+- **H1:** Websites for UK aesthetics clinics that you can update yourself
+- **Intro paragraph (answer-first):** "Zyverra Labs builds websites, local SEO, AI search visibility and Meta ads for UK aesthetics clinics, aesthetic nurses, med spas and beauty salons. Every Option A site includes an admin dashboard, so you can change treatments, prices, before-and-after photos, offers and blog posts yourself, without paying a developer for small changes. Websites start at £400, go live in 7–10 working days, and you can pay 50/50 or in three parts."
+- **CTAs:** "Get a quote" (→ /contact) · "See clinic websites we've built" (→ /work) · WhatsApp
+- **H2 outline:**
+  - "Everything your clinic needs online, from one team". A services grid with 7 cards linking to each service page.
+  - "Your website, your control: the Zyverra admin dashboard". 4 bullets: treatments, prices, before/afters, offers and blogs. Link to /clinic-website-admin-dashboard.
+  - "Simple, transparent pricing". Option A £400 / Option B £300, payment plans → /pricing.
+  - "Clinic websites we've built". Belgrave Cosmetics (Bristol) plus the confirmed others → /work.
+  - "Built to be found on Google and AI assistants". 3 bullets: schema, answer-first content, Bing and Google indexing → /seo-ai-search-for-aesthetic-clinics.
+  - "Written with UK advertising rules in mind". Mentions ASA/CAP and that prescription-only medicines can't be advertised to the public → blog post.
+  - "How it works". 4 steps: Free call → Content & design → Build & review → Launch & handover (dashboard training).
+  - "Common questions". The first 6 FAQs from Section E (rendered as an accordion, with FAQPage schema on /faq only; see G).
+  - Final CTA band: "Tell us about your clinic", with WhatsApp and quote buttons.
+- **Keep:** a small "Also: AI chatbots & custom software" strip linking to /custom-software-ai-chatbots, which preserves the existing AI work.
+- **Schema:** Organization + ProfessionalService + WebSite (Section G).
+
+## D2. Aesthetic Clinic Website Design `/aesthetic-clinic-website-design`
+- **Title:** Aesthetic Clinic Website Design UK from £400 | Zyverra
+- **Meta description:** Custom aesthetic clinic websites for UK clinics, nurses and med spas. Edit treatments, prices and before/afters yourself. Live in 7–10 working days.
+- **H1:** Aesthetic clinic website design for UK clinics and practitioners
+- **Opening (answer-first, ≤60 words):** "We design and build fast, mobile-first websites for UK aesthetics clinics, aesthetic nurses, skin clinics and med spas. Each site has treatment pages, clear prices, a before-and-after gallery, booking or enquiry buttons, and, with Option A, an admin dashboard so you can keep everything up to date yourself. From £400, live in 7–10 working days."
+- **H2s:**
+  1. What's included in every clinic website: treatment pages, price list, practitioner bio and qualifications, gallery, booking link/enquiry form, Google Maps, reviews section (real reviews only), legal pages, SEO setup and schema.
+  2. Update it yourself with the admin dashboard → link to the USP page.
+  3. Designed for how clients choose a practitioner: trust signals, qualifications, consultation-first journeys, mobile speed.
+  4. Compliant by design: no prescription-only medicine promotion, consultation-led wording, consented before-and-afters, cookie consent.
+  5. Booking that fits your clinic: link or embed your existing booking system [CONFIRM supported systems, e.g. Fresha, Treatwell, Timely, Phorest].
+  6. Who we build for: aesthetics clinics, aesthetic nurses and independent practitioners, skin clinics, med spas, beauty salons → /beauty-salon-website-design.
+  7. We work with clinics across the UK. One paragraph naming London, Manchester, Birmingham, Leeds, Bristol, Glasgow, Cardiff and Belfast, stating that everything is done remotely via video call and WhatsApp in UK working hours [CONFIRM hours]. Link /aesthetic-clinic-website-design/bristol.
+  8. Pricing → /pricing.
+  9. Examples → /work.
+  10. FAQs: 5 relevant Qs from Section E.
+- **CTA:** "Get your clinic website quote"
+- **Schema:** Service (serviceType "Aesthetic clinic website design", areaServed GB, offers £400 and £300) + BreadcrumbList.
+
+## D3. Beauty Salon Website Design `/beauty-salon-website-design`
+- **Title:** Beauty Salon Website Design UK | From £300 | Zyverra
+- **Meta description:** Salon websites with your treatment menu, prices, gallery and booking link — plus a dashboard to update them yourself. From £300, live in 7–10 days.
+- **H1:** Beauty salon website design for UK salons and therapists
+- **Opening:** "We build beauty salon websites that show your full treatment menu and prices, show off your work in a gallery and send clients straight to booking. Choose Option B (£300) for a clean, fast site, or Option A (£400) to add an admin dashboard so you can change prices and offers yourself."
+- **H2s:** What a salon website needs (menu, prices, gallery, booking, reviews, map); Reduce reliance on booking-platform commission by using your own site as the front door (no figures unless sourced); Update your menu and offers yourself; Pricing; Examples; FAQs.
+- **Internal links:** /clinic-website-admin-dashboard, /pricing, /social-media-reels-for-clinics, /meta-ads-for-aesthetic-clinics.
+- **Schema:** Service + BreadcrumbList.
+
+## D4. Admin Dashboard (USP) `/clinic-website-admin-dashboard`
+- **Title:** Clinic Website Admin Dashboard: Edit It Yourself | Zyverra
+- **Meta description:** Update treatments, prices, before/after photos, offers and blogs yourself — no developer fees for small changes. See how our clinic dashboard works.
+- **H1:** An admin dashboard that lets you run your clinic website yourself
+- **Opening:** "Every Option A website comes with a simple admin dashboard. Log in from your phone or laptop to add a new treatment, change a price, upload before-and-after photos, publish an offer or write a blog post. Changes go live straight away, and you don't need to call or pay a developer. You only need us for major changes, such as a new feature or a redesign."
+- **H2s:**
+  1. What you can change yourself. A table with these rows: Treatments (add, edit, hide); Prices; Images and galleries; Before-and-after photos; Offers and promotions; Blog posts; New pages/sections [CONFIRM scope]; Opening hours and contact details [CONFIRM].
+  2. What still needs a developer. Major changes: new features, new page layouts, integrations, redesigns [CONFIRM pricing for these].
+  3. Why it matters for clinics: prices change, new treatments launch, seasonal offers, fresh content helps SEO, and no waiting or extra invoices for small edits (no specific £ figure unless confirmed).
+  4. Built with compliance in mind: consent reminder when uploading before-and-after photos [CONFIRM if built; otherwise phrase as "we show you how to"].
+  5. Dashboard training at handover [CONFIRM].
+  6. Option A vs Option B comparison table.
+  7. FAQs: the dashboard questions from Section E.
+- **Media:** add 3–4 real dashboard screenshots with descriptive alt text, e.g. "Zyverra clinic admin dashboard: editing a treatment price". If none exist, add `TODO [CONFIRM]` placeholders. Do not use fake mock-ups presented as real.
+- **CTA:** "See the dashboard on a free call"
+- **Schema:** Service (name "Clinic website admin dashboard") + BreadcrumbList.
+
+## D5. Local SEO & AI Search Visibility `/seo-ai-search-for-aesthetic-clinics`
+- **Title:** SEO & AI Search Visibility for Aesthetic Clinics | Zyverra
+- **Meta description:** Local SEO and AI search visibility for UK aesthetics clinics: Google Business Profile, schema, content and citations so Google and ChatGPT can find you.
+- **H1:** Local SEO and AI search visibility for aesthetics clinics
+- **Opening:** "More clients now ask Google, ChatGPT, Gemini and Perplexity to recommend a clinic. We make your clinic easy for search engines and AI assistants to find, understand and trust. That means fast, crawlable treatment pages, answer-first content, accurate structured data, a well-maintained Google Business Profile, consistent listings and genuine mentions on other websites. Nobody can guarantee a recommendation, but these are the foundations every recommendation is built on."
+- **H2s:** Local SEO for clinics (GBP, reviews, NAP, treatment and location pages); How AI assistants choose which clinics to mention (Google says its AI features rely on the same Search index and core SEO best practices; ChatGPT's live search leans on Bing; brand mentions across the web correlate with AI visibility); What we do month to month [CONFIRM packages and prices]; Measuring it (Search Console including the generative AI report, Bing Webmaster Tools, enquiry tracking); FAQs.
+- **Internal links:** blog post 3, /clinic-website-admin-dashboard (fresh content), /pricing.
+- **Schema:** Service + BreadcrumbList.
+
+## D6. Meta Ads `/meta-ads-for-aesthetic-clinics`
+- **Title:** Meta Ads for Aesthetic Clinics UK | Zyverra Labs
+- **Meta description:** ASA-aware Facebook and Instagram ads for UK aesthetics clinics and salons — consultation-led campaigns, landing pages and honest monthly reporting.
+- **H1:** Meta ads for aesthetics clinics and beauty salons
+- **Opening:** "We plan, create and manage Facebook and Instagram ads that bring UK clinics consultation enquiries, not just likes. Campaigns are consultation-led, avoid promoting prescription-only medicines, and point to a fast landing page on your own site."
+- **H2s:** What's included (strategy, creative, audiences, landing page, tracking with consent, reporting); Staying within ASA and Meta rules (no POM promotion, no under-18 targeting for cosmetic procedures, realistic imagery); Ads plus a website you control (offers updated via the dashboard); Pricing [CONFIRM; otherwise hidden until confirmed]; FAQs.
+- **Schema:** Service + BreadcrumbList.
+
+## D7. Social Media & Reels `/social-media-reels-for-clinics`
+- **Title:** Social Media & Reels for Aesthetics Clinics | Zyverra Labs
+- **Meta description:** Instagram and TikTok reels, content calendars and social media management for UK aesthetics clinics and salons, written to stay within ASA rules.
+- **H1:** Social media management and reels for aesthetics clinics
+- **Opening:** "We plan, script, edit and schedule reels and posts that show your clinic, your results (with consent) and your expertise. Posts are written in UK English and checked against UK advertising rules."
+- **H2s:** What we create; How it connects to your website and SEO (repurpose reels into blog posts and FAQs); Compliance; Packages [CONFIRM]; FAQs.
+- **Schema:** Service + BreadcrumbList.
+
+## D8. Custom Software & AI Chatbots `/custom-software-ai-chatbots`
+- **Title:** AI Chatbots & Custom Software for Clinics | Zyverra Labs
+- **Meta description:** AI chatbots that answer treatment questions and capture enquiries 24/7, plus custom booking tools, CRMs and SaaS for clinics and growing businesses.
+- **H1:** AI chatbots and custom software for clinics and growing businesses
+- **Opening:** "Beyond websites, we build AI chatbots that answer common treatment questions and capture enquiries out of hours, plus custom tools such as CRMs, dashboards and SaaS products."
+- **H2s:** AI chatbots for clinics (with a human handover; no medical advice); Custom software and SaaS; Selected work: move the existing portfolio cards here (LandChain, AI Sales Engineer, Aura Manufacturers, VAREZA, Employee Management CRM, AI Proposal Generator, PDF Merger) with their existing case-study links; "Try our live AI agent" (keep the existing widget); FAQs.
+- **Schema:** Service + BreadcrumbList.
+
+## D9. Pricing `/pricing`
+- **Title:** Clinic Website Pricing UK: £400 or £300 | Zyverra Labs
+- **Meta description:** Clear GBP pricing: £400 clinic website with admin dashboard or £300 without. Live in 7–10 working days. Pay 50/50 or in three parts (30/40/30).
+- **H1:** Clinic website pricing
+- **Opening:** "Option A costs £400 and includes a custom clinic website plus an admin dashboard for updating it yourself. Option B costs £300 for the same custom website without the dashboard. Both go live in 7–10 working days. Pay 50% upfront and 50% at launch, or split it 30/40/30."
+- **Comparison table:** Option A vs Option B. Rows: price; admin dashboard (✓/✗); edit treatments, prices and before-and-afters yourself (✓/✗); blog; mobile-first design; SEO and schema setup; WhatsApp/booking buttons; timeline; small changes after launch (A: do it yourself; B: by request [CONFIRM fee]); hosting/domain [CONFIRM]; page count [CONFIRM].
+- **H2s:** Payment plans explained (50/50, or 30% to start, 40% at design approval, 30% at launch [CONFIRM milestones]); What's not included (copywriting, photography, ads spend [CONFIRM]); Ongoing marketing: SEO, Meta ads and social are quoted separately [CONFIRM]; How we compare to typical UK prices (neutral sentence linking to blog post 1, no competitor names on this page); FAQs (cost and payment questions).
+- **Schema:** Service with two Offer objects in GBP, + BreadcrumbList. Use no Product schema.
+
+## D10. Portfolio `/work` and case studies
+- **Title:** Aesthetic Clinic Website Examples | Zyverra Labs Portfolio
+- **Meta description:** See live UK clinic websites we built, including Belgrave Cosmetics in Bristol — what each clinic needed, what we built and what the owner can edit.
+- **H1:** Clinic websites we've built
+- **Each case study** (`/work/[slug]`): H1 "[Clinic] website: [location]"; the client and their goal; what we built; what the owner can update themselves; pages and features; a link to the live site (`rel="noopener"`); a testimonial ONLY if supplied and approved, otherwise omit it. Use real screenshots with alt text.
+- **Before publishing Belgrave**, flag in your report that the live client site currently shows "Banbury" on its contact page and the word "Botox" in public homepage copy. Both should be fixed on the client site.
+- **Schema:** CollectionPage + BreadcrumbList. Each case study gets Article + BreadcrumbList.
+
+## D11. About `/about`
+- **Title:** About Zyverra Labs | Founder-Led Clinic Web Studio
+- **Meta description:** Zyverra Labs is a founder-led web studio run by Muhammad Awais, building websites, dashboards and AI search visibility for UK aesthetics clinics.
+- **H1:** A founder-led studio building websites for UK clinics
+- **Sections:** Who we are (Lahore-based and UK-focused, with an honest note on remote working and UK-hours availability [CONFIRM]); `#founder` (bio, photo, LinkedIn link); `#process` (merge the existing "How we deliver" 4 steps); Why clinics choose us (reuse the existing "Why us" content, rewritten for clinics); Honest fit (keep the existing "great fit / not for you" section).
+- **Schema:** AboutPage + Person (founder) + BreadcrumbList.
+
+## D12. Contact `/contact`
+- **Title:** Contact Zyverra Labs | WhatsApp, Email or Book a Call
+- **Meta description:** Message us on WhatsApp, email hello@zyverralabs.com or book a free 30-minute call about your clinic website, SEO, ads or AI search.
+- **H1:** Talk to us about your clinic
+- **Content:** three contact cards (WhatsApp, Email, Book a free 30-minute call using the existing booking flow) and the existing form. Form fields: name, clinic name, town/city, website (optional), services interested in (checkboxes), message, plus a privacy notice link.
+- **Schema:** ContactPage + BreadcrumbList.
+
+## D13. FAQ `/faq`
+- **Title:** Aesthetic Clinic Website & Marketing FAQs | Zyverra Labs
+- **Meta description:** Straight answers on clinic website costs, admin dashboards, timelines, SEO, ChatGPT visibility, Meta ads and ASA rules for UK aesthetics clinics.
+- **H1:** Frequently asked questions
+- **Content:** render every Q&A from Section E as visible HTML (H2 per group, H3 per question, answer visible or in an accessible `<details>`).
+- **Schema:** FAQPage (with the exact same text) + BreadcrumbList.
+
+## D14. Blog index `/blog`
+- **Title:** Aesthetics Clinic Marketing Blog | Zyverra Labs
+- **Meta description:** Practical guides for UK aesthetics clinic owners on websites, local SEO, AI search, Meta ads and advertising compliance. Written in plain English.
+- **H1:** Guides for aesthetics clinic owners
+- **Schema:** Blog + BreadcrumbList.
+
+## D15. Location page `/aesthetic-clinic-website-design/bristol`
+- **Title:** Aesthetic Clinic Website Design Bristol | Zyverra Labs
+- **Meta description:** Websites with a self-edit admin dashboard for Bristol aesthetics clinics and practitioners. From £400, live in 7–10 working days. See our work.
+- **H1:** Aesthetic clinic website design for Bristol clinics
+- **Content (must be unique, not a find-and-replace of D2):** the Belgrave Cosmetics (Whitchurch, BS14) case study summary; local search considerations for Bristol clinics (Google Business Profile, neighbourhood names clients actually search, such as Clifton and Whitchurch); link to the case study; CTA.
+- **London page:** create `/aesthetic-clinic-website-design/london` only if the Serra Aesthetics (London E17) client is confirmed. Otherwise do not create it.
+- **Schema:** Service (areaServed: City "Bristol") + BreadcrumbList.
+
+## D16. Legal pages
+- `/privacy`: Privacy Policy | Zyverra Labs
+- `/cookies`: Cookie Policy | Zyverra Labs
+- `/terms`: Terms & Conditions | Zyverra Labs
+- `/complaints`: Complaints | Zyverra Labs
+
+Add `/complaints`, which describes how to raise a data-protection complaint with us. Update the cookie and privacy text per Step 8. Legal pages can be indexed but get no special schema.
+
+# Section E: FAQ (UK English, answer-first)
+
+Group under these H2s: Cost & payment · Your website & dashboard · SEO & AI search · Marketing · Working with us · Compliance.
+
+**Cost & payment**
+
+1. **How much does an aesthetic clinic website cost in the UK?** Our clinic websites cost £400 with an admin dashboard (Option A) or £300 without (Option B). Across the UK, clinic website prices range from a few hundred pounds for template sites to £8,000 or more for bespoke agency builds, so ask exactly what's included and who can edit the site afterwards.
+2. **What is the difference between Option A and Option B?** Option A (£400) includes the admin dashboard, so you can change treatments, prices, photos, offers and blog posts yourself. Option B (£300) is the same custom website without the dashboard, so content changes are made by us on request.
+3. **Can I pay in instalments?** Yes. You can pay 50% to start and 50% at launch, or split the cost into three payments of 30%, 40% and 30%.
+4. **Are there any monthly fees?** [CONFIRM: e.g. "The website itself has no monthly fee from us. You pay for your domain and hosting, which we set up and explain before launch."]
+
+**Your website & dashboard**
+
+5. **How long does it take to build my clinic website?** Most clinic websites go live in 7–10 working days once we have your logo, treatment list, prices and photos.
+6. **What can I change myself with the admin dashboard?** You can add or edit treatments, update prices, upload images and before-and-after photos, publish offers and write blog posts, all without a developer. [CONFIRM: new pages/sections.]
+7. **When would I still need a developer?** Only for major changes, such as a new feature, a new page layout, a third-party integration or a redesign. Day-to-day content changes are yours to make.
+8. **Can clients book online through my website?** Yes. We link or embed the booking system you already use, so clients can go from a treatment page to booking in a couple of taps. [CONFIRM supported systems.]
+9. **Can you redesign my existing clinic website?** Yes. We can rebuild an existing Wix, Squarespace or WordPress site, keep the content that works, and set up redirects so you don't lose existing Google rankings.
+10. **Do I own my website and domain?** [CONFIRM: e.g. "Yes. The domain is registered in your name and you own your content."]
+
+**SEO & AI search**
+
+11. **Will my website rank on Google?** Every site is built with the foundations Google looks for: fast mobile pages, clear treatment pages, correct titles, schema markup and a sitemap. No honest agency can guarantee rankings, and ongoing local SEO is available as a separate service.
+12. **Can you get my clinic recommended by ChatGPT or Google AI Overviews?** We can make your clinic much easier for AI assistants to find and trust, but nobody can guarantee a recommendation. We focus on crawlable answer-first content, accurate structured data, Bing and Google indexing, consistent listings and genuine mentions on other websites.
+13. **What is AI search visibility?** It is how often AI assistants such as ChatGPT, Gemini, Perplexity and Google's AI Overviews mention or link to your clinic when people ask for recommendations. It builds on normal SEO plus your reputation across the wider web.
+
+**Marketing**
+
+14. **Do you run Meta ads for aesthetics clinics?** Yes. We run Facebook and Instagram campaigns built around consultations, with landing pages on your own website and monthly reporting, and we keep the wording within UK advertising rules.
+15. **Do you create reels and manage social media?** Yes. We plan, script, edit and schedule reels and posts for clinics and salons, and repurpose the best content on your website to help SEO.
+16. **Can you add an AI chatbot to my clinic website?** Yes. We build chatbots that answer common questions about treatments, prices and opening hours and capture enquiries out of hours, with a clear handover to you. They do not give medical advice.
+
+**Working with us**
+
+17. **Where are you based, and do you work with UK clinics?** Zyverra Labs is based in Lahore, Pakistan, and works with clinics across the UK remotely by video call, email and WhatsApp. Prices are in pounds sterling and all copy is written in UK English.
+18. **Do you work with aesthetic nurses and solo practitioners?** Yes. We build sites for independent aesthetic nurses and practitioners as well as multi-room clinics, med spas and beauty salons.
+19. **What do you need from me to start?** Your logo, treatment list with prices, practitioner bio and qualifications, photos, booking link and any existing website login. If you don't have everything, we'll help you put it together.
+
+**Compliance**
+
+20. **Can I say "Botox" on my clinic website?** Generally, no. Botox and other botulinum toxin brands are prescription-only medicines, and the ASA says these may not be advertised to the public. We use compliant, consultation-led wording and explain the rules before launch.
+21. **Can I show before-and-after photos?** Yes, if they are genuine, unedited, from your own clients, used with written consent and not misleading about typical results. Option A's dashboard lets you manage the gallery yourself.
+22. **Is my website GDPR and cookie compliant?** Each site includes a privacy policy, a cookie policy and a cookie banner. Advertising and tracking cookies (such as the Meta Pixel) only load after consent, in line with UK GDPR and PECR.
+
+# Section F: Blog system, 16-post plan and 3 starter posts
+
+**Blog system.** If an MDX or CMS blog exists, extend it. Otherwise implement MDX files in `/content/blog/*.mdx` with frontmatter `title, slug, description, date, updated, author, category, targetKeyword, ogImage`. Features: index page with categories; post page with author box (founder, linking to /about#founder) and visible "Published" and "Updated" dates; table of contents; 3 related posts; CTA block; reading time; BlogPosting + BreadcrumbList JSON-LD; RSS feed at `/blog/rss.xml`; every post in the sitemap.
+
+**16-post plan** (title — target keyword — outline):
+
+1. *How much does an aesthetic clinic website cost in the UK? (2026)* — aesthetic clinic website cost UK — **write in full (Post 1 below).**
+2. *Can you say "Botox" on your clinic website? UK ASA rules explained* — ASA botox advertising rules — **write in full (Post 2).**
+3. *How to get your aesthetics clinic recommended by ChatGPT and Google AI* — get clinic recommended by ChatGPT — **write in full (Post 3).**
+4. *What pages should an aesthetics clinic website have?* — aesthetics website pages — home, treatments, prices, about/practitioner, gallery, FAQs, contact/booking, legal.
+5. *Why you should be able to update your own clinic website* — website I can update myself — cost of small changes, speed, SEO freshness, how the dashboard works.
+6. *Before-and-after photos on clinic websites: consent and ASA rules* — before and after photos rules UK — consent, editing, typical results, storage.
+7. *Fresha, Treatwell or your own website: where should clients book?* — Fresha vs own website — commission, ownership, linking and embedding.
+8. *Google Business Profile for aesthetics clinics: a step-by-step guide* — Google Business Profile aesthetics clinic.
+9. *Local SEO for aesthetics clinics: a 2026 checklist* — local SEO aesthetics clinic.
+10. *Meta ads for aesthetics clinics: what you can and can't advertise* — Meta ads aesthetics clinic.
+11. *Reels ideas for aesthetics clinics that stay within the rules* — reels ideas aesthetics clinic.
+12. *Website for an aesthetic nurse: what you actually need when starting out* — aesthetic nurse website.
+13. *Beauty salon website checklist: menu, prices, gallery and booking* — beauty salon website checklist.
+14. *Do aesthetics clinics need an AI chatbot?* — AI chatbot for clinic.
+15. *Cookie banners and privacy policies for UK clinic websites (2026 rules)* — clinic website GDPR cookies.
+16. *Template, DIY or custom: choosing the right website for your clinic* — clinic website template vs custom.
+
+Publish posts 1–3 now. For posts 4–16, create no placeholder pages; add them to `content/blog/_planned.md` for later.
+
+---
+
+## Post 1
+
+Slug: `aesthetic-clinic-website-cost-uk` · Title tag: "Aesthetic Clinic Website Cost UK (2026 Guide) | Zyverra" · Meta: "What does an aesthetic clinic website cost in the UK in 2026? Real price ranges, ongoing costs, hidden extras and what to ask before you pay."
+
+# How much does an aesthetic clinic website cost in the UK? (2026)
+
+**Short answer:** In 2026, a UK aesthetic clinic website can cost anything from around £150 for a basic template to £15,000 or more for a fully bespoke agency build. Most independent clinics and aesthetic nurses will find a professional, mobile-first site in the £300–£3,000 range. The price alone matters less than three questions. What pages are included? Who can edit the site after launch? What will you pay every year to keep it running?
+
+This guide breaks down the real price bands, the costs people forget, and how to choose.
+
+## What UK clinics are being quoted
+
+Prices vary so widely because "a website" can mean very different things. Here is what different types of provider publicly advertise:
+
+- **Low-cost specialist builders.** Some aesthetics-focused providers advertise sites from £350 that go live within a week. These suit new practitioners who need a credible presence quickly.
+- **Freelance designers.** UK designer Lains Creative says prices "can range from £150 – £10,000". Its own builds start from around £895 for a faster turnaround and £2,100 for bespoke work.
+- **Template builds with support.** The industry site My Aesthetics Business estimates a well-built template clinic website at £800–£2,500 to set up, and £1,200–£3,500 in year one once hosting and support are included.
+- **Bespoke agency builds.** The same source puts properly scoped bespoke builds at £6,000–£15,000. Some specialist agencies, such as AETHUS, start bespoke clinic sites from £8,000 excluding VAT.
+
+At Zyverra Labs we charge **£400 for a custom clinic website with an admin dashboard** (Option A) and **£300 without the dashboard** (Option B). Both go live in 7–10 working days.
+
+## What should be included at any price
+
+Whatever you pay, a clinic website should include:
+
+1. **Individual treatment pages.** Each one should explain what the treatment is for, how it works, downtime, the consultation process and the price or price range.
+2. **A clear price list.** Clients compare clinics on price. Hiding prices tends to push them elsewhere.
+3. **A practitioner page** with your qualifications, insurance and experience. In aesthetics, trust is the purchase.
+4. **A before-and-after gallery** using genuine, consented photos.
+5. **Booking or enquiry buttons** on every page, linked to your booking system, WhatsApp or a form.
+6. **Mobile-first design and fast loading.** Most clients will find you on their phone.
+7. **Basic SEO setup.** That means unique page titles and descriptions, schema markup, a sitemap and Google Search Console.
+8. **Legal pages and a cookie banner** that meet UK GDPR and PECR.
+
+If a quote doesn't cover these, ask why.
+
+## The costs people forget
+
+The build is rarely the whole story. Budget for these as well:
+
+- **Domain name.** A .co.uk domain typically costs £5–£15 a year.
+- **Hosting.** This ranges from free tiers to £10–£30 a month, depending on the platform.
+- **Platform subscriptions.** Wix, Squarespace and similar builders charge monthly.
+- **Changes after launch.** This is the big one. If every price change, new treatment or seasonal offer means emailing a developer, you either wait or pay. My Aesthetics Business estimates ongoing annual costs of £1,000–£3,000 once maintenance and occasional changes are included.
+- **Photography and copywriting**, if you can't supply them.
+- **Booking-system fees.** These are separate from your website.
+
+## Why "who can edit it?" matters more than the build price
+
+Aesthetics clinics change constantly. You add treatments, adjust prices, run offers and upload new results. A cheap website that you can't update can end up more expensive over a year than a slightly dearer one that you can.
+
+That's why we build an **admin dashboard** into Option A. You log in and change treatments, prices, images, before-and-after photos, offers and blog posts yourself. A developer is only needed for major changes, such as a new feature or a redesign.
+
+When comparing quotes, ask each provider:
+
+- Can I change prices and add treatments myself without a developer?
+- What exactly will I pay each year after launch?
+- Who owns the domain and the content?
+- How long until it's live, and what do you need from me?
+- Will the wording comply with ASA rules on prescription-only medicines?
+
+## Template, DIY or custom?
+
+- **DIY builders** are cheapest in cash terms but cost you time. They often end up looking generic and are rarely set up properly for SEO.
+- **Templates** are quick and affordable, but you may look like other clinics using the same design.
+- **Custom builds** fit your brand and treatments. Traditionally they've been expensive, but they don't have to be.
+
+## Our recommendation
+
+If you're a new practitioner or a single-room clinic, you don't need a £10,000 website. You need a fast, professional, mobile-first site; clear treatment pages and prices; compliant wording; and the ability to keep it up to date yourself. Spend the difference on photography, reviews and getting found.
+
+**Ready to see what your clinic site would look like?** [Get a quote] or message us on WhatsApp.
+
+---
+
+## Post 2
+
+Slug: `botox-advertising-rules-clinic-website` · Title tag: "Can You Say 'Botox' on Your Website? UK ASA Rules" · Meta: "Botox is a prescription-only medicine, so UK clinics can't advertise it to the public. Here's what the ASA allows on your website and social media."
+
+# Can you say "Botox" on your clinic website? UK ASA rules explained
+
+**Short answer:** In most cases, no. Botox and other botulinum toxin brands, such as Vistabel, Dysport, Azzalure and Bocouture, are prescription-only medicines (POMs). In the UK, the ASA's guidance is blunt: "prescription-only medicines… simply may not be advertised to the public". Indirect references can count as advertising too. Your clinic website, Instagram, Facebook and paid ads all count as advertising. This guide covers what you can say instead.
+
+*This is general guidance, not legal advice. Always check the current guidance from the ASA and CAP.*
+
+## Why the rule exists
+
+The Committee of Advertising Practice (CAP) writes the UK advertising rules, and the Advertising Standards Authority (ASA) enforces them. CAP Code rule 12.12 states that prescription-only medicines "may not be advertised to the public". This sits alongside the Human Medicines Regulations 2012, which ban any advertisement "likely to lead to the use of a prescription only medicine". The idea is that a prescriber, not an advert, should decide whether you need a medicine.
+
+The ASA has published an Enforcement Notice specifically about advertising Botox and other botulinum toxin injections on social media, and it actively monitors clinics.
+
+## What counts as "advertising" a POM
+
+It's broader than most practitioners expect. The ASA's FAQs and Enforcement Notice cover:
+
+- **The brand name itself**: "Botox", "Vistabel", "Azzalure" and others.
+- **Implied references.** The ASA's Botox FAQs state that "the word 'relaxing' is likely to be understood as an implied reference to Botox", so "wrinkle-relaxing injections" is a problem. Nicknames and plays on words are treated the same way.
+- **Prices.** The Enforcement Notice warns that "anti-wrinkle injections" shown alongside a price that relates to a POM will be seen as an ad for that POM.
+- **Juxtaposition.** If you write "anti-wrinkle injections and dermal fillers", the "injections" will be read as Botox.
+- **Images** that clearly show a POM treatment being promoted.
+
+## What you *can* say
+
+The ASA's own FAQs give clinics some room:
+
+- **Use a collective term for your anti-wrinkle options.** The ASA suggests "anti-wrinkle injections" or "anti-wrinkle treatments" as a collective term, *if* you offer both prescription-only and non-prescription-only options. If you only offer the POM, it advises against "anti-wrinkle injections" because the phrase becomes an implied ad.
+- **Promote consultations, not the medicine.** You can promote a consultation for a concern, such as lines and wrinkles, as long as it's clear the consultation may or may not lead to a prescription.
+- **Name non-POM treatments.** Many dermal fillers, skin peels, microneedling and laser treatments are not POMs and can be described normally. Some fillers containing lidocaine may be classed differently, so check each product.
+- **Answer questions factually where the rules allow.** In its "dos and don'ts of advertising Botox" guidance, the ASA says limited references may be acceptable "as long as they do not appear on the home page" and are "balanced and factual". It adds that "casually browsing consumers must not be able to come across information relating to Botox or other POMs with ease". Don't assume your page qualifies.
+
+## How this affects your website structure
+
+Practical changes we make on every aesthetics site:
+
+1. **Treatment pages are built around concerns, not brand names.** For example: "Lines and wrinkles consultation", "Lip enhancement with dermal filler", "Skin rejuvenation".
+2. **Price lists separate POM and non-POM treatments.** POM prices are not listed in a promotional way. We use "Price on consultation" or follow current ASA wording guidance.
+3. **No "Brotox", "Baby Tox", "tox" or "wrinkle-relaxing"**, anywhere, including image alt text, file names and meta descriptions. Search engines index all of these.
+4. **Offers.** Avoid time-limited or "buy now" promotions for injectable treatments. CAP's guidance on cosmetic interventions also warns against trivialising procedures and pressuring people into quick decisions.
+5. **No targeting of under-18s** for cosmetic procedures.
+6. **Before-and-after images** must be genuine, unedited and representative. If you offer both POM and non-POM treatments, make clear which treatment a photo shows.
+
+## "But my competitors say Botox everywhere"
+
+Some do, and some are complained about and named in ASA rulings. Ranking for "Botox [town]" isn't worth an ASA ruling, a forced rewrite of your site or questions from your insurer. Treatment-concern pages ("lines and wrinkles", "frown lines", "excessive sweating consultation") can still attract people searching for help. Clear, factual, helpful content is also exactly what Google and AI assistants favour.
+
+## A quick compliance checklist for your site
+
+- [ ] Search your site for "Botox" and other POM brand names, and remove promotional uses.
+- [ ] Search for "relaxing", "tox" and nicknames.
+- [ ] Check price lists for POM prices displayed promotionally.
+- [ ] Check offers and countdown banners on injectables.
+- [ ] Check image alt text, file names, page titles and meta descriptions.
+- [ ] Check your Google Business Profile services and social bios.
+- [ ] Make sure before-and-after images are consented and labelled.
+
+## How we help
+
+Every Zyverra Labs clinic website is written with these rules in mind. With Option A's admin dashboard, you can update treatment pages and offers yourself, and we show you how to keep new content compliant.
+
+[Get a quote] or message us on WhatsApp to have your current site reviewed.
+
+---
+
+## Post 3
+
+Slug: `get-clinic-recommended-by-chatgpt` · Title tag: "How to Get Your Clinic Recommended by ChatGPT | Zyverra" · Meta: "How ChatGPT, Google AI Overviews and Perplexity choose which clinics to mention — and the practical steps UK aesthetics clinics can take in 2026."
+
+# How to get your aesthetics clinic recommended by ChatGPT and Google AI
+
+**Short answer:** AI assistants recommend clinics they can find, understand and trust. In practice that means five things: a fast website that search engines can crawl, with clear, answer-first treatment pages; accurate structured data; being indexed in both Google *and* Bing (ChatGPT's live search leans on Bing); consistent business details everywhere; and your clinic's name being mentioned on other reputable websites. No one can guarantee a recommendation, but these are the foundations every recommendation is built on.
+
+## How AI assistants actually find clinics
+
+When someone asks "Who's a good aesthetics clinic in Leeds for skin treatments?", the assistant usually runs a live web search and then summarises what it finds. The sources differ by platform:
+
+- **Google AI Overviews and AI Mode** use Google's normal Search index. Google's guide to optimising for its generative AI features says: "For Google Search, you can ignore tactics like 'chunking' content, creating unnecessary AI text files (like llms.txt), or pursuing inauthentic mentions."
+- **ChatGPT search** relies heavily on Bing's index and third-party data. A February 2025 Seer Interactive study found that 87% of ChatGPT search citations matched Bing's top results, compared with 56% for Google's. A larger replication found a much lower overlap, so treat this as directional. Either way, a site that Bing hasn't indexed is effectively invisible to it.
+- **Perplexity** uses its own crawler and index.
+- **Gemini** draws on Google's systems.
+
+So "AI SEO" is mostly good SEO, done for more than one search engine.
+
+## Step 1: Make your website easy to read
+
+- **One page per treatment or concern.** Open each with a two- or three-sentence direct answer: what it is, who it's for, the price or range, and how to book.
+- **Plain HTML text.** Avoid putting key information only inside images, sliders or PDFs.
+- **Fast and mobile-friendly.** Google's guidance lists page experience among the basics.
+- **An FAQ section** answering real client questions in full sentences.
+
+## Step 2: Add accurate structured data
+
+Schema markup tells machines exactly who you are: your business type, address, opening hours, services, prices and practitioners. Use LocalBusiness (or a more specific type), Service, FAQPage and BreadcrumbList. Google says no *special* schema is required for AI features, but correct schema removes ambiguity about your clinic's name, location and services. Only mark up information that is visible on the page.
+
+## Step 3: Get indexed in Bing as well as Google
+
+1. Verify your site in **Google Search Console** and submit your sitemap. Google now offers a generative AI performance report, which helps you see how your content performs in its AI features.
+2. Verify your site in **Bing Webmaster Tools**. You can import it from Search Console in minutes. Submit the sitemap and enable IndexNow so new pages are picked up quickly.
+3. Claim **Bing Places for Business** as well as your **Google Business Profile**, and keep the two identical.
+
+## Step 4: Keep your details consistent everywhere
+
+Your clinic's name, address, phone number, opening hours and treatments should match on your website, Google Business Profile, Bing Places, social profiles, booking platforms and directories. Conflicting details make it harder for AI systems to be confident about your clinic.
+
+## Step 5: Earn mentions on other websites
+
+This is the step most clinics skip, and it's probably the most important.
+
+- In a 2025 study of 75,000 brands with a Domain Rating above 40, Ahrefs found that **branded web mentions** had the strongest Spearman correlation with visibility in Google AI Overviews: 0.664, compared with 0.218 for backlinks.
+- Ahrefs' December 2025 follow-up across ChatGPT, AI Mode and AI Overviews found **YouTube mentions** correlated even more strongly, at roughly 0.737, the strongest signal it measured.
+
+Ahrefs itself stresses these are correlations, not proof of cause, but the direction is clear. Ways to earn mentions: reviews on Google and other platforms; features in local press or trade publications; supplier and training-academy "find a practitioner" listings; talks, podcasts and YouTube videos; genuine community discussion.
+
+Avoid paid fake reviews or spammy listicles. Google explicitly says inauthentic mentions are not the way.
+
+## Step 6: Keep content fresh
+
+AI assistants and search engines favour clinics that look active: current prices, new treatments, recent blog posts and up-to-date results. This is where an **admin dashboard** helps. If you can update your own site in minutes, it stays accurate without waiting for a developer.
+
+## What about llms.txt?
+
+llms.txt is a proposed text file that summarises your site for AI tools. It's cheap to add, but don't expect miracles. Google says it is not needed for Google Search. Ahrefs' June 2026 study checked 137,210 domains and found about 38,000 with a valid llms.txt. Of those, 97% received zero requests in May 2026, and AI retrieval bots made only 1.1% of the requests that did occur. Add one if you like, but put your effort into steps 1–6.
+
+## A 30-minute starter checklist
+
+- [ ] Search ChatGPT, Gemini and Perplexity for "[your treatment] clinic in [your town]", and note who appears.
+- [ ] Check your site is indexed in Bing (search `site:yourdomain.co.uk` on Bing).
+- [ ] Make sure your Google Business Profile and Bing Places details match your website exactly.
+- [ ] Add a direct-answer opening paragraph to your top three treatment pages.
+- [ ] Ask five happy clients for a review this week.
+
+## How we help
+
+Zyverra Labs builds clinic websites with all of this built in: answer-first treatment pages, schema, Google and Bing setup, IndexNow and an admin dashboard so your content stays current. Our local SEO and AI search visibility service handles the ongoing work.
+
+[Get a quote] or message us on WhatsApp.
+
+---
+
+# Section G: Technical SEO
+
+## G1. robots.txt (`app/robots.ts` or `/public/robots.txt`)
+```
+User-agent: *
+Allow: /
+Disallow: /api/
+Disallow: /admin
+Disallow: /dashboard
+
+# Search and AI assistants: explicitly allowed
+User-agent: Googlebot
+Allow: /
+User-agent: Bingbot
+Allow: /
+User-agent: OAI-SearchBot
+Allow: /
+User-agent: ChatGPT-User
+Allow: /
+User-agent: GPTBot
+Allow: /
+User-agent: PerplexityBot
+Allow: /
+User-agent: ClaudeBot
+Allow: /
+User-agent: Google-Extended
+Allow: /
+
+Sitemap: https://zyverralabs.com/sitemap.xml
+```
+(Adjust admin paths to match the real ones. Make sure no `noindex` remains on public pages.)
+
+## G2. sitemap.xml
+Generate it dynamically with `app/sitemap.ts`. Include every public page; the case studies (new and existing `/case-studies/*`); every blog post, with `lastModified` from frontmatter `updated`. Exclude redirects, admin pages, thank-you pages and 404s.
+
+## G3. Canonicals, hreflang and redirects
+- Absolute self-canonicals on the chosen host.
+- `alternates.languages`: `en-GB` and `x-default` → the same URL.
+- 301s in `next.config` `redirects()` (host, `/en/*` and old pages, as listed in Step 0).
+- A custom `app/not-found.tsx` with links to Home, Clinic Websites, Pricing, Blog and Contact. It must return a real 404 status.
+
+## G4. Open Graph and Twitter
+Every page sets `og:title`, `og:description`, `og:url`, `og:image` (1200×630, with alt text), `og:type` (`website`, or `article` for posts) and `og:locale` `en_GB`, plus the matching `twitter:*` tags.
+
+## G5. JSON-LD
+Inject JSON-LD via a `<script type="application/ld+json">` component. Replace `[CONFIRM]` values or omit those properties. Never output placeholder text.
+
+**Site-wide (layout) graph:**
+```json
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": ["Organization", "ProfessionalService"],
+      "@id": "https://zyverralabs.com/#organization",
+      "name": "Zyverra Labs",
+      "url": "https://zyverralabs.com/",
+      "logo": "https://zyverralabs.com/zyverra-mark.png",
+      "image": "https://zyverralabs.com/og-image.png",
+      "description": "Zyverra Labs builds websites with a built-in admin dashboard, local SEO, AI search visibility, Meta ads and social media for UK aesthetics clinics, aesthetic practitioners, med spas and beauty salons.",
+      "email": "hello@zyverralabs.com",
+      "telephone": "+923024258017",
+      "address": {
+        "@type": "PostalAddress",
+        "addressLocality": "Lahore",
+        "addressRegion": "Punjab",
+        "addressCountry": "PK"
+      },
+      "areaServed": { "@type": "Country", "name": "United Kingdom" },
+      "currenciesAccepted": "GBP",
+      "priceRange": "£300–£400",
+      "founder": { "@id": "https://zyverralabs.com/#founder" },
+      "knowsAbout": [
+        "Aesthetic clinic website design",
+        "Beauty salon website design",
+        "Website admin dashboards",
+        "Local SEO",
+        "AI search visibility",
+        "Meta advertising",
+        "Social media management",
+        "AI chatbots",
+        "Custom software development"
+      ],
+      "sameAs": [
+        "https://www.linkedin.com/in/awaissarwar898/",
+        "https://www.instagram.com/zyverralabs/",
+        "https://github.com/awaissarwar03021433916-creator"
+      ],
+      "contactPoint": {
+        "@type": "ContactPoint",
+        "contactType": "sales",
+        "email": "hello@zyverralabs.com",
+        "telephone": "+923024258017",
+        "areaServed": "GB",
+        "availableLanguage": ["en-GB"]
+      }
+    },
+    {
+      "@type": "WebSite",
+      "@id": "https://zyverralabs.com/#website",
+      "url": "https://zyverralabs.com/",
+      "name": "Zyverra Labs",
+      "inLanguage": "en-GB",
+      "publisher": { "@id": "https://zyverralabs.com/#organization" }
+    },
+    {
+      "@type": "Person",
+      "@id": "https://zyverralabs.com/#founder",
+      "name": "Muhammad Awais",
+      "jobTitle": "Founder",
+      "worksFor": { "@id": "https://zyverralabs.com/#organization" },
+      "url": "https://zyverralabs.com/about#founder",
+      "sameAs": ["https://www.linkedin.com/in/awaissarwar898/"]
+    }
+  ]
+}
+```
+(Add a Facebook Page, Clutch, GoodFirms and DesignRush URLs to `sameAs` once they exist [CONFIRM]. Do not add a UK street address the business doesn't have.)
+
+**Service page (example: D2):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "@id": "https://zyverralabs.com/aesthetic-clinic-website-design#service",
+  "name": "Aesthetic clinic website design",
+  "serviceType": "Website design for aesthetics clinics",
+  "provider": { "@id": "https://zyverralabs.com/#organization" },
+  "areaServed": { "@type": "Country", "name": "United Kingdom" },
+  "audience": { "@type": "BusinessAudience", "audienceType": "Aesthetics clinics, aesthetic practitioners, med spas and beauty salons" },
+  "offers": [
+    { "@type": "Offer", "name": "Option A – website with admin dashboard", "price": "400", "priceCurrency": "GBP", "url": "https://zyverralabs.com/pricing" },
+    { "@type": "Offer", "name": "Option B – website without admin dashboard", "price": "300", "priceCurrency": "GBP", "url": "https://zyverralabs.com/pricing" }
+  ]
+}
+```
+Repeat this for each service page, with its own name and serviceType. Omit `offers` where the price is unconfirmed.
+
+**BreadcrumbList (example):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "BreadcrumbList",
+  "itemListElement": [
+    { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://zyverralabs.com/" },
+    { "@type": "ListItem", "position": 2, "name": "Aesthetic Clinic Website Design", "item": "https://zyverralabs.com/aesthetic-clinic-website-design" }
+  ]
+}
+```
+
+**FAQPage (on /faq; build `mainEntity` from the same data source as the visible FAQ):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "FAQPage",
+  "mainEntity": [
+    {
+      "@type": "Question",
+      "name": "How much does an aesthetic clinic website cost in the UK?",
+      "acceptedAnswer": { "@type": "Answer", "text": "Our clinic websites cost £400 with an admin dashboard (Option A) or £300 without (Option B). Across the UK, clinic website prices range from a few hundred pounds for template sites to £8,000 or more for bespoke agency builds, so ask exactly what's included and who can edit the site afterwards." }
+    }
+  ]
+}
+```
+(Include all FAQs with confirmed answers.)
+
+**BlogPosting (each post):**
+```json
+{
+  "@context": "https://schema.org",
+  "@type": "BlogPosting",
+  "headline": "How much does an aesthetic clinic website cost in the UK? (2026)",
+  "description": "What does an aesthetic clinic website cost in the UK in 2026? Real price ranges, ongoing costs, hidden extras and what to ask before you pay.",
+  "datePublished": "2026-11-11",
+  "dateModified": "2026-11-11",
+  "inLanguage": "en-GB",
+  "author": { "@id": "https://zyverralabs.com/#founder" },
+  "publisher": { "@id": "https://zyverralabs.com/#organization" },
+  "mainEntityOfPage": "https://zyverralabs.com/blog/aesthetic-clinic-website-cost-uk",
+  "image": "https://zyverralabs.com/blog/aesthetic-clinic-website-cost-uk/opengraph-image"
+}
+```
+
+**Do not output** Review or AggregateRating schema for Zyverra Labs itself. Google does not show self-serving review stars for organisations and local businesses, and fabricated ratings are a policy violation.
+
+## G6. llms.txt (`/public/llms.txt`)
+```
+# Zyverra Labs
+
+> Zyverra Labs is a founder-led web studio based in Lahore, Pakistan, serving UK aesthetics clinics, aesthetic nurses and practitioners, med spas and beauty salons. We build custom clinic websites with a built-in admin dashboard (clients update treatments, prices, images, before-and-after photos, offers and blogs themselves), plus local SEO, AI search visibility, Meta ads, social media and reels, AI chatbots and custom software. Prices: £400 website with admin dashboard; £300 without. Live in 7–10 working days. Payment plans: 50/50 or 30/40/30. Contact: hello@zyverralabs.com, WhatsApp +92 302 4258017.
+
+## Services
+- [Aesthetic clinic website design](https://zyverralabs.com/aesthetic-clinic-website-design): custom websites for UK aesthetics clinics and practitioners
+- [Beauty salon website design](https://zyverralabs.com/beauty-salon-website-design): salon websites with menu, prices, gallery and booking
+- [Clinic website admin dashboard](https://zyverralabs.com/clinic-website-admin-dashboard): what clients can edit themselves
+- [SEO and AI search visibility](https://zyverralabs.com/seo-ai-search-for-aesthetic-clinics)
+- [Meta ads for aesthetic clinics](https://zyverralabs.com/meta-ads-for-aesthetic-clinics)
+- [Social media and reels](https://zyverralabs.com/social-media-reels-for-clinics)
+- [AI chatbots and custom software](https://zyverralabs.com/custom-software-ai-chatbots)
+
+## Key pages
+- [Pricing](https://zyverralabs.com/pricing)
+- [Clinic website examples](https://zyverralabs.com/work)
+- [FAQ](https://zyverralabs.com/faq)
+- [About and founder](https://zyverralabs.com/about)
+- [Contact](https://zyverralabs.com/contact)
+
+## Guides
+- [Aesthetic clinic website cost in the UK](https://zyverralabs.com/blog/aesthetic-clinic-website-cost-uk)
+- [Botox and ASA advertising rules for clinic websites](https://zyverralabs.com/blog/botox-advertising-rules-clinic-website)
+- [Getting your clinic recommended by ChatGPT and Google AI](https://zyverralabs.com/blog/get-clinic-recommended-by-chatgpt)
+```
+Note: llms.txt is low-cost and optional. Google states it is not needed for Search. Do not spend extra effort beyond this file.
+
+## G7. Performance and accessibility
+
+*Core Web Vitals targets (mobile, field data):* LCP ≤2.5s, INP ≤200ms, CLS ≤0.1.
+
+*Images:* use `next/image` everywhere with correct `sizes`, so images stop requesting `w=3840`; convert the `.PNG` portfolio screenshots to AVIF/WebP at sensible widths; use `priority` only on the hero LCP image and lazy-load everything else; give every image explicit width and height; write descriptive alt text in UK English and use `alt=""` for decorative images; de-duplicate the industry marquee images, or mark the duplicates `aria-hidden`.
+
+*Fonts and scripts:* use `next/font` with `display: swap`; remove unused JS; load the chatbot widget and any third-party scripts after interaction or idle (`next/script` `strategy="lazyOnload"`).
+
+*Accessibility:* visible focus states and contrast ≥4.5:1; labelled form fields; keyboard-operable dropdown nav and accordions; keep the existing skip link and make sure it targets `<main id="main">`; `prefers-reduced-motion` disables marquee and counter animations.
+
+## G8. Analytics, Search Console, Bing, IndexNow
+
+*Analytics:* use first-party, privacy-friendly analytics for aggregate statistics only (for example Vercel Web Analytics or Plausible), so it can rely on the UK statistical-purposes exemption with a clear opt-out (see Step 8). GA4 and the Meta Pixel load **only after consent** in the marketing category. Fire these events through one consent-aware `track(eventName, params)` helper: `whatsapp_click`, `quote_form_submit`, `book_call_click`, `email_click`, `pricing_view_option_a/b`.
+
+*Verification and indexing:* add Google Search Console and Bing Webmaster Tools verification via env vars (`NEXT_PUBLIC_GSC_VERIFICATION`, `NEXT_PUBLIC_BING_VERIFICATION`) as `<meta>` tags, left empty if not provided. IndexNow: generate a key; serve `/{key}.txt`; add a small script `scripts/indexnow.ts` that POSTs changed URLs to `https://api.indexnow.org/indexnow` after deploy or post publish; document how to run it.
+
+# Section H: Floating WhatsApp button
+
+- **Component:** `components/WhatsAppButton.tsx`, rendered in the root layout on every page.
+- **Link:** `https://wa.me/923024258017?text=` + `encodeURIComponent("Hi Zyverra Labs, I run a clinic in the UK and I'd like to talk about a new website/marketing. My clinic is: ")`. Open in a new tab with `target="_blank" rel="noopener noreferrer"`.
+- **Position:** `position: fixed; right: 20px; bottom: calc(20px + var(--cookie-banner-offset, 0px));` with a z-index below the cookie banner and modals.
+- **Cookie banner interaction:** when the cookie banner is visible, set `--cookie-banner-offset` to the banner height so the button sits above the banner and never covers its buttons. On small screens you may hide the button until a consent choice is made.
+- **Size and look:** 56×56px circle (≥44×44 tap target), WhatsApp green `#25D366`, white official glyph as an inline SVG, a subtle shadow and a visible focus ring. On desktop hover, show a tooltip "Chat on WhatsApp".
+- **Accessibility:** an `<a>` with `aria-label="Chat with Zyverra Labs on WhatsApp (opens in a new tab)"`; keyboard focusable; no animation when `prefers-reduced-motion` is set; must not overlap the chatbot launcher (if both exist, stack them with 12px spacing).
+- **Tracking:** on click, call `track('whatsapp_click', { page_path, location: 'floating_button' })`, which fires only if analytics is permitted. Also add inline WhatsApp CTAs on /contact, /pricing and service pages, using `location: 'inline_cta'`.
+- **No-JS fallback:** a plain link that still works.
+
+# Section I: Admin dashboard USP messaging (weave across the site)
+
+- **Core line** (hero sub-copy, pricing, service pages): "Update treatments, prices and before-and-after photos yourself, with no developer, no waiting and no extra invoice for small changes."
+- **Short tagline** (badges, OG images): "Your clinic website. Your control."
+- **Proof framing:** "Developers are for big changes. Price updates and new photos shouldn't need one."
+- **Comparison framing** (pricing, FAQ): "Most clinic websites need a developer for every edit. With Option A, you make day-to-day changes yourself."
+- **Placement:** Home (H2 section plus a hero sub-line); D2/D3 (H2 section); Pricing (table row); every service page (one-line callout box linking to /clinic-website-admin-dashboard); blog posts (CTA block); footer (tagline).
+- **Accuracy:** never claim features that aren't built. Mark anything uncertain `[CONFIRM]`.
+
+# Step 8: Cookies, privacy and compliance
+
+*Cookie banner:* update the existing banner, do not replace it. Categories:
+- **Strictly necessary:** always on.
+- **Statistics:** first-party, aggregate-only analytics. May run without consent under the UK Data (Use and Access) Act 2025 changes to PECR (in force since 5 February 2026), but only if it is clearly explained and there is a simple, free way to object. Provide an "Opt out of statistics" toggle on the banner and on /cookies.
+- **Marketing:** GA4 with Google signals or Ads links, and the Meta Pixel. **Off by default.** Loads only after an "Accept" choice.
+
+Use equal-prominence "Accept" and "Reject" buttons, no pre-ticked boxes, and a "Cookie settings" link in the footer to reopen the banner.
+
+*Privacy and complaints pages:* the privacy policy covers the controller (Zyverra Labs, Lahore, Pakistan); what is collected (form data, WhatsApp, analytics); lawful bases; international transfers (data processed in Pakistan and by named processors [CONFIRM]); retention; rights under UK GDPR; how to complain to us, and to the ICO. Add the /complaints page (data-protection complaints procedure).
+
+*Copy rules:* run a site-wide search and remove promotional uses of POM brand names and "relaxing". No fake urgency. No "#1", "leading" or "award-winning" claims without evidence.
+
+# Step 9: Verification checklist (run all of these and report results)
+
+1. `npm run build` passes with zero errors. Lint and type-check pass.
+2. Every page in Section D returns HTTP 200 at its new URL. Every old URL 301s to the right destination. The non-canonical host 301s. The 404 page returns a 404 status.
+3. View the source of each page and confirm: one H1; the title and meta description exactly as specified (titles ≤60, descriptions ≤155 characters; print a table of lengths); a self-canonical on the chosen host; `lang="en-GB"`; `og:locale` `en_GB`; no `noindex`.
+4. `/robots.txt`, `/sitemap.xml`, `/llms.txt` and `/{indexnow-key}.txt` are reachable. The sitemap lists every public page and post, and no redirects.
+5. All JSON-LD validates in the Schema.org validator (validator.schema.org) and Google's Rich Results Test, with no errors and no placeholder or `[CONFIRM]` strings in the output. FAQPage text matches the visible FAQ.
+6. Lighthouse (mobile) on Home, D2, Pricing and one blog post: Performance ≥90, Accessibility ≥95, Best Practices ≥95, SEO = 100. Report the scores.
+7. The WhatsApp button appears on every page; opens `wa.me/923024258017` with the prefilled message; has its aria-label; is keyboard accessible; sits above, and does not cover, the cookie banner; fires `whatsapp_click` only when analytics is permitted.
+8. Cookie banner: marketing scripts (GA4/Meta Pixel) do not load before consent (check the Network tab), and the opt-out works.
+9. Grep the built output for "Botox", "Vistabel", "Dysport", "Azzalure", "Bocouture", "relaxing", "optimized", "color", "center" (in copy), "#1", "guarantee". Report every hit. Only the compliance post may mention POM brand names, and only to explain the rule.
+10. Internal links: no broken links. Every service page links to /pricing, /clinic-website-admin-dashboard, /work and /contact. Every blog post links to at least one service page and one other post.
+11. The three blog posts render with author, dates, table of contents, CTA and BlogPosting schema. The RSS feed works.
+12. Finish with a list of every `[CONFIRM]` item you could not resolve, any client-site issues found (Belgrave: "Banbury" location, "Botox" wording), and manual next steps for the owner: verify GSC and Bing, submit the sitemaps, claim Bing Places/GBP only where eligible, and create Clutch, GoodFirms and DesignRush profiles.
+
+===== END PROMPT =====
+
+---
+
+## What you need to do yourself (outside the code)
+
+1. **Get your brand mentioned on other websites. This matters most for AI search.** In Ahrefs' 2025 study of 75,000 brands (DR above 40), mentions of a brand on other sites correlated 0.664 with appearing in AI Overviews, against 0.218 for backlinks. Its December 2025 follow-up found YouTube mentions correlated at about 0.737. Ahrefs notes this shows correlation, not proof of cause.
+   - **Client footer credits:** ask each client for a "Website by Zyverra Labs" credit in their footer, linking to your clinic-websites page.
+   - **Agency directories:** create Clutch, GoodFirms and DesignRush profiles using exactly the same description and £ prices as your site.
+   - **YouTube:** post short walkthroughs of the dashboard, such as "Changing a treatment price in 30 seconds".
+   - **Guest articles:** pitch articles to UK aesthetics trade publications.
+2. **Set up Bing first, for ChatGPT.** In the Seer Interactive study, 87% of ChatGPT search citations matched Bing's top results. Another test found less overlap, but Bing is still the main route in. Verify the site in Bing Webmaster Tools on day one.
+3. **Google Business Profile.** **Don't** create a UK profile with a virtual address: Google requires a real, staffed location or a genuine service area, and a fake UK address risks suspension. A Lahore profile is only appropriate if you meet Google's eligibility rules. Build UK trust instead with honest copy about working remotely, video calls and client proof.
+4. **Check your AI visibility every month.** Use the generative AI report in Search Console. Also run the same 10 prompts each month in ChatGPT, Gemini and Perplexity, such as "website designer for aesthetics clinic UK that I can update myself", and note whether Zyverra appears.
+5. **Don't compete on price alone.** Aesthetics Desk advertises from £350, live in 5 days. Compete on what you can prove: the self-edit dashboard, readiness for AI search, compliance-aware copy and having the founder build the site.
+
+## Caveats
+
+- **Technical items I couldn't check.** I couldn't open robots.txt, sitemap.xml, llms.txt or /en/blog, or get real Core Web Vitals data. The prompt makes the agent check these first.
+- **No real search volumes.** No public source gave volumes, so check them in Keyword Planner or Search Console before treating any keyword group as a priority.
+- **Unconfirmed portfolio.** I couldn't confirm serraaesthetics.co.uk or penelopejaesthetics.com are live. Publish case studies only after you've confirmed them and have the clients' permission.
+- **Third-party AI search data.** Claims about how ChatGPT sources local data, and some readings of ASA rules (such as time-limited offers), come from agencies and tool vendors. Treat them as a direction, not fact. The ASA's own guidance and Google's documentation are the reliable sources.
+- **Not legal advice.** Have a professional check your privacy policy, VAT on UK sales and terms.
