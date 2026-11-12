@@ -81,6 +81,7 @@ export const googleBusinessProfilePage: LandingContent = {
     { id: "gbp-existing", q: "I already have a profile. Can you improve it?", a: "Yes. We audit your existing profile, fix anything inaccurate or missing, and then keep it active each month." },
   ],
   related: [
+    { href: "/blog/local-seo-aesthetic-clinic-90-day-plan", label: "90-day local SEO plan for clinics" },
     { href: routes.seoAiSearch, label: "SEO for aesthetic clinics" },
     BLOG.ai,
     BLOG.asa,
@@ -160,6 +161,7 @@ export const nurseWebsitesPage: LandingContent = {
     { id: "nurse-photos", q: "Can I show before-and-after photos?", a: "Yes, if they are genuine, unedited, from your own clients and used with written consent." },
   ],
   related: [
+    { href: "/blog/leaving-nhs-start-aesthetics-business-online", label: "Leaving the NHS for aesthetics" },
     { href: routes.aestheticClinicWebsites, label: "Aesthetic clinic website design" },
     BLOG.asa,
     BLOG.cost,
@@ -238,6 +240,7 @@ export const redesignPage: LandingContent = {
     { id: "re-wix", q: "Can you move my site off Wix?", a: "Yes. We rebuild it as a custom clinic website and set up redirects from your old Wix page addresses." },
   ],
   related: [
+    { href: "/blog/aesthetic-clinic-website-mistakes", label: "12 clinic website mistakes to fix" },
     { href: routes.aestheticClinicWebsites, label: "Aesthetic clinic website design" },
     BLOG.cost,
     BLOG.ai,

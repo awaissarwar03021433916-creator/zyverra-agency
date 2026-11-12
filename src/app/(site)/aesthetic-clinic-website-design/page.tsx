@@ -297,11 +297,14 @@ export default function Page() {
 
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="Clinic website FAQs" />
-        <FaqList faqs={faqsById(["who-to-use", "best-designer", "cost", "under-500", "best-platform", "timeline", "booking", "redesign"])} />
+        <FaqList faqs={faqsById(["who-to-use", "best-designer", "cost", "under-500", "best-platform", "timeline", "booking", "redesign", "fed-up-developer", "instalments", "legit"])} />
       </Section>
 
       <RelatedLinks
         links={[
+          { href: "/blog/aesthetic-clinic-website-mistakes", label: "12 clinic website mistakes to fix" },
+          { href: "/blog/choose-web-designer-clinic-avoid-scams", label: "How to choose a clinic web designer" },
+          { href: "/blog/leaving-nhs-start-aesthetics-business-online", label: "Leaving the NHS for aesthetics" },
           { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
           { href: "/blog/botox-advertising-rules-clinic-website", label: "UK advertising rules for clinic websites" },
           { href: "/clinic-types/aesthetics-clinics", label: "Aesthetics clinic marketing" },

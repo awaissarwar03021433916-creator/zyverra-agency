@@ -51,6 +51,10 @@ pages exist.
 | get-more-bookings-aesthetics-clinic | get more bookings aesthetics clinic |
 | does-aesthetics-clinic-need-ai-chatbot | AI chatbot aesthetics clinic |
 | leaving-nhs-start-aesthetics-business-online | leaving NHS aesthetics business |
+| aesthetic-clinic-website-mistakes | aesthetic clinic website mistakes |
+| facebook-ads-cost-aesthetic-clinic-uk | Facebook ads cost aesthetic clinic |
+| check-ai-assistants-mention-clinic | check AI visibility clinic |
+| instagram-profile-checklist-aesthetic-clinic | Instagram bio aesthetic clinic |
 
 Pages also own keywords: e.g. /work ("aesthetic clinic website examples"),
 /website-for-aesthetic-nurses ("website for aesthetic nurse"),
@@ -70,7 +74,6 @@ aesthetic clinics"), /pricing ("aesthetic clinic website cost UK").
 | # | Title | Slug | Main keyword | Outline |
 |---|---|---|---|---|
 | C3 | Bing, Perplexity and Gemini: the forgotten search engines for clinics | bing-perplexity-gemini-clinics | Bing SEO for clinics | How each finds sources; Bing Webmaster Tools + IndexNow; Bing Places; consistency. Comparison table. |
-| C4 | How to check if AI assistants mention your clinic (free method) | check-ai-assistants-mention-clinic | check AI visibility clinic | Prompt list, logged-out testing, recording citations in a spreadsheet template, monthly cadence, what to fix. |
 
 ## D. Paid social and ads
 

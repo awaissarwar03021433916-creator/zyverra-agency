@@ -11,7 +11,9 @@ import { Reveal } from "@/components/marketing/pages/Reveal";
 import { IconTile, type IconName } from "@/components/marketing/ColorIcon";
 import { WhatsAppInlineLink } from "@/components/contact/WhatsAppButton";
 import { dashboardLines, routes } from "@/config/site";
-import type { Faq } from "@/data/faqs";
+import { schemaFaqs, type Faq } from "@/data/faqs";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { faqPageSchema } from "@/lib/schema";
 
 /* ------------------------------------------------------------------ */
 /* Layout                                                              */
@@ -349,12 +351,19 @@ export function CompareTable({ rows, caption }: { rows: CompareRow[]; caption: s
 export function FaqList({
   faqs,
   headingLevel = "h3",
+  schema = true,
 }: {
   faqs: Faq[];
   headingLevel?: "h3" | "h4";
+  /** Emit FAQPage JSON-LD for these FAQs (identical text). /faq turns this off
+      and emits one page-level FAQPage instead. Unconfirmed answers are skipped. */
+  schema?: boolean;
 }) {
   const Heading = headingLevel;
+  const marked = schema ? schemaFaqs(faqs) : [];
   return (
+    <>
+    {marked.length > 0 && <JsonLd data={faqPageSchema(marked)} />}
     <div className="mt-8 divide-y divide-border overflow-hidden rounded-2xl border border-border bg-card shadow-xs">
       {faqs.map((faq) => (
         <details key={faq.id} id={`faq-${faq.id}`} className="group px-5 py-1 sm:px-6">
@@ -381,6 +390,7 @@ export function FaqList({
         </details>
       ))}
     </div>
+    </>
   );
 }
 

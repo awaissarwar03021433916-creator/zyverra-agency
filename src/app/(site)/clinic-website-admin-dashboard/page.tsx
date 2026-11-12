@@ -205,11 +205,13 @@ export default function Page() {
 
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="Admin dashboard FAQs" />
-        <FaqList faqs={faqsById(["best-platform", "fed-up-developer", "dashboard-edits", "developer", "options", "before-after"])} />
+        <FaqList faqs={faqsById(["best-platform", "fed-up-developer", "dashboard-edits", "developer", "options", "before-after", "instalments"])} />
       </Section>
 
       <RelatedLinks
         links={[
+          { href: "/blog/aesthetic-clinic-website-mistakes", label: "12 clinic website mistakes to fix" },
+          { href: "/blog/before-and-after-photos-consent-asa", label: "Before-and-after photo rules" },
           { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
           { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
           { href: "/clinic-types/aesthetic-nurses", label: "Aesthetic nurse marketing" },

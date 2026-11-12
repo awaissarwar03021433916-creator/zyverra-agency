@@ -127,6 +127,8 @@ export default function Page() {
 
       <RelatedLinks
         links={[
+          { href: "/blog/instagram-profile-checklist-aesthetic-clinic", label: "Instagram profile checklist for clinics" },
+          { href: "/blog/before-and-after-photos-consent-asa", label: "Before-and-after photo rules" },
           { href: "/blog/botox-advertising-rules-clinic-website", label: "UK advertising rules for clinic websites" },
           { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
           { href: "/clinic-types/aesthetic-nurses", label: "Aesthetic nurse marketing" },

@@ -20,7 +20,7 @@ import {
 import { KeywordMarquee, ScreenshotCollage, WorkShowcase } from "@/components/marketing/blocks/showcase";
 import { marketingPackages, pricing, keyFacts } from "@/config/business";
 import { dashboardLines, routes, services, type ServiceKey } from "@/config/site";
-import { allFaqs } from "@/data/faqs";
+import { allFaqs, faqsById } from "@/data/faqs";
 import { publishedCaseStudies } from "@/data/work";
 import { pageMetadata } from "@/lib/seo";
 
@@ -322,7 +322,7 @@ export default function HomePage() {
 
       <Section id="faq" narrow tone="muted">
         <SectionHeading eyebrow="FAQ" title="Common questions" />
-        <FaqList faqs={allFaqs.slice(0, 6)} />
+        <FaqList faqs={[...allFaqs.slice(0, 6), ...faqsById(["quiet-clinic"])]} />
         <Link href={routes.faq} className="group mt-6 inline-flex items-center gap-1.5 text-sm font-semibold text-primary">
           See all questions
           <ArrowRight aria-hidden className="h-4 w-4 transition-transform duration-200 group-hover:translate-x-0.5" />

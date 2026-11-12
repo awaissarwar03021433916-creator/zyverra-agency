@@ -236,6 +236,8 @@ export default function Page() {
 
       <RelatedLinks
         links={[
+          { href: "/blog/does-aesthetics-clinic-need-ai-chatbot", label: "Do clinics need an AI chatbot?" },
+          { href: "/blog/check-ai-assistants-mention-clinic", label: "Check if AI assistants mention your clinic" },
           { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
           { href: "/blog/ai-agents-vs-automation", label: "AI agents vs AI automation" },
           { href: "/clinic-types/aesthetics-clinics", label: "Aesthetics clinic marketing" },

@@ -21,7 +21,7 @@ import {
   tableOfContents,
   type BlogBlock,
 } from "@/data/blog";
-import { blogPostingSchema, siteOrigin } from "@/lib/schema";
+import { blogPostingSchema, faqPageSchema, siteOrigin } from "@/lib/schema";
 import { pageMetadata } from "@/lib/seo";
 
 export const dynamicParams = false;
@@ -227,6 +227,13 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
 
   const toc = tableOfContents(post);
   const related = relatedPosts(post);
+  // FAQPage for the post's visible FAQ block. The inline markup is reduced to
+  // the exact text readers see (link labels, no asterisks).
+  const plain = (t: string) =>
+    t.replace(/\[([^\]]+)\]\([^)]+\)/g, "$1").replace(/\*\*([^*]+)\*\*/g, "$1").replace(/\*([^*]+)\*/g, "$1").replace(/`([^`]+)`/g, "$1");
+  const postFaqs = post.body
+    .flatMap((b) => (b.type === "faq" ? b.items : []))
+    .map((f, i) => ({ id: `post-faq-${i}`, q: plain(f.q), a: plain(f.a) }));
   const service = services.find((s) => s.href === post.servicePath);
   const path = `${routes.blog}/${post.slug}`;
 
@@ -238,6 +245,7 @@ export default async function Page({ params }: { params: Promise<{ slug: string 
       ]}
     >
       <JsonLd data={blogPostingSchema(siteOrigin(), post)} />
+      {postFaqs.length > 0 && <JsonLd data={faqPageSchema(postFaqs)} />}
 
       <article className="mx-auto max-w-6xl px-4 py-12 sm:px-6 md:py-16">
         <header className="mx-auto max-w-3xl">

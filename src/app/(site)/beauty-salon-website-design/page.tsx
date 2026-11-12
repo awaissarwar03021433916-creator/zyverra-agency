@@ -156,6 +156,8 @@ export default function Page() {
 
       <RelatedLinks
         links={[
+          { href: "/blog/instagram-profile-checklist-aesthetic-clinic", label: "Instagram profile checklist for clinics" },
+          { href: "/blog/does-aesthetics-clinic-need-ai-chatbot", label: "Do clinics need an AI chatbot?" },
           { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
           { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
           { href: "/clinic-types/beauty-salons", label: "Beauty salon marketing UK" },

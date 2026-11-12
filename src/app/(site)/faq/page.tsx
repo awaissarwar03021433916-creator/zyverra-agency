@@ -54,7 +54,7 @@ export default function Page() {
               <h2 id={`${slug(group.title)}-h`} className="font-heading text-2xl font-bold tracking-tight text-foreground md:text-3xl">
                 {group.title}
               </h2>
-              <FaqList faqs={group.items} />
+              <FaqList faqs={group.items} schema={false} />
             </section>
           ))}
         </div>

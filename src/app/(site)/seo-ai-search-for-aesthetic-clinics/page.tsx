@@ -151,6 +151,8 @@ export default function Page() {
 
       <RelatedLinks
         links={[
+          { href: "/blog/local-seo-aesthetic-clinic-90-day-plan", label: "90-day local SEO plan for clinics" },
+          { href: "/blog/check-ai-assistants-mention-clinic", label: "Check if AI assistants mention your clinic" },
           { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
           { href: "/blog/botox-advertising-rules-clinic-website", label: "UK advertising rules for clinic websites" },
           { href: "/clinic-types/skin-clinics", label: "Skin clinic website design" },

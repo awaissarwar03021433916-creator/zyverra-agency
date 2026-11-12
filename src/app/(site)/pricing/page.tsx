@@ -265,11 +265,13 @@ export default function Page() {
 
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="Cost and payment questions" />
-        <FaqList faqs={faqsById(["cost", "under-500", "options", "instalments", "monthly-fees"])} />
+        <FaqList faqs={faqsById(["cost", "under-500", "options", "instalments", "monthly-fees", "legit"])} />
       </Section>
 
       <RelatedLinks
         links={[
+          { href: "/blog/choose-web-designer-clinic-avoid-scams", label: "How to choose a clinic web designer" },
+          { href: "/blog/facebook-ads-cost-aesthetic-clinic-uk", label: "What Facebook ads cost a clinic" },
           { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
           { href: "/blog/botox-advertising-rules-clinic-website", label: "UK advertising rules for clinic websites" },
           { href: "/clinic-types/aesthetic-nurses", label: "Aesthetic nurse marketing" },

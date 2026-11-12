@@ -134,6 +134,8 @@ export default function Page() {
 
       <RelatedLinks
         links={[
+          { href: "/blog/facebook-ads-cost-aesthetic-clinic-uk", label: "What Facebook ads cost a clinic" },
+          { href: "/blog/get-more-bookings-aesthetics-clinic", label: "How to get more clinic bookings" },
           { href: "/blog/botox-advertising-rules-clinic-website", label: "UK advertising rules for clinic websites" },
           { href: "/blog/get-clinic-recommended-by-chatgpt", label: "Getting your clinic recommended by ChatGPT" },
           { href: "/clinic-types/aesthetics-clinics", label: "Aesthetics clinic marketing" },

@@ -26,6 +26,10 @@ import { localSeoPlanPost } from "./posts/b3-local-seo-90-day-plan";
 import { beforeAfterPhotosPost } from "./posts/e3-before-after-photos";
 import { aiChatbotPost } from "./posts/f3-ai-chatbot";
 import { moreBookingsPost } from "./posts/f4-more-bookings";
+import { websiteMistakesPost } from "./posts/a11-website-mistakes";
+import { facebookAdsCostPost } from "./posts/d3-facebook-ads-cost";
+import { checkAiVisibilityPost } from "./posts/c3-check-ai-visibility";
+import { instagramProfilePost } from "./posts/e4-instagram-profile-checklist";
 
 export type { BlogBlock, BlogPost, BlogCategory } from "./types";
 
@@ -43,6 +47,7 @@ export const blogPosts: BlogPost[] = [
   gdprPost,
   websiteCostPost,
   chooseWebDesignerPost,
+  websiteMistakesPost,
   // B. Local SEO
   gbpGuidePost,
   mapPackPost,
@@ -50,13 +55,16 @@ export const blogPosts: BlogPost[] = [
   // C. AI search
   aiSearchPost,
   aiOverviewsPost,
+  checkAiVisibilityPost,
   // D. Ads
   facebookAdsPlaybookPost,
   googleVsMetaPost,
+  facebookAdsCostPost,
   // E. Social
   instagramPlanPost,
   reelsIdeasPost,
   beforeAfterPhotosPost,
+  instagramProfilePost,
   // F. Growth
   enquiryConversionPost,
   patientRetentionPost,
@@ -148,9 +156,50 @@ export function tableOfContents(post: BlogPost): { id: string; text: string }[] 
 }
 
 /** Three related posts: same category first, then the most recent others. */
+// Hand-picked "Related guides". Each existing guide gets one link to the newer
+// guide that extends it, and each newer guide links back to its siblings (posts
+// on a neighbouring keyword are always linked both ways). Everything else is
+// filled by category.
+const RELATED: Record<string, string[]> = {
+  "aesthetic-clinic-website-checklist": ["aesthetic-clinic-website-mistakes"],
+  "aesthetic-clinic-website-design-examples": ["choose-web-designer-clinic-avoid-scams"],
+  "wix-squarespace-or-custom-clinic-website": ["choose-web-designer-clinic-avoid-scams"],
+  "clinic-website-not-getting-bookings": ["get-more-bookings-aesthetics-clinic"],
+  "aesthetic-treatment-page-seo": ["local-seo-aesthetic-clinic-90-day-plan"],
+  "fresha-treatwell-or-own-website": ["does-aesthetics-clinic-need-ai-chatbot"],
+  "aesthetic-nurse-website-starting-out": ["leaving-nhs-start-aesthetics-business-online"],
+  "clinic-website-gdpr-cookies": ["before-and-after-photos-consent-asa"],
+  "aesthetic-clinic-website-cost-uk": ["choose-web-designer-clinic-avoid-scams"],
+  "google-business-profile-aesthetic-clinic-guide": ["local-seo-aesthetic-clinic-90-day-plan"],
+  "google-map-pack-aesthetic-clinic": ["local-seo-aesthetic-clinic-90-day-plan"],
+  "get-clinic-recommended-by-chatgpt": ["check-ai-assistants-mention-clinic"],
+  "google-ai-overviews-aesthetic-clinics": ["check-ai-assistants-mention-clinic"],
+  "facebook-ads-aesthetic-clinics-uk-playbook": ["facebook-ads-cost-aesthetic-clinic-uk"],
+  "google-ads-vs-meta-ads-clinics": ["facebook-ads-cost-aesthetic-clinic-uk"],
+  "instagram-content-plan-aesthetic-clinic": ["instagram-profile-checklist-aesthetic-clinic"],
+  "reels-ideas-aesthetic-clinics": ["instagram-profile-checklist-aesthetic-clinic"],
+  "clinic-enquiry-conversion": ["does-aesthetics-clinic-need-ai-chatbot"],
+  "aesthetic-clinic-patient-retention": ["get-more-bookings-aesthetics-clinic"],
+  "botox-advertising-rules-clinic-website": ["before-and-after-photos-consent-asa"],
+  // Newer guides → their siblings
+  "aesthetic-clinic-website-mistakes": ["aesthetic-clinic-website-checklist", "clinic-website-not-getting-bookings"],
+  "facebook-ads-cost-aesthetic-clinic-uk": ["facebook-ads-aesthetic-clinics-uk-playbook", "google-ads-vs-meta-ads-clinics"],
+  "check-ai-assistants-mention-clinic": ["get-clinic-recommended-by-chatgpt", "google-ai-overviews-aesthetic-clinics"],
+  "instagram-profile-checklist-aesthetic-clinic": ["instagram-content-plan-aesthetic-clinic", "reels-ideas-aesthetic-clinics"],
+  "choose-web-designer-clinic-avoid-scams": ["aesthetic-clinic-website-cost-uk", "wix-squarespace-or-custom-clinic-website"],
+  "local-seo-aesthetic-clinic-90-day-plan": ["google-business-profile-aesthetic-clinic-guide", "google-map-pack-aesthetic-clinic"],
+  "before-and-after-photos-consent-asa": ["botox-advertising-rules-clinic-website", "clinic-website-gdpr-cookies"],
+  "get-more-bookings-aesthetics-clinic": ["clinic-website-not-getting-bookings", "aesthetic-clinic-patient-retention"],
+  "does-aesthetics-clinic-need-ai-chatbot": ["clinic-enquiry-conversion", "fresha-treatwell-or-own-website"],
+  "leaving-nhs-start-aesthetics-business-online": ["aesthetic-nurse-website-starting-out", "instagram-content-plan-aesthetic-clinic"],
+};
+
 export function relatedPosts(post: BlogPost, count = 3): BlogPost[] {
-  const others = getAllPosts().filter((p) => p.slug !== post.slug);
+  const picked = (RELATED[post.slug] ?? [])
+    .map((slug) => getPost(slug))
+    .filter((p): p is BlogPost => Boolean(p));
+  const others = getAllPosts().filter((p) => p.slug !== post.slug && !picked.includes(p));
   const same = others.filter((p) => p.category === post.category);
   const rest = others.filter((p) => p.category !== post.category);
-  return [...same, ...rest].slice(0, count);
+  return [...picked, ...same, ...rest].slice(0, count);
 }

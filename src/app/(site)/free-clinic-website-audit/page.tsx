@@ -81,6 +81,8 @@ export default function Page() {
 
       <RelatedLinks
         links={[
+          { href: "/blog/get-more-bookings-aesthetics-clinic", label: "How to get more clinic bookings" },
+          { href: "/blog/aesthetic-clinic-website-mistakes", label: "12 clinic website mistakes to fix" },
           { href: routes.redesign, label: "Clinic website redesign UK" },
           { href: routes.seoAiSearch, label: "SEO for aesthetic clinics" },
           { href: routes.treatmentPages, label: "Treatment pages that rank" },
