@@ -14,6 +14,8 @@ const nextConfig: NextConfig = {
   },
   images: {
     formats: ["image/avif", "image/webp"],
+    // 60 for the decorative hero background; 75 is the default for everything else.
+    qualities: [60, 75],
     remotePatterns: [
       {
         protocol: "https",

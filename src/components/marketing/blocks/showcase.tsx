@@ -17,11 +17,13 @@ export function BrowserFrame({
   url,
   sizes,
   eager = false,
+  lowPriority = false,
 }: {
   shot: ClinicCaseStudy["screenshot"];
   url: string;
   sizes: string;
   eager?: boolean;
+  lowPriority?: boolean;
 }) {
   return (
     <div className="overflow-hidden rounded-xl border border-border bg-white shadow-lg sm:rounded-2xl">
@@ -42,6 +44,7 @@ export function BrowserFrame({
           height={shot.height}
           sizes={sizes}
           loading={eager ? "eager" : "lazy"}
+          fetchPriority={lowPriority ? "low" : undefined}
           className="block h-auto w-full transition-transform duration-700 ease-out group-hover:scale-[1.03] motion-reduce:group-hover:scale-100"
         />
       </div>
@@ -123,16 +126,16 @@ export function ScreenshotCollage({ items }: { items: ClinicCaseStudy[] }) {
       <div aria-hidden className="absolute inset-6 -z-10 rounded-[2.5rem] bg-gradient-to-tr from-primary/25 via-sky-300/20 to-fuchsia-300/25 blur-3xl" />
       {b && (
         <div className="animate-float-slow absolute left-0 top-[6%] w-[64%] -rotate-3">
-          <BrowserFrame shot={b.screenshot} url={b.liveUrl} sizes="(max-width: 1024px) 60vw, 360px" eager />
+          <BrowserFrame shot={b.screenshot} url={b.liveUrl} sizes="(max-width: 1024px) 60vw, 360px" eager lowPriority />
         </div>
       )}
       {c && (
         <div className="animate-float-slower absolute right-0 top-0 w-[58%] rotate-3">
-          <BrowserFrame shot={c.screenshot} url={c.liveUrl} sizes="(max-width: 1024px) 55vw, 330px" eager />
+          <BrowserFrame shot={c.screenshot} url={c.liveUrl} sizes="(max-width: 1024px) 55vw, 330px" eager lowPriority />
         </div>
       )}
       <div className="animate-float absolute bottom-0 left-[14%] w-[72%]">
-        <BrowserFrame shot={a.screenshot} url={a.liveUrl} sizes="(max-width: 1024px) 70vw, 410px" eager />
+        <BrowserFrame shot={a.screenshot} url={a.liveUrl} sizes="(max-width: 1024px) 70vw, 410px" eager lowPriority />
       </div>
     </div>
   );

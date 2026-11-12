@@ -1,11 +1,13 @@
+import Image from "next/image";
 import type { ReactNode } from "react";
 
 // Hero shared by every marketing page.
 //
 // Background: /background.jpg (a dark navy digital-wave image) shown faintly
 // under a light white wash, so the hero reads as a soft, light texture with a
-// hint of blue. It is a CSS background, so it never competes with the text for
-// LCP. The copy itself is fully static on first paint (no entrance animation
+// hint of blue. It is the largest element in the hero, so it is a next/image
+// (not a CSS background): it appears in the initial HTML, is preloaded with
+// high priority and served as AVIF/WebP at a modest quality. The copy itself is fully static on first paint (no entrance animation
 // or opacity:0), which is what keeps LCP fast. Pass `aside` for a two-column
 // hero with a visual on the right.
 export function PageHero({
@@ -30,7 +32,16 @@ export function PageHero({
   return (
     <section className="relative isolate overflow-hidden border-b border-border">
       <div className="pointer-events-none absolute inset-0 -z-10" aria-hidden>
-        <div className="absolute inset-0 bg-[url('/background.jpg')] bg-cover bg-center" />
+        <Image
+          src="/background.jpg"
+          alt=""
+          fill
+          preload
+          fetchPriority="high"
+          sizes="100vw"
+          quality={60}
+          className="object-cover object-center"
+        />
         {/* Light wash: keeps the image as a subtle texture and text at full contrast. */}
         <div className="absolute inset-0 bg-gradient-to-b from-white/[0.86] via-white/[0.9] to-white" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_70%_55%_at_50%_0%,rgba(0,122,204,0.10),transparent)]" />
@@ -96,10 +107,11 @@ export function PageHero({
   );
 }
 
-/** Gradient accent used inside hero titles (both ends pass 3:1 on white). */
+/** Gradient accent used inside hero titles (both ends pass 3:1 on white).
+ *  Static: animating background-position can't run on the compositor. */
 export function Accent({ children }: { children: ReactNode }) {
   return (
-    <span className="animate-gradient bg-gradient-to-r from-primary via-sky-600 to-indigo-600 bg-clip-text text-transparent">
+    <span className="bg-gradient-to-r from-primary via-sky-600 to-indigo-600 bg-clip-text text-transparent">
       {children}
     </span>
   );
