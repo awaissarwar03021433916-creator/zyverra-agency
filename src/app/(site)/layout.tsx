@@ -10,8 +10,25 @@ import { WhatsAppButton } from "@/components/contact/WhatsAppButton";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { siteGraph, siteOrigin } from "@/lib/schema";
 
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap", preload: false });
-const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], display: "swap", preload: true });
+// Fonts: options must match global-not-found.tsx exactly, otherwise Next builds
+// a second copy of each font and the 404 page's preload leaks onto every page.
+// Only the heading font is preloaded; both swap over size-adjusted fallbacks.
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
+  fallback: ["Arial", "Helvetica", "sans-serif"],
+});
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
+  fallback: ["Arial", "Helvetica", "sans-serif"],
+});
 
 const origin = siteOrigin();
 

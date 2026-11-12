@@ -7,8 +7,23 @@ import { NotFoundContent } from "@/components/marketing/pages/NotFoundContent";
 
 // The app has two root layouts ((site) and (admin)), so unmatched URLs are
 // handled here (experimental.globalNotFound). Returns a real 404 status.
-const inter = Inter({ variable: "--font-inter", subsets: ["latin"], display: "swap" });
-const spaceGrotesk = Space_Grotesk({ variable: "--font-space-grotesk", subsets: ["latin"], display: "swap" });
+// Same options as app/(site)/layout.tsx (see the note there).
+const inter = Inter({
+  variable: "--font-inter",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
+  fallback: ["Arial", "Helvetica", "sans-serif"],
+});
+const spaceGrotesk = Space_Grotesk({
+  variable: "--font-space-grotesk",
+  subsets: ["latin"],
+  display: "swap",
+  preload: true,
+  adjustFontFallback: true,
+  fallback: ["Arial", "Helvetica", "sans-serif"],
+});
 
 export const metadata: Metadata = {
   title: "Page not found | Zyverra Labs",

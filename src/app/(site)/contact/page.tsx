@@ -2,7 +2,7 @@ import { IconTile } from "@/components/marketing/ColorIcon";
 import PageShell from "@/components/marketing/pages/PageShell";
 import { PageHero } from "@/components/marketing/pages/PageHero";
 import { Section, SectionHeading } from "@/components/marketing/blocks";
-import ContactForm from "@/components/forms/ContactForm";
+import { LazyContactForm as ContactForm } from "@/components/forms/LazyForms";
 import { TrackedLink } from "@/components/analytics/TrackedLink";
 import { WhatsAppGlyph, WhatsAppInlineLink } from "@/components/contact/WhatsAppButton";
 import { JsonLd } from "@/components/seo/JsonLd";

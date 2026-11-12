@@ -1,7 +1,7 @@
 import PageShell from "@/components/marketing/pages/PageShell";
 import { Accent, PageHero } from "@/components/marketing/pages/PageHero";
 import { CardGrid, FaqList, Lead, RelatedLinks, Section, SectionHeading } from "@/components/marketing/blocks";
-import AuditForm from "@/components/forms/AuditForm";
+import { LazyAuditForm as AuditForm } from "@/components/forms/LazyForms";
 import { JsonLd } from "@/components/seo/JsonLd";
 import { pricing } from "@/config/business";
 import { routes } from "@/config/site";
