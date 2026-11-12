@@ -367,7 +367,17 @@ export function FaqList({
               +
             </span>
           </summary>
-          <p className="pb-5 text-sm leading-relaxed text-muted-foreground sm:text-base">{faq.a}</p>
+          <p className="pb-5 text-sm leading-relaxed text-muted-foreground sm:text-base">
+            {faq.a}
+            {faq.link ? (
+              <>
+                {" "}
+                <Link href={faq.link.href} className="font-semibold text-primary hover:underline">
+                  {faq.link.label} →
+                </Link>
+              </>
+            ) : null}
+          </p>
         </details>
       ))}
     </div>

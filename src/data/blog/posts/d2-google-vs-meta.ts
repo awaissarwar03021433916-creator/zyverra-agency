@@ -30,6 +30,11 @@ export const googleVsMetaPost: BlogPost = {
         "Get your website and Google Business Profile right before spending on either.",
       ],
     },
+    { type: "heading", text: "Facebook ads or Google Ads: which works better for a skin clinic?" },
+    {
+      type: "paragraph",
+      text: "It depends on whether people already search for your treatments locally. Google Ads works best when people know what they want, such as “skin peel near me”, because you appear at the moment they search. Facebook and Instagram ads work better for creating demand: showing your results and personality to local people who weren't searching yet.",
+    },
     { type: "heading", text: "What's the core difference between Google Ads and Meta ads?" },
     {
       type: "paragraph",

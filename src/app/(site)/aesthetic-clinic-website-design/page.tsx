@@ -297,7 +297,7 @@ export default function Page() {
 
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="Clinic website FAQs" />
-        <FaqList faqs={faqsById(["cost", "timeline", "dashboard-edits", "booking", "redesign"])} />
+        <FaqList faqs={faqsById(["who-to-use", "best-designer", "cost", "under-500", "best-platform", "timeline", "booking", "redesign"])} />
       </Section>
 
       <RelatedLinks

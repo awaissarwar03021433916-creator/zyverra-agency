@@ -129,7 +129,7 @@ export default function Page() {
 
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="Meta ads FAQs" />
-        <FaqList faqs={faqsById(["meta-ads", "pom-wording", "gdpr"])} />
+        <FaqList faqs={faqsById(["meta-ads", "best-fb-agency", "ad-spend", "compliant-website", "gdpr"])} />
       </Section>
 
       <RelatedLinks

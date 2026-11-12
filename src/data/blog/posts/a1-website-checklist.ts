@@ -1,5 +1,5 @@
 import type { BlogPost } from "../types";
-import { LINK, POST, SRC } from "../sources";
+import { LINK, POST, SRC, cite } from "../sources";
 
 export const websiteChecklistPost: BlogPost = {
   slug: "aesthetic-clinic-website-checklist",
@@ -40,7 +40,11 @@ export const websiteChecklistPost: BlogPost = {
       type: "paragraph",
       text: "A checklist also protects you. Aesthetics is one of the most closely watched advertising sectors in the UK: the ASA treats your website as advertising, and the ICO treats your contact form as a way of collecting personal, and sometimes health, data. Getting the basics right is cheaper than fixing a complaint.",
     },
-    { type: "heading", text: "Which pages should every aesthetic clinic website have?" },
+    { type: "heading", text: "What pages should your aesthetics clinic website have?" },
+    {
+      type: "paragraph",
+      text: "Every aesthetics clinic website needs a homepage, a page for each treatment with its price, an about page with your qualifications, a results gallery with consented photos, a contact and booking page, an FAQ, and legal pages: a privacy notice and cookie policy. Location pages help if you work from more than one place.",
+    },
     {
       type: "paragraph",
       text: "Start with the pages clients actually use to choose a clinic. Google's own guidance is to create content that's helpful to people first, and for a clinic that means answering the questions people ask before they book ([Google Search Central](https://developers.google.com/search/docs/fundamentals/creating-helpful-content)).",
@@ -145,6 +149,55 @@ export const websiteChecklistPost: BlogPost = {
     {
       type: "paragraph",
       text: "Prices, treatments, team members and offers change constantly in aesthetics. A website that was accurate at launch can be misleading six months later, and an out-of-date price is both a lost booking and a potential complaint. Review the checklist at least every quarter, and update prices and treatments the day they change. If every edit means emailing a developer, that's a sign your website is working against you rather than for you.",
+    },
+    { type: "heading", text: "Can your website link to Fresha or Treatwell for bookings?" },
+    {
+      type: "paragraph",
+      text: "Yes. Your website can link to, or embed, your Fresha, Treatwell, Booksy, Timely, Phorest, Acuity or Faces booking page, so clients go from a treatment page straight to the right service. Linking is the simplest and most reliable option; embedding keeps people on your site but depends on what your booking system supports.",
+    },
+    {
+      type: "paragraph",
+      text: "Put a booking button in the header and on every treatment page, and link each treatment to its own service in your booking system rather than the general calendar, so clients don't search twice. If you don't use a booking system yet, an enquiry form plus a WhatsApp button works well for consultation-led treatments. Our " + POST("fresha-treatwell-or-own-website", "guide to Fresha, Treatwell and your own website") + " compares the options.",
+    },
+    { type: "heading", text: "How quickly can you get a professional clinic or salon website?" },
+    {
+      type: "paragraph",
+      text: "A professional custom website for a clinic or salon can go live in 7–10 working days once your logo, treatment list, prices and photos are ready. Template builders can be quicker if you build it yourself, while bespoke agency projects often take several weeks. The biggest delay is usually gathering content, not the build itself.",
+    },
+    {
+      type: "list",
+      items: [
+        "Your logo, or a clear name and colours if you don't have one yet",
+        "A treatment list with prices or “from” prices",
+        "A short bio with your qualifications and registration",
+        "Photos of you, your room and, with written consent, genuine results",
+        "Your booking link, and logins for any existing website and domain",
+      ],
+    },
+    {
+      type: "paragraph",
+      text: "Have those ready and the build itself is rarely what slows a launch down. Our clinic websites go live in that 7–10 working day window; see " + LINK.pricing + " for what each option includes.",
+    },
+    { type: "heading", text: "Your website looks outdated: should you redesign it or start again?" },
+    {
+      type: "paragraph",
+      text: "If your site is slow, hard to update or built on a template that can't give each treatment its own page, start again and keep the content that works. If the structure is sound and only the look is dated, a redesign is enough. Either way, redirect old pages to their new addresses so you keep your Google rankings.",
+    },
+    {
+      type: "table",
+      caption: "Redesign or rebuild? Quick guide",
+      head: ["What you're seeing", "Usually the right move"],
+      rows: [
+        ["Looks dated, but loads fast and is easy to edit", "Redesign the look, keep the structure"],
+        ["Slow on mobile or failing Core Web Vitals", "Rebuild on a faster platform"],
+        ["Every price change needs a developer", "Rebuild with an admin dashboard"],
+        ["Treatments crammed onto one page", "Rebuild with a page per treatment"],
+        ["Good Google rankings you want to protect", "Either, with a redirect for every old page"],
+      ],
+    },
+    {
+      type: "paragraph",
+      text: "Check speed with " + cite(SRC.pageSpeed) + " and judge it against " + cite(SRC.webVitals, "Core Web Vitals") + ". If you move to new addresses, follow Google's advice on site moves (" + cite(SRC.googleSiteMove, "Google Search Central") + "). Our " + LINK.redesign + " service handles the redirects for you.",
     },
     { type: "heading", text: "How Zyverra helps" },
     {

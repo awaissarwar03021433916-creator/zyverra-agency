@@ -67,6 +67,18 @@ export const SRC = {
   treatwell: s("Treatwell — For partners", "https://www.treatwell.co.uk/partners/"),
   wix: s("Wix — Plans", "https://www.wix.com/plans"),
   squarespace: s("Squarespace — Pricing", "https://www.squarespace.com/pricing"),
+  whatsappBusiness: s("WhatsApp Business app", "https://business.whatsapp.com/products/business-app"),
+
+  // Choosing suppliers, scams and starting a business
+  citizensAdviceScams: s("Citizens Advice — Check if something might be a scam", "https://www.citizensadvice.org.uk/consumer/scams/check-if-something-might-be-a-scam/"),
+  companiesHouse: s("Companies House — Find and update company information", "https://find-and-update.company-information.service.gov.uk/"),
+  ncscSmallBusiness: s("NCSC — Small Business Guide: cyber security", "https://www.ncsc.gov.uk/collection/small-business-guide"),
+  icannLookup: s("ICANN Lookup — check who a domain is registered to", "https://lookup.icann.org/"),
+  govSetUpBusiness: s("GOV.UK — Set up a business", "https://www.gov.uk/set-up-business"),
+  govWorkingForYourself: s("GOV.UK — Working for yourself", "https://www.gov.uk/working-for-yourself"),
+  govSelfAssessment: s("GOV.UK — Register for Self Assessment", "https://www.gov.uk/register-for-self-assessment"),
+  icoConsent: s("ICO — Consent (UK GDPR lawful basis)", "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/lawful-basis/consent/"),
+  icoAi: s("ICO — Guidance on AI and data protection", "https://ico.org.uk/for-organisations/uk-gdpr-guidance-and-resources/artificial-intelligence/guidance-on-ai-and-data-protection/"),
 } as const;
 
 // Internal links used across posts (descriptive anchors only).
@@ -85,6 +97,8 @@ export const LINK = {
   audit: "[free clinic website audit](/free-clinic-website-audit)",
   chatbot: "[AI chatbot for aesthetic clinics](/custom-software-ai-chatbots)",
   work: "[clinic websites we've built](/work)",
+  about: "[about Zyverra Labs](/about)",
+  faq: "[clinic website FAQs](/faq)",
 } as const;
 
 export const POST = (slug: string, label: string) => `[${label}](/blog/${slug})`;

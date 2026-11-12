@@ -45,6 +45,15 @@ export const facebookAdsPlaybookPost: BlogPost = {
       type: "paragraph",
       text: "Prescription-only medicines can't be advertised to the public in the UK, and that includes botulinum toxin products used for anti-wrinkle treatment, even when a health professional administers them (" + cite(SRC.asaBotulinum, "CAP") + "). The ASA has issued an Enforcement Notice specifically about social media ads for these products (" + cite(SRC.asaEnforcement, "ASA") + "). Indirect references, nicknames and prices linked to the medicine can also count as advertising it (" + cite(SRC.asaFineLine, "ASA") + "). Our " + POST("botox-advertising-rules-clinic-website", "guide to the advertising rules") + " covers this in detail.",
     },
+    { type: "subheading", text: "Can you advertise anti-wrinkle injections on Facebook in the UK?" },
+    {
+      type: "paragraph",
+      text: "Not as a promoted product. Anti-wrinkle injections usually mean botulinum toxin, a prescription-only medicine, and the ASA treats ads for them, including indirect references and prices, as advertising that medicine. You can advertise a consultation for lines and wrinkles, as long as the ad focuses on the consultation and doesn't name or price the medicine.",
+    },
+    {
+      type: "paragraph",
+      text: "CAP's advice gives “a consultation for the treatment of lines and wrinkles” as the kind of claim likely to be acceptable (" + cite(SRC.asaBotulinum, "CAP") + "). Meta's own policies add further restrictions on cosmetic procedure ads (" + cite(SRC.metaCosmetic, "Meta") + ").",
+    },
     { type: "heading", text: "What can you advertise?" },
     {
       type: "list",
@@ -151,6 +160,55 @@ export const facebookAdsPlaybookPost: BlogPost = {
     {
       type: "paragraph",
       text: "Change one thing at a time: the creative, the opening line, the offer or the landing page. Give each test enough time and budget to produce a meaningful number of enquiries before judging it, and always judge by booked consultations, not clicks. Keep a simple log of what you changed and when, so you learn from every campaign rather than starting again each time.",
+    },
+    { type: "heading", text: "Why didn't boosting Instagram posts bring any bookings?" },
+    {
+      type: "paragraph",
+      text: "Boosted posts are built for engagement, not bookings. They usually send people to your profile rather than a page where they can book, use broad targeting and give you little to measure. A proper campaign has one clear offer, a landing page with prices and a booking button, and tracking that counts consultations rather than likes.",
+    },
+    {
+      type: "list",
+      items: [
+        "**One treatment per campaign.** A boosted grid post rarely says what to do next.",
+        "**A landing page, not your profile.** Send people to a page with the price, practitioner and booking button.",
+        "**A local, 18+ audience.** Cosmetic intervention ads must not target under-18s ([CAP](" + SRC.asaCosmeticSR.url + ")).",
+        "**Fast replies.** Most of the work of turning an enquiry into a booking happens after the click.",
+      ],
+    },
+    { type: "heading", text: "How do aesthetics clinics get clients from Instagram ads?" },
+    {
+      type: "paragraph",
+      text: "Clinics that get clients from Instagram ads usually promote one consultation-led treatment at a time, use real photos or short videos from their own clinic, send people to a matching landing page and reply to every enquiry quickly. The ad starts the conversation; the landing page and your follow-up turn it into a booking.",
+    },
+    {
+      type: "ordered",
+      items: [
+        "Pick a treatment people already ask you about, with a clear price or consultation fee",
+        "Film 15–30 second clips of the room, the practitioner and the consultation",
+        "Build a landing page that repeats the ad's message and has one booking button",
+        "Reply to messages and form enquiries the same day, ideally within the hour",
+        "Review cost per booked consultation every two weeks and keep what works",
+      ],
+    },
+    { type: "heading", text: "Is it better to hire a freelancer or an agency for Facebook ads?" },
+    {
+      type: "paragraph",
+      text: "Either can work. A freelancer is often cheaper and you deal with one person, but you depend on their availability. An agency usually covers ads, creative and landing pages together. For a clinic, what matters most is knowledge of UK advertising rules for cosmetic treatments, a clear monthly price and reporting on booked consultations.",
+    },
+    {
+      type: "table",
+      caption: "Freelancer or agency for clinic ads",
+      head: ["", "Freelancer", "Agency"],
+      rows: [
+        ["Typical set-up", "One specialist", "A small team"],
+        ["Creative and landing pages", "Sometimes, or extra", "Often included"],
+        ["Cover for holidays and illness", "Limited", "Usually yes"],
+        ["Questions to ask both", "Who checks ads against CAP rules?", "How do you report on bookings?"],
+      ],
+    },
+    {
+      type: "paragraph",
+      text: "Whoever you hire, ask to see a sample report and how they keep ads within Meta's advertising standards (" + cite(SRC.metaStandards, "Meta") + "). Our " + LINK.metaAds + " packages are priced on " + LINK.pricing + ".",
     },
     { type: "heading", text: "How Zyverra helps" },
     {

@@ -139,6 +139,24 @@ export const aiSearchPost: BlogPost = {
         "Prices and treatments up to date",
       ],
     },
+    { type: "heading", text: "What is AEO, and does your clinic need it?" },
+    {
+      type: "paragraph",
+      text: "AEO, or answer engine optimisation, means writing pages so search engines and AI assistants can lift a clear answer from them: the question as a heading, a direct answer first, then detail and sources. Your clinic doesn't need a separate AEO project; it needs treatment pages and FAQs written this way, which helps ordinary SEO too.",
+    },
+    {
+      type: "paragraph",
+      text: "A quick test: read the first two sentences under each heading on your treatment pages. If they answer the question on their own, with the price and who it suits, the page is answer-ready. If they start with a welcome message or a story, rewrite them. See " + POST("aesthetic-treatment-page-seo", "how to write treatment pages that rank") + ".",
+    },
+    { type: "heading", text: "Will AI search replace Google for finding clinics?" },
+    {
+      type: "paragraph",
+      text: "Nobody knows for certain, but you don't have to choose. More people now ask ChatGPT, Gemini or Google's AI Overviews for recommendations, yet those assistants build their answers from the same web pages, business listings and reviews that search engines use. A clinic that's strong on Google Search and Maps is usually well placed for AI search too.",
+    },
+    {
+      type: "paragraph",
+      text: "OpenAI describes ChatGPT search as drawing on web sources and linking to them (" + cite(SRC.openaiSearch, "OpenAI") + "), and Google says the same SEO best practices apply to its AI features (" + cite(SRC.googleAiFeatures, "Google Search Central") + "). So the practical plan is one plan: a clear website, an accurate Google Business Profile, Bing indexing and a genuine reputation.",
+    },
     { type: "heading", text: "How Zyverra helps" },
     {
       type: "paragraph",

@@ -12,6 +12,9 @@ CONFIRMED FACTS (use exactly, never change them)
 - With the Option A dashboard, clients can change everything themselves: add, rename or remove categories and services, prices, page sections, photos, offers, blogs, opening hours and contact details.
 - Major changes (new features, layouts, integrations), and content changes on Option B, cost £50 to £100 per update depending on the change.
 - Dashboard training is given live on Google Meet at handover.
+- Running costs: hosting is free and there is no monthly website fee; the domain name costs about £10 to £20 a year.
+- Booking: the website links to or embeds Fresha, Treatwell, Booksy, Timely, Phorest, Acuity or Faces, or uses an enquiry form plus a WhatsApp button.
+- Referral reward: refer another clinic and get 3 months of free small updates.
 - Monthly marketing packages: Meta ads management £350 (Starter) or £550 (Growth) per month, with ad spend paid separately to Meta; local SEO £300 (Local) or £500 (Local + AI search) per month; social media and reels £300 (Essentials) or £550 (Reels-led) per month.
 - Recent clinic websites: Serra Aesthetics (Walthamstow, London), Penelope J Aesthetics and Belgrave Cosmetics (Bristol).
 - Works with UK clinics remotely by video call, email and WhatsApp (+92 302 4258017). Do not volunteer where the team is based; if someone asks directly, answer honestly that the team is based in Lahore, Pakistan and works remotely with UK clinics.

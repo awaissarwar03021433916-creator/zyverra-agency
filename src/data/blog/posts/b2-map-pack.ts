@@ -30,6 +30,11 @@ export const mapPackPost: BlogPost = {
         "Your website matters for Maps too; treatment pages back up your profile.",
       ],
     },
+    { type: "heading", text: "How do you get your clinic into the top 3 on Google Maps?" },
+    {
+      type: "paragraph",
+      text: "Make your Google Business Profile the most complete and relevant in your area: the right primary category, every treatment listed, real photos, regular updates and a steady flow of genuine reviews with replies. Back it up with treatment pages on your website and consistent details across directories. Distance still matters, so nobody can guarantee a top-three place.",
+    },
     { type: "heading", text: "What is the Google Map Pack?" },
     {
       type: "paragraph",

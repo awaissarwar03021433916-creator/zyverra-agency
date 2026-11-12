@@ -30,7 +30,11 @@ export const nurseWebsitePost: BlogPost = {
         "Choose a set-up you can update yourself as you add treatments.",
       ],
     },
-    { type: "heading", text: "Do you really need a website when you're just starting?" },
+    { type: "heading", text: "Do you need a website, or is Instagram enough?" },
+    {
+      type: "paragraph",
+      text: "Instagram is a good place to start, but it isn't enough on its own. Clients searching Google for a treatment in your town won't find your Instagram grid, and you don't control the platform. A simple website with your treatments, prices, qualifications and booking link makes you look established and gives Instagram somewhere to send people.",
+    },
     {
       type: "paragraph",
       text: "Many new practitioners begin with Instagram alone. That can bring early clients, but it has limits: posts are hard to find later, prices and aftercare get lost in captions, and you're not visible when someone searches Google for a treatment near them. A simple website gives you one dependable place to send people from Instagram, your Google Business Profile and word of mouth.",

@@ -205,7 +205,7 @@ export default function Page() {
 
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="Admin dashboard FAQs" />
-        <FaqList faqs={faqsById(["dashboard-edits", "developer", "options", "before-after"])} />
+        <FaqList faqs={faqsById(["best-platform", "fed-up-developer", "dashboard-edits", "developer", "options", "before-after"])} />
       </Section>
 
       <RelatedLinks

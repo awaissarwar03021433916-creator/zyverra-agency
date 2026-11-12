@@ -35,6 +35,11 @@ export const gdprPost: BlogPost = {
       type: "note",
       text: "This is general information for UK clinics, not legal advice. Check the ICO's guidance or a qualified adviser for your situation.",
     },
+    { type: "heading", text: "Does your clinic website need to be GDPR compliant?" },
+    {
+      type: "paragraph",
+      text: "Yes. If your website collects any personal data, through enquiry forms, booking details, analytics or advertising cookies, UK GDPR and PECR apply. In practice that means a clear privacy notice, a cookie banner that asks before non-essential cookies load, secure forms that avoid collecting health details, and paying the ICO data protection fee if it applies to you.",
+    },
     { type: "heading", text: "Which rules apply to a clinic website?" },
     {
       type: "paragraph",

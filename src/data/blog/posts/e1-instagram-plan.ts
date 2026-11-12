@@ -95,7 +95,11 @@ export const instagramPlanPost: BlogPost = {
         "Use your website link, not only a booking marketplace link",
       ],
     },
-    { type: "heading", text: "How do you turn followers into bookings?" },
+    { type: "heading", text: "Why does your Instagram have followers but no bookings?" },
+    {
+      type: "paragraph",
+      text: "Usually because nothing turns interest into action. Common causes are no booking link in your bio, posts that never mention prices or how to book, slow replies to DMs, and content that entertains but doesn't explain what you treat. Followers become clients when every post makes the next step obvious and booking takes a couple of taps.",
+    },
     {
       type: "paragraph",
       text: "Instagram builds interest; your website and booking system close it. Link your bio to your website, point posts to specific treatment pages, and reply to DMs quickly with a link to book. Read " + POST("clinic-enquiry-conversion", "how to turn more enquiries into booked consultations") + ".",
@@ -149,6 +153,37 @@ export const instagramPlanPost: BlogPost = {
     {
       type: "paragraph",
       text: "Reply to comments the same day where you can; it keeps conversations going and shows you're responsive. Move anything personal, especially health questions, out of public comments and into a private message or consultation. In DMs, answer the actual question, then share a direct booking link. Our guide to " + POST("clinic-enquiry-conversion", "turning enquiries into booked consultations") + " includes reply templates.",
+    },
+    { type: "heading", text: "How much does social media management for a beauty salon cost in the UK?" },
+    {
+      type: "paragraph",
+      text: "Prices vary widely. UK freelancers and agencies commonly charge from a few hundred pounds to well over £1,000 a month, depending on how many posts and reels are included and whether filming is part of it. Our packages cost £300 a month (8 posts and 4 reels) or £550 a month (12 posts, 8 reels and weekly stories).",
+    },
+    {
+      type: "paragraph",
+      text: "Compare quotes on what you actually get: number of posts and reels, who films, who writes captions, whether stories and replies are included, and how results are reported. A cheap package that posts generic stock images rarely brings bookings. See " + LINK.social + " for what ours include.",
+    },
+    { type: "heading", text: "Social media is taking up all your time. Should you outsource it?" },
+    {
+      type: "paragraph",
+      text: "If social media is eating into treatment time, outsourcing the planning, editing and scheduling usually makes sense, while you keep the parts only you can do: filming short clips, answering clinical questions and replying to DMs. A good manager works from your footage, follows UK advertising rules and sends you a calendar to approve each month.",
+    },
+    {
+      type: "list",
+      items: [
+        "**Keep in-house:** clinical answers, DMs about suitability, filming in your room",
+        "**Outsource:** the content calendar, editing, captions, scheduling and reporting",
+        "**Agree up front:** who approves posts, how fast replies happen, and what's off-limits under the CAP Code ([CAP](" + SRC.capCode.url + "))",
+      ],
+    },
+    { type: "heading", text: "What reels should an aesthetics clinic post?" },
+    {
+      type: "paragraph",
+      text: "Post reels that educate, build trust and show the experience: answers to common questions, what happens at a consultation, behind-the-scenes clinic prep, aftercare tips and genuine consented results with context. Avoid reels that promote prescription-only medicines, put time pressure on injectables or edit results. A steady weekly rhythm beats daily posting you can't keep up.",
+    },
+    {
+      type: "paragraph",
+      text: "We've written " + POST("reels-ideas-aesthetic-clinics", "a full list of reels ideas that stay within the rules") + ", with a scripted example.",
     },
     { type: "heading", text: "How Zyverra helps" },
     {

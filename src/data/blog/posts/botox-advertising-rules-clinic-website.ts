@@ -1,7 +1,9 @@
-// The compliance post. This is the ONLY place on the site where
-// prescription-only medicine brand names appear, and only to explain the rule.
+// The compliance post. Prescription-only medicine brand names appear only here
+// and in the /faq answer to "Can I say Botox on my website?", and only to
+// explain the rule.
 
 import type { BlogPost } from "../types";
+import { POST, SRC, cite } from "../sources";
 
 export const advertisingRulesPost: BlogPost = {
   slug: "botox-advertising-rules-clinic-website",
@@ -93,6 +95,15 @@ export const advertisingRulesPost: BlogPost = {
         "Check your Google Business Profile services and social bios.",
         "Make sure before-and-after images are consented and labelled.",
       ],
+    },
+    { type: "heading", text: "What are the ASA rules for advertising aesthetics treatments?" },
+    {
+      type: "paragraph",
+      text: "All UK clinic advertising, including your website and social media, must follow the CAP Code. The key rules: don't advertise prescription-only medicines to the public, don't make misleading or unproven claims, use genuine and representative before-and-after images, don't target or appeal to under-18s, and don't pressure people with time-limited offers on cosmetic interventions.",
+    },
+    {
+      type: "paragraph",
+      text: "CAP's guidance on cosmetic interventions sets out the claims and social responsibility rules (" + cite(SRC.asaCosmetic, "CAP") + ", " + cite(SRC.asaCosmeticSR, "CAP social responsibility") + "), and the full rules are in " + cite(SRC.capCode) + ". For photos, read our " + POST("before-and-after-photos-consent-asa", "guide to before-and-after photo rules") + ".",
     },
     { type: "heading", text: "How we help" },
     {

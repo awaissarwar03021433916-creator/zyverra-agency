@@ -265,7 +265,7 @@ export default function Page() {
 
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="Cost and payment questions" />
-        <FaqList faqs={faqsById(["cost", "options", "instalments", "monthly-fees"])} />
+        <FaqList faqs={faqsById(["cost", "under-500", "options", "instalments", "monthly-fees"])} />
       </Section>
 
       <RelatedLinks

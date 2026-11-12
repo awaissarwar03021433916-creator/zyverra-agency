@@ -56,8 +56,14 @@ export const pricing = {
   trainingFormat: "Google Meet",
   // Availability for UK clients (confirmed by the owner).
   hours: "6am to 8pm UK time",
-  // Booking systems we link or embed (confirmed: "Fresha, etc.").
-  bookingSystems: ["Fresha", "Treatwell", "Timely", "Phorest"],
+  // Booking systems we link or embed (confirmed by the owner). Clinics without
+  // one get an enquiry form plus a WhatsApp button.
+  bookingSystems: ["Fresha", "Treatwell", "Booksy", "Timely", "Phorest", "Acuity", "Faces"],
+  // Running costs (confirmed): hosting is free; the domain is about £10–£20 a year.
+  hosting: "free",
+  domainCost: "about £10–£20 a year",
+  // Referral reward (confirmed): refer a clinic, get 3 months of free small updates.
+  referralOffer: "3 months of free small updates",
   // Free audit turnaround. TODO [CONFIRM]: turnaround promised on /free-clinic-website-audit.
   auditTurnaround: "2 working days",
 } as const;
@@ -174,6 +180,7 @@ export const keyFacts = [
   { label: "What's included", value: "Custom design, treatment pages with prices, booking links, SEO and schema set-up, legal pages" },
   { label: "Who it's for", value: "UK aesthetics clinics, aesthetic nurses, med spas and beauty salons" },
   { label: "UK coverage", value: "England, Scotland, Wales and Northern Ireland, remotely" },
+  { label: "Running costs", value: `Hosting free; domain ${pricing.domainCost}; no monthly website fee` },
   { label: "Updates after launch", value: `Do it yourself (Option A), or ${pricing.updateFee} per update` },
   { label: "Contact", value: `${business.email} · WhatsApp ${business.phoneDisplay} · ${pricing.hours}` },
 ] as const;

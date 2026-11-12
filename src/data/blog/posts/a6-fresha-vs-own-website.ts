@@ -56,7 +56,11 @@ export const freshaVsWebsitePost: BlogPost = {
         "If terms change, you have little control",
       ],
     },
-    { type: "heading", text: "Why does your own website still matter?" },
+    { type: "heading", text: "Is it worth paying for a website when you already use Fresha?" },
+    {
+      type: "paragraph",
+      text: "Usually, yes. Fresha is excellent for running your diary and taking bookings, but your profile lives on their platform, next to other businesses and under their rules. Your own website is the part you control: it ranks for your treatments and town, builds trust with your story and results, then sends clients to Fresha to book.",
+    },
     {
       type: "paragraph",
       text: "Your website is the one place you control completely: your treatment pages, prices, practitioner story, results and FAQs. It's what builds your own presence in Google and AI assistants over time, and it's where clients land from your Google Business Profile, Instagram and ads. Google's guidance is to create helpful, people-first content (" + cite(SRC.googleHelpful, "Google Search Central") + "), which is much easier on your own site than inside a marketplace profile.",

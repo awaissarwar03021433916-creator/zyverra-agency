@@ -5,6 +5,7 @@
 import type { LandingContent } from "@/components/marketing/LandingPage";
 import { pricing } from "@/config/business";
 import { routes } from "@/config/site";
+import { faqsById } from "@/data/faqs";
 
 const BLOG = {
   cost: { href: "/blog/aesthetic-clinic-website-cost-uk", label: "Clinic website prices in the UK" },
@@ -72,6 +73,7 @@ export const googleBusinessProfilePage: LandingContent = {
     },
   ],
   faqs: [
+    ...faqsById(["near-me"]),
     { id: "gbp-cost", q: "How much does Google Business Profile management cost?", a: "Google Business Profile optimisation is included in our Local SEO package from £300 a month. The profile itself is free from Google." },
     { id: "gbp-time", q: "How long before my clinic shows higher on Google Maps?", a: "It varies by area and competition. Fixing categories, details and photos can help within weeks, while reviews and posts build up over months. Nobody can guarantee a ranking." },
     { id: "gbp-address", q: "Can I have a Google profile if I work from a shared clinic or rent a room?", a: "Usually yes, but Google has specific rules for shared and home-based businesses. We check your situation and set the profile up in a way that follows those rules." },
@@ -150,6 +152,7 @@ export const nurseWebsitesPage: LandingContent = {
     },
   ],
   faqs: [
+    ...faqsById(["leaving-nhs"]),
     { id: "nurse-cost", q: "How much does a website for an aesthetic nurse cost?", a: `£${pricing.optionB.price} for a custom website, or £${pricing.optionA.price} with an admin dashboard so you can update it yourself. Both go live in ${pricing.timeline}.` },
     { id: "nurse-new", q: "I'm just starting out. Do I need a full website?", a: "A focused site with an about page, treatment pages, prices and booking is enough to start. You can add pages and blog posts later." },
     { id: "nurse-locations", q: "I work from more than one place. Can the website handle that?", a: "Yes. We add a clear section for each location with its own booking route and opening times." },
@@ -227,6 +230,7 @@ export const redesignPage: LandingContent = {
     },
   ],
   faqs: [
+    ...faqsById(["fed-up-developer"]),
     { id: "re-cost", q: "How much does a clinic website redesign cost?", a: `The same as a new website: £${pricing.optionB.price}, or £${pricing.optionA.price} with an admin dashboard so you can update it yourself.` },
     { id: "re-rankings", q: "Will I lose my Google rankings if I redesign?", a: "Not if it's done properly. We redirect every old page to its new address and keep or improve titles, which is what protects existing visibility." },
     { id: "re-domain", q: "Do I keep my domain name?", a: "Yes. Your website keeps the same address; only what's behind it changes." },

@@ -146,7 +146,7 @@ export default function Page() {
 
       <Section id="faq" narrow>
         <SectionHeading eyebrow="FAQ" title="SEO & AI search FAQs" />
-        <FaqList faqs={faqsById(["rank", "chatgpt", "ai-visibility"])} />
+        <FaqList faqs={faqsById(["near-me", "seo-company", "chatgpt", "chatgpt-missing", "ai-agency", "rank"])} />
       </Section>
 
       <RelatedLinks

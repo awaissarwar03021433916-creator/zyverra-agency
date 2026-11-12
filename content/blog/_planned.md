@@ -45,6 +45,12 @@ pages exist.
 | clinic-enquiry-conversion | clinic enquiry conversion |
 | aesthetic-clinic-patient-retention | aesthetic clinic patient retention |
 | botox-advertising-rules-clinic-website | ASA botox advertising rules |
+| choose-web-designer-clinic-avoid-scams | choose web designer clinic |
+| local-seo-aesthetic-clinic-90-day-plan | local SEO plan aesthetic clinic |
+| before-and-after-photos-consent-asa | before and after photos rules UK |
+| get-more-bookings-aesthetics-clinic | get more bookings aesthetics clinic |
+| does-aesthetics-clinic-need-ai-chatbot | AI chatbot aesthetics clinic |
+| leaving-nhs-start-aesthetics-business-online | leaving NHS aesthetics business |
 
 Pages also own keywords: e.g. /work ("aesthetic clinic website examples"),
 /website-for-aesthetic-nurses ("website for aesthetic nurse"),
@@ -56,7 +62,6 @@ aesthetic clinics"), /pricing ("aesthetic clinic website cost UK").
 
 | # | Title | Slug | Main keyword | Outline |
 |---|---|---|---|---|
-| B3 | Local SEO for aesthetic clinics: a 90-day plan | local-seo-aesthetic-clinic-90-day-plan | local SEO plan aesthetic clinic | Days 1–30 foundations (GBP, NAP, Search Console, Bing); 31–60 treatment pages + reviews; 61–90 mentions + measurement. Table: weekly tasks. |
 | B4 | How to get more Google reviews for your clinic (without breaking the rules) | more-google-reviews-aesthetic-clinic | more Google reviews clinic | When to ask, review links, scripts, replying, what's prohibited (Google contribution policy), handling negative reviews without disclosing health data. |
 | B5 | Technical SEO checklist for clinic websites | technical-seo-checklist-clinic-website | technical SEO clinic website | Indexing, sitemaps, Core Web Vitals, structured data, redirects, duplicate pages, image optimisation. Checklist. |
 
@@ -76,9 +81,7 @@ aesthetic clinics"), /pricing ("aesthetic clinic website cost UK").
 
 ## E. Social media
 
-| # | Title | Slug | Main keyword | Outline |
-|---|---|---|---|---|
-| E3 | Before-and-after photos: consent, editing and ASA rules | before-and-after-photos-consent-asa | before and after photos rules UK | Consent forms, storage (UK GDPR), editing rules (CAP before-and-after advice), POM restriction, labelling, platform rules. |
+Nothing planned: E3 (before-and-after photos) is published.
 
 ## F. Clinic growth and operations
 

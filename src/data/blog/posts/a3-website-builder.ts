@@ -111,7 +111,11 @@ export const websiteBuilderPost: BlogPost = {
         "If I leave, can I take my domain and content with me?",
       ],
     },
-    { type: "heading", text: "Which should you choose?" },
+    { type: "heading", text: "Wix, Squarespace or custom: which is better for a beauty clinic?" },
+    {
+      type: "paragraph",
+      text: "For a new beauty clinic on a tight budget that's happy to build and maintain the site itself, Wix or Squarespace is workable. For a clinic that wants each treatment to rank on Google, prices updated in seconds and no monthly builder plan, a custom website with an admin dashboard is often better value over a few years.",
+    },
     {
       type: "list",
       items: [

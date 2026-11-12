@@ -57,6 +57,9 @@ ${serviceText}
 - Timeline: ${pricing.timeline} once content is received.
 - Payment plans: 50/50, or ${pricing.instalments}.
 - Dashboard training: live on ${pricing.trainingFormat} at handover.
+- Running costs: hosting free; domain ${pricing.domainCost}; no monthly website fee.
+- Booking: ${pricing.bookingSystems.join(", ")}, or an enquiry form plus WhatsApp.
+- Referral reward: ${pricing.referralOffer} for each clinic you refer.
 ${u(routes.pricing)}
 
 ## Monthly marketing packages

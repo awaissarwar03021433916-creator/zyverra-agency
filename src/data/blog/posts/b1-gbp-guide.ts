@@ -35,6 +35,11 @@ export const gbpGuidePost: BlogPost = {
       type: "paragraph",
       text: "When someone searches for a treatment near them, Google often shows a map with local businesses before ordinary results. Your Google Business Profile is what appears there. Google says local results are based mainly on relevance, distance and prominence (" + cite(SRC.gbpRanking, "Google Business Profile Help") + "). You can't change your distance from the searcher, but you can make your profile as relevant and prominent as possible.",
     },
+    { type: "heading", text: "How do you set up a Google Business Profile for your clinic?" },
+    {
+      type: "paragraph",
+      text: "Go to Google Business Profile, search for your clinic name, then claim the existing listing or create a new one. Add your real address or service area, choose the most accurate category, verify the business, and complete your services, hours, photos and website link. Verification can take several days, so start well before you launch.",
+    },
     { type: "heading", text: "Step 1: How do you claim or create your profile?" },
     {
       type: "paragraph",
@@ -78,7 +83,11 @@ export const gbpGuidePost: BlogPost = {
       type: "paragraph",
       text: "Post updates regularly: a new treatment, a seasonal offer, a team introduction or an aftercare tip. Reply to every review, positive or negative, calmly and without sharing any health details. Answer questions people ask on the profile. Keep hours and services accurate as they change.",
     },
-    { type: "heading", text: "Step 8: How do you get more reviews, within the rules?" },
+    { type: "heading", text: "Step 8: How can you get more Google reviews for your clinic or salon?" },
+    {
+      type: "paragraph",
+      text: "Ask every client, at the right moment, with a direct review link. Send it by text or email shortly after the appointment, keep a QR code at reception, and reply to every review you receive. Don't offer discounts or gifts for reviews, don't ask only the clients you expect to be happy, and never post reviews yourself.",
+    },
     {
       type: "paragraph",
       text: "Ask happy clients for a review at the right moment, such as after a follow-up when they're pleased with their results, with a short direct link. Don't offer incentives for reviews, don't review yourself and don't ask staff or family to post reviews: Google's policies prohibit fake engagement (" + cite(SRC.googleContribution, "Google") + "). A steady flow of genuine reviews is worth far more than a sudden burst.",

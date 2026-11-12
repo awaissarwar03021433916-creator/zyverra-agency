@@ -137,7 +137,7 @@ export default function Page() {
 
       <Section id="faq" narrow tone="muted">
         <SectionHeading eyebrow="FAQ" title="Questions from Bristol clinics" />
-        <FaqList faqs={faqsById(["location", "timeline", "cost"])} />
+        <FaqList faqs={faqsById(["who-to-use", "location", "timeline", "cost"])} />
       </Section>
 
       <RelatedLinks

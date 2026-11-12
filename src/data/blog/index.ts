@@ -20,6 +20,12 @@ import { instagramPlanPost } from "./posts/e1-instagram-plan";
 import { reelsIdeasPost } from "./posts/e2-reels-ideas";
 import { enquiryConversionPost } from "./posts/f1-enquiry-conversion";
 import { patientRetentionPost } from "./posts/f2-patient-retention";
+import { leavingNhsPost } from "./posts/a9-leaving-nhs";
+import { chooseWebDesignerPost } from "./posts/a10-choose-web-designer";
+import { localSeoPlanPost } from "./posts/b3-local-seo-90-day-plan";
+import { beforeAfterPhotosPost } from "./posts/e3-before-after-photos";
+import { aiChatbotPost } from "./posts/f3-ai-chatbot";
+import { moreBookingsPost } from "./posts/f4-more-bookings";
 
 export type { BlogBlock, BlogPost, BlogCategory } from "./types";
 
@@ -36,9 +42,11 @@ export const blogPosts: BlogPost[] = [
   nurseWebsitePost,
   gdprPost,
   websiteCostPost,
+  chooseWebDesignerPost,
   // B. Local SEO
   gbpGuidePost,
   mapPackPost,
+  localSeoPlanPost,
   // C. AI search
   aiSearchPost,
   aiOverviewsPost,
@@ -48,9 +56,13 @@ export const blogPosts: BlogPost[] = [
   // E. Social
   instagramPlanPost,
   reelsIdeasPost,
+  beforeAfterPhotosPost,
   // F. Growth
   enquiryConversionPost,
   patientRetentionPost,
+  moreBookingsPost,
+  aiChatbotPost,
+  leavingNhsPost,
   // Compliance + software
   advertisingRulesPost,
   ...softwarePosts,
