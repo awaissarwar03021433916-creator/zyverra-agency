@@ -23,6 +23,10 @@ import { dashboardLines, routes, services, type ServiceKey } from "@/config/site
 import { allFaqs, faqsById } from "@/data/faqs";
 import { publishedCaseStudies } from "@/data/work";
 import { pageMetadata } from "@/lib/seo";
+import { Testimonials } from "@/components/marketing/blocks/Testimonials";
+import { JsonLd } from "@/components/seo/JsonLd";
+import { testimonials } from "@/data/testimonials";
+import { siteOrigin, testimonialReviewsSchema } from "@/lib/schema";
 
 export const metadata = pageMetadata({
   title: "Aesthetic Clinic Website Design UK | Zyverra Labs",
@@ -125,6 +129,9 @@ export default function HomePage() {
       </Lead>
 
       <KeyFacts facts={keyFacts.map((f) => ({ label: f.label, value: f.value }))} />
+
+      <Testimonials items={testimonials} />
+      <JsonLd data={testimonialReviewsSchema(siteOrigin(), testimonials)} />
 
       <Section id="services">
         <SectionHeading

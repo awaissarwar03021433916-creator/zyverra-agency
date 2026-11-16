@@ -2,7 +2,9 @@
 // objects that server components emit through <JsonLd>.
 //
 // Rules: only describe what is visible on the page, never output placeholder
-// or unconfirmed values, and never emit Review/AggregateRating for Zyverra Labs.
+// or unconfirmed values, and never emit an AggregateRating for Zyverra Labs.
+// The only Review markup is testimonialReviewsSchema: real client testimonials
+// shown verbatim on the homepage.
 
 import { env } from "@/config/env";
 import { appConfig, CANONICAL_ORIGIN, ENTITY_DESCRIPTION } from "@/config/app";
@@ -11,6 +13,7 @@ import { founder, sameAsProfiles } from "@/config/founder";
 import { routes } from "@/config/site";
 import type { Faq } from "@/data/faqs";
 import { postSources, type BlogPost } from "@/data/blog";
+import { reviewBody, type Testimonial } from "@/data/testimonials";
 
 const CONTEXT = "https://schema.org";
 
@@ -103,6 +106,21 @@ export function siteGraph(origin: string) {
         sameAs: [sameAsProfiles[0]],
       },
     ],
+  };
+}
+
+/** Client testimonials as Reviews of the Organization (no AggregateRating). */
+export function testimonialReviewsSchema(origin: string, items: Testimonial[]) {
+  return {
+    "@context": CONTEXT,
+    "@graph": items.map((t) => ({
+      "@type": "Review",
+      "@id": `${abs(origin, "/")}#review-${t.id}`,
+      itemReviewed: { "@id": orgId(origin) },
+      author: { "@type": "Person", name: t.name, affiliation: { "@type": "Organization", name: t.clinic, url: t.website } },
+      reviewBody: reviewBody(t),
+      reviewRating: { "@type": "Rating", ratingValue: 5, bestRating: 5, worstRating: 1 },
+    })),
   };
 }
 
